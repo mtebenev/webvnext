@@ -1,7 +1,7 @@
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Mt.WebVNext.DataModel.Entities
+namespace Mt.WebVNext.DataModel.Entities.ContactManager
 {
 	[Table("App" + nameof(Contact))]
 	public class Contact
