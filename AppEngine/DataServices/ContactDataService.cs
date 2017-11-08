@@ -1,4 +1,5 @@
 using System.Threading.Tasks;
+using AutoMapper;
 using Mt.WebVNext.DataModel;
 using Mt.WebVNext.DataModel.Dto.ContactManager;
 using Mt.WebVNext.DataModel.Entities;
@@ -9,10 +10,12 @@ namespace Mt.WebVNext.AppEngine.DataServices
   public class ContactDataService : IContactDataService
   {
     private readonly AppDataContext _dbContext;
+    private readonly IMapper _mapper;
 
-    public ContactDataService(AppDataContext dbContext)
+    public ContactDataService(AppDataContext dbContext, IMapper mapper)
     {
       _dbContext = dbContext;
+      _mapper = mapper;
     }
 
     public Task<Contact[]> GetContactsAsync(int userId)
@@ -27,29 +30,10 @@ namespace Mt.WebVNext.AppEngine.DataServices
 
     public async Task<Contact> CreateContactAsync(int userId, ContactDto contactDto)
     {
-      var contact = new Contact
-      {
-        FirstName = contactDto.FirstName,
-        LastName = contactDto.LastName
-      };
 
+      var contact = _mapper.Map<Contact>(contactDto);
       _dbContext.Contacts.Add(contact);
       await _dbContext.SaveChangesAsync();
-
-        /*
-      Contact result;
-      using(var unitOfWork = _dcFactory.CreateUnitOfWork())
-      {
-        var dbSetContact = unitOfWork.GetSet<Contact>();
-        result = new Contact();
-
-        Mapper.Map(contactDto, result);
-        result.UserId = userId;
-
-        dbSetContact.Add(result);
-        await unitOfWork.CommitAsync();
-      }
-      */
 
       return contact;
     }

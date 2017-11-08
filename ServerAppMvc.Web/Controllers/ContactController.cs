@@ -19,17 +19,17 @@ namespace Mt.WebVNext.ServerAppMvc.Web.Controllers
       return View();
     }
 
-    [HttpPost]
-    public async Task<IActionResult> NewContact()
+    public IActionResult NewContact()
     {
-      ContactDto contactDto = new ContactDto()
-      {
-        FirstName = "first_name",
-        LastName = "last_name"
-      };
-      await _contactDataService.CreateContactAsync(1, contactDto);
+      return View();
+    }
 
-      return View("Index");
+    [HttpPost]
+    public async Task<IActionResult> NewContact(ContactDto contactDto)
+    {
+
+      await _contactDataService.CreateContactAsync(1, contactDto);
+      return View();
     }
   }
 }

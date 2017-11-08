@@ -1,10 +1,12 @@
+using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Mt.Psyworks.AppEngine.AutoMapperConfig;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel;
+using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
 
 namespace Mt.WebVNext.ServerAppMvc.Web
 {
@@ -52,6 +54,15 @@ namespace Mt.WebVNext.ServerAppMvc.Web
     {
       services.AddDbContext<AppDataContext>(options => options.UseInMemoryDatabase("MemoryDb"));
       services.AddScoped<IContactDataService, ContactDataService>();
+
+      // Automapper
+      var autoMapperConfig = new MapperConfiguration(cfg =>
+      {
+        cfg.AddProfile<DtoProfile>();
+      });
+
+      var mapper = autoMapperConfig.CreateMapper();
+      services.AddSingleton(mapper);
     }
   }
 }
