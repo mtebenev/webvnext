@@ -22,6 +22,7 @@ namespace Mt.WebVNext.ServerAppMvc.Web
     public void ConfigureServices(IServiceCollection services)
     {
       services.AddMvc();
+      services.AddCors();
       ConfigureContainer(services);
     }
 
@@ -35,6 +36,13 @@ namespace Mt.WebVNext.ServerAppMvc.Web
       {
         app.UseExceptionHandler("/Home/Error");
       }
+
+      app.UseCors(builder =>
+        {
+          builder
+            .WithOrigins("http://localhost:4200")
+            .AllowAnyHeader();
+        });
 
       app.UseDefaultFiles();
       app.UseStaticFiles();
