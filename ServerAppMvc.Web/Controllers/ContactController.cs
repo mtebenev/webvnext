@@ -1,10 +1,12 @@
 using System.Threading.Tasks;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel.Dto.ContactManager;
 
 namespace Mt.WebVNext.ServerAppMvc.Web.Controllers
 {
+  [Authorize]
   public class ContactController : Controller
   {
     private readonly IContactDataService _contactDataService;

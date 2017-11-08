@@ -23,7 +23,15 @@ namespace Mt.WebVNext.ServerAppMvc.Web
     {
       services.AddMvc();
       services.AddCors();
-      ConfigureContainer(services);
+
+      services
+        .AddIdentityServer()
+        .AddDeveloperSigningCredential()
+        .AddInMemoryApiResources(IdentityServerConfig.GetApiResources())
+        .AddInMemoryClients(IdentityServerConfig.GetClients())
+        .AddTestUsers(IdentityServerConfig.GetUsers());
+
+        ConfigureContainer(services);
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -43,6 +51,8 @@ namespace Mt.WebVNext.ServerAppMvc.Web
             .WithOrigins("http://localhost:4200")
             .AllowAnyHeader();
         });
+
+      app.UseIdentityServer();
 
       app.UseDefaultFiles();
       app.UseStaticFiles();
