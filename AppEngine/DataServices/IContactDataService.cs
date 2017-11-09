@@ -1,6 +1,5 @@
 using System.Threading.Tasks;
 using Mt.WebVNext.DataModel.Dto.ContactManager;
-using Mt.WebVNext.DataModel.Entities;
 using Mt.WebVNext.DataModel.Entities.ContactManager;
 
 namespace Mt.WebVNext.AppEngine.DataServices

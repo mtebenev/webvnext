@@ -3,7 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Mt.Psyworks.AppEngine.AutoMapperConfig;
+using Mt.WebVNext.AppEngine.AutoMapperConfig;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
@@ -70,8 +70,9 @@ namespace Mt.WebVNext.ServerAppMvc.Web
     /// </summary>
     private void ConfigureContainer(IServiceCollection services)
     {
-      services.AddDbContext<AppDataContext>(options => options.UseInMemoryDatabase("MemoryDb"));
+      services.AddDbContext<AppDataContext>(options => options.UseSqlServer("Data Source=localhost;Initial Catalog=webvnext;Integrated Security=true;"));
       services.AddScoped<IContactDataService, ContactDataService>();
+      services.AddScoped<ICompanyDataService, CompanyDataService>();
 
       // Automapper
       var autoMapperConfig = new MapperConfiguration(cfg =>

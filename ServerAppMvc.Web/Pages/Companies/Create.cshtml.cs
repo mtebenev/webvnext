@@ -1,7 +1,6 @@
-using System.Collections.Generic;
-using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel.Dto.ContactManager;
@@ -9,27 +8,36 @@ using Mt.WebVNext.ServerAppMvc.Web.Core;
 
 namespace Mt.WebVNext.ServerAppMvc.Web.Pages.Companies
 {
+  /// <summary>
+  /// Creates a new company
+  /// </summary>
   [Authorize]
-  public class IndexModel : PageModel
+  public class CreateModel : PageModel
   {
     private readonly ICompanyDataService _companyDataService;
 
-    public IndexModel(ICompanyDataService companyDataService)
+    public CreateModel(ICompanyDataService companyDataService)
     {
       _companyDataService = companyDataService;
     }
 
+    [BindProperty]
+    public CompanyDto Company { get; set; }
 
-    public IList<CompanyDto> Companies { get; private set; }
-
-    public async Task OnGetAsync()
+    public void OnGet()
     {
-      // TODO: use automapper
-      var userId = this.GetCurrentUserId();
-      var companies = await _companyDataService
-        .GetCompaniesByUserAsync(userId);
 
-      Companies = companies.Select(c => new CompanyDto {CompanyId = c.CompanyId, Name = c.Name, Description = c.Description}).ToList();
+    }
+
+    public async Task<IActionResult> OnPostAsync()
+    {
+      if(!ModelState.IsValid)
+        return Page();
+
+      var userId = this.GetCurrentUserId();
+      await _companyDataService.CreateCompanyAsync(userId, Company);
+
+      return Page();
     }
   }
 }

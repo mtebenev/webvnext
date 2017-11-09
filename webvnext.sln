@@ -11,7 +11,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppEngine", "AppEngine\AppE
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AppEngine.Test", "AppEngine.Test\AppEngine.Test.csproj", "{B00C8939-38A6-4B21-906B-E925BBCB10FE}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ClientApp.Angular", "ClientApp.Angular\ClientApp.Angular.csproj", "{303BA265-1E6A-40B7-8CD2-14F891DA79B4}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApp.Angular", "ClientApp.Angular\ClientApp.Angular.csproj", "{303BA265-1E6A-40B7-8CD2-14F891DA79B4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

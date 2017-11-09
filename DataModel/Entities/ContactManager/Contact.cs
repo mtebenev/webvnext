@@ -3,11 +3,13 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Mt.WebVNext.DataModel.Entities.ContactManager
 {
-	[Table("App" + nameof(Contact))]
+	[Table("App_" + nameof(Contact))]
 	public class Contact
 	{
 		[Key]
 		public int ContactId { get; set; }
+
+    public int UserId { get; set; }
 
 		[Required, MaxLength(64)]
 		public string FirstName { get; set; }

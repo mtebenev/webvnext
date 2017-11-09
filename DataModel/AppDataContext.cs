@@ -1,5 +1,4 @@
 using Microsoft.EntityFrameworkCore;
-using Mt.WebVNext.DataModel.Entities;
 using Mt.WebVNext.DataModel.Entities.ContactManager;
 
 namespace Mt.WebVNext.DataModel

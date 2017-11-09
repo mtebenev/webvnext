@@ -1,7 +1,37 @@
 @page
-@using Mt.WebVNext.ServerAppMvc.Web.Companies
-@model Mt.WebVNext.ServerAppMvc.Web.Companies.IndexModel
+@addTagHelper *, Microsoft.AspNetCore.Mvc.TagHelpers
+@using Mt.WebVNext.ServerAppMvc.Web.Pages.Companies
+@model IndexModel
 @{
 }
 
-Company list goes here
+<h1>Companies</h1>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Name</th>
+      <th>Description</th>
+    </tr>
+  </thead>
+  <tbody>
+    @foreach(var company in Model.Companies)
+    {
+      <tr>
+        <td>@company.CompanyId</td>
+        <td>@company.Name</td>
+        <td>@company.Description</td>
+        <td>
+          <a asp-page="./Edit"
+             asp-route-id="@company.CompanyId">edit</a>
+          <button type="submit"
+                  asp-page-handler="delete"
+                  asp-route-id="@company.CompanyId">delete</button>
+        </td>
+      </tr>
+    }
+  </tbody>
+</table>
+
+<a asp-page="./Create">Create New Company</a>

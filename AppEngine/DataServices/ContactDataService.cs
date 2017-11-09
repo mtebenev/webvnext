@@ -2,7 +2,6 @@ using System.Threading.Tasks;
 using AutoMapper;
 using Mt.WebVNext.DataModel;
 using Mt.WebVNext.DataModel.Dto.ContactManager;
-using Mt.WebVNext.DataModel.Entities;
 using Mt.WebVNext.DataModel.Entities.ContactManager;
 
 namespace Mt.WebVNext.AppEngine.DataServices
