@@ -23,6 +23,42 @@ namespace Mt.WebVNext.ServerAppMvc.Web
             new Secret("secret".Sha256())
           },
           AllowedScopes = {"api1"}
+        },
+        new Client
+        {
+          ClientName = "angularclient",
+          ClientId = "angularclient",
+          AccessTokenType = AccessTokenType.Reference,
+          AccessTokenLifetime = 330, // 330 seconds, default 60 minutes
+          IdentityTokenLifetime = 20,
+          AllowedGrantTypes = GrantTypes.Implicit,
+          AllowAccessTokensViaBrowser = true,
+          RedirectUris = new List<string>
+          {
+            "http://localhost:4200"
+
+          },
+          PostLogoutRedirectUris = new List<string>
+          {
+            "http://localhost:4200/unauthorized",
+            "http://localhost:4200"
+          },
+          AllowedCorsOrigins = new List<string>
+          {
+            "https://localhost:4200",
+            "http://localhost:4200"
+          },
+          AllowedScopes = new List<string>
+          {
+            "openid",
+            "dataEventRecords",
+            "dataeventrecordsscope",
+            "securedFiles",
+            "securedfilesscope",
+            "role",
+            "profile",
+            "email"
+          }
         }
       };
     }
@@ -51,6 +87,15 @@ namespace Mt.WebVNext.ServerAppMvc.Web
       return new List<ApiResource>
       {
         new ApiResource("api1", "My API")
+      };
+    }
+
+    public static List<IdentityResource> GetIdentityResources()
+    {
+      return new List<IdentityResource>
+      {
+        new IdentityResources.OpenId(),
+        new IdentityResources.Profile()
       };
     }
   }

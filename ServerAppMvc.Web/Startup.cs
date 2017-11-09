@@ -1,6 +1,9 @@
+using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Mt.WebVNext.AppEngine.AutoMapperConfig;
@@ -21,6 +24,8 @@ namespace Mt.WebVNext.ServerAppMvc.Web
 
     public void ConfigureServices(IServiceCollection services)
     {
+      TelemetryConfiguration.Active.DisableTelemetry = true;
+
       services.AddMvc();
       services.AddCors();
 
@@ -29,9 +34,10 @@ namespace Mt.WebVNext.ServerAppMvc.Web
         .AddDeveloperSigningCredential()
         .AddInMemoryApiResources(IdentityServerConfig.GetApiResources())
         .AddInMemoryClients(IdentityServerConfig.GetClients())
+        .AddInMemoryIdentityResources(IdentityServerConfig.GetIdentityResources())
         .AddTestUsers(IdentityServerConfig.GetUsers());
 
-        ConfigureContainer(services);
+      ConfigureContainer(services);
     }
 
     public void Configure(IApplicationBuilder app, IHostingEnvironment env)
@@ -49,7 +55,8 @@ namespace Mt.WebVNext.ServerAppMvc.Web
         {
           builder
             .WithOrigins("http://localhost:4200")
-            .AllowAnyHeader();
+            .AllowAnyHeader()
+            .AllowAnyMethod();
         });
 
       app.UseIdentityServer();

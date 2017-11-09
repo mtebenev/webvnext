@@ -1,23 +1,38 @@
-import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import {Component, OnInit, OnDestroy} from '@angular/core';
+import {HttpClient} from '@angular/common/http';
+
+import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
-  title = 'app';
+export class AppComponent implements OnDestroy {
+  public title = 'app';
 
   public output: string;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, public oidcSecurityService: OidcSecurityService) {
+    if (this.oidcSecurityService.moduleSetup) {
+      this.doCallbackLogicIfRequired();
+    } else {
+      this.oidcSecurityService.onModuleSetup.subscribe(() => {
+        this.doCallbackLogicIfRequired();
+      });
+    }
+  }
 
+  /**
+   * OnDestroy
+   */
+  public ngOnDestroy(): void {
+    this.oidcSecurityService.onModuleSetup.unsubscribe();
   }
 
   public handleLoadContactsClick(): void {
 
-    this.httpClient.get('http://localhost:59613/api/contact')
+    this.httpClient.get('http://localhost:59613/api/contacts')
       .subscribe(data => {
         this.output = JSON.stringify(data);
 
@@ -25,5 +40,18 @@ export class AppComponent {
         alert('error loading data!');
         this.output = JSON.stringify(error);
       });
+  }
+
+  public handleLoginClick() {
+    this.oidcSecurityService.authorize();
+  }
+
+  public handleLogoutClick() {
+    this.oidcSecurityService.logoff();
+  }
+
+  private doCallbackLogicIfRequired() {
+    if (window.location.hash)
+      this.oidcSecurityService.authorizedCallback();
   }
 }
