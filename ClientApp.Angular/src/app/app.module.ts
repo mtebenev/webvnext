@@ -9,9 +9,12 @@ import {AppComponent} from './app.component';
 import {CompanyListComponent} from './contact-manager/company-list.component';
 import {ErrorUnauthorizedComponent} from './error-unauthorized.component';
 
+import {CompanyHttpService} from './services/contact-manager/company-http.service';
+
 const appRoutes: Routes = [
-  {path: '', component: AppComponent},
+  {path: '', component: CompanyListComponent},
   {path: 'companies', component: CompanyListComponent},
+  {path: 'home', component: CompanyListComponent},
   {path: 'Unauthorized', component: ErrorUnauthorizedComponent}
 ];
 
@@ -27,7 +30,9 @@ const appRoutes: Routes = [
     AuthModule.forRoot(),
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [],
+  providers: [
+    CompanyHttpService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {

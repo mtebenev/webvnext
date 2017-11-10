@@ -5,12 +5,14 @@
     "node_modules/codelyzer"
   ],
   "rules": {
+    "arrow-parens": false,
     "comment-format": false,
     "max-line-length": [true, 150],
     "object-literal-sort-keys": false,
     "ordered-imports": false,
     "prefer-const": false,
     "quotemark": [true, "single"],
-    "trailing-comma": false
+    "trailing-comma": false,
+    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
   }
 }

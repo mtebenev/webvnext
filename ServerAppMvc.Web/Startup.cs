@@ -1,10 +1,8 @@
-using System.Threading.Tasks;
 using AutoMapper;
 using IdentityServer4;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
@@ -102,6 +100,7 @@ namespace Mt.WebVNext.ServerAppMvc.Web
     /// </summary>
     private void ConfigureContainer(IServiceCollection services)
     {
+      // TODO: use shared configuration with API host
       services.AddDbContext<AppDataContext>(options => options.UseSqlServer("Data Source=localhost;Initial Catalog=webvnext;Integrated Security=true;"));
       services.AddScoped<IContactDataService, ContactDataService>();
       services.AddScoped<ICompanyDataService, CompanyDataService>();

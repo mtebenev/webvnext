@@ -1,1 +1,11 @@
 Company list goes here
+<button (click)="handleLoadCompaniesClick()">Load Companies</button>
+
+<div>
+  Companies:
+</div>
+<div>
+  <div *ngFor="let company of companies">
+    {{company.name}}
+  </div>
+</div>
