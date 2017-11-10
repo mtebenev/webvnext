@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using IdentityServer4;
 using IdentityServer4.Models;
 using IdentityServer4.Test;
 
@@ -26,6 +27,23 @@ namespace Mt.WebVNext.ServerAppMvc.Web
         },
         new Client
         {
+          ClientId = "angularclient",
+          ClientName = "angularclient",
+          AllowedGrantTypes = GrantTypes.Implicit,
+          AllowAccessTokensViaBrowser = true,
+
+          RedirectUris = {"http://localhost:4200"},
+          PostLogoutRedirectUris = {"http://localhost:4200/Unauthorized"},
+          AllowedCorsOrigins = {"http://localhost:4200"},
+
+          AllowedScopes =
+          {
+            IdentityServerConstants.StandardScopes.OpenId,
+            IdentityServerConstants.StandardScopes.Profile,
+            "api1"
+          }
+          // Before
+          /* 
           ClientName = "angularclient",
           ClientId = "angularclient",
           AccessTokenType = AccessTokenType.Reference,
@@ -57,8 +75,10 @@ namespace Mt.WebVNext.ServerAppMvc.Web
             "securedfilesscope",
             "role",
             "profile",
-            "email"
+            "email",
+            "api1"
           }
+          */
         }
       };
     }

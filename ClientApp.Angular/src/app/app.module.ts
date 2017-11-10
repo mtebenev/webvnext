@@ -33,8 +33,8 @@ export class AppModule {
     openIDImplicitFlowConfiguration.redirect_url = 'http://localhost:4200';
     openIDImplicitFlowConfiguration.client_id = 'angularclient';
     openIDImplicitFlowConfiguration.response_type = 'id_token token';
-    openIDImplicitFlowConfiguration.scope = 'openid';
-    openIDImplicitFlowConfiguration.post_logout_redirect_uri = 'http://localhost:4200';
+    openIDImplicitFlowConfiguration.scope = 'openid profile api1';
+    openIDImplicitFlowConfiguration.post_logout_redirect_uri = 'http://localhost:4200/Unauthorized';
     openIDImplicitFlowConfiguration.start_checksession = false;
     openIDImplicitFlowConfiguration.silent_renew = true;
     openIDImplicitFlowConfiguration.silent_renew_offset_in_seconds = 0;

@@ -1,5 +1,5 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
-import {HttpClient} from '@angular/common/http';
+import {HttpClient, HttpHeaders} from '@angular/common/http';
 
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
@@ -32,7 +32,17 @@ export class AppComponent implements OnDestroy {
 
   public handleLoadContactsClick(): void {
 
-    this.httpClient.get('http://localhost:59613/api/contacts')
+    let headers = new HttpHeaders();
+    headers.set('Content-Type', 'application/json');
+    headers.set('Accept', 'application/json');
+
+    const token = this.oidcSecurityService.getToken();
+    if (token !== '') {
+      const tokenValue = 'Bearer ' + token;
+      headers.set('Authorization', tokenValue);
+    }
+
+    this.httpClient.get('http://localhost:59613/api/contacts', {headers})
       .subscribe(data => {
         this.output = JSON.stringify(data);
 

@@ -37,6 +37,15 @@ namespace Mt.WebVNext.ServerAppMvc.Web
         .AddInMemoryIdentityResources(IdentityServerConfig.GetIdentityResources())
         .AddTestUsers(IdentityServerConfig.GetUsers());
 
+      services.AddAuthentication("Bearer")
+        .AddIdentityServerAuthentication(options =>
+        {
+          options.Authority = "http://localhost:59613";
+          options.RequireHttpsMetadata = false;
+
+          options.ApiName = "api1";
+        });
+
       ConfigureContainer(services);
     }
 
