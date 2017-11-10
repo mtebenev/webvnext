@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ClientApp.Angular", "Client
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerApi", "ServerApi\ServerApi.csproj", "{44641CD5-4DC2-44E4-982D-7A6B42009842}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerAppIdentity.Web", "ServerAppIdentity.Web\ServerAppIdentity.Web.csproj", "{7722BF89-750E-4508-BF18-70B466BF4651}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerAppIdentity.Web", "ServerAppIdentity.Web\ServerAppIdentity.Web.csproj", "{7722BF89-750E-4508-BF18-70B466BF4651}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerAppApi.Web", "ServerAppApi.Web\ServerAppApi.Web.csproj", "{2E54E121-8B92-4812-9965-8A75B73AB12E}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -51,6 +53,10 @@ Global
 		{7722BF89-750E-4508-BF18-70B466BF4651}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7722BF89-750E-4508-BF18-70B466BF4651}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7722BF89-750E-4508-BF18-70B466BF4651}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2E54E121-8B92-4812-9965-8A75B73AB12E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2E54E121-8B92-4812-9965-8A75B73AB12E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2E54E121-8B92-4812-9965-8A75B73AB12E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2E54E121-8B92-4812-9965-8A75B73AB12E}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

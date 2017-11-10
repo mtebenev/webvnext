@@ -5,6 +5,7 @@
     "node_modules/codelyzer"
   ],
   "rules": {
+    "comment-format": false,
     "max-line-length": [true, 150],
     "object-literal-sort-keys": false,
     "ordered-imports": false,

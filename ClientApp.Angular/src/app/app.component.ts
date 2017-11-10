@@ -32,18 +32,18 @@ export class AppComponent implements OnDestroy {
 
   public handleLoadContactsClick(): void {
 
-    let headers = new HttpHeaders();
-    headers.set('Content-Type', 'application/json');
-    headers.set('Accept', 'application/json');
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json');
 
     const token = this.oidcSecurityService.getToken();
     if (token !== '') {
       const tokenValue = 'Bearer ' + token;
-      headers.set('Authorization', tokenValue);
+      headers = headers.set('Authorization', tokenValue);
     }
 
-    this.httpClient.get('http://localhost:59613/api/contacts', {headers})
-      .subscribe(data => {
+    this.httpClient.get('http://localhost:52563/api/contacts', {headers:headers})
+      .subscribe((data) => {
         this.output = JSON.stringify(data);
 
       }, (error) => {
