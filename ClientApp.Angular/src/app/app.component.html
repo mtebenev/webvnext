@@ -5,9 +5,15 @@
 </div>
 <div>
   <button type="button" (click)="handleLoadContactsClick()">Load Contacts</button>
+</div>
+<div>
+  <a routerLink="/companies" routerLinkActive="active">Companies</a>
+</div>
+<div>
+    Output: {{output}}
+
 
 </div>
 <div>
-
-  Output: {{output}}
+  <router-outlet></router-outlet>
 </div>

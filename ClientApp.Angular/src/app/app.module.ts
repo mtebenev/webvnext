@@ -1,21 +1,31 @@
 import {BrowserModule} from '@angular/platform-browser';
+import {RouterModule, Routes} from '@angular/router';
 import {NgModule} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
-import {RouterModule} from '@angular/router';
 
 import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration} from 'angular-auth-oidc-client';
 
 import {AppComponent} from './app.component';
+import {CompanyListComponent} from './contact-manager/company-list.component';
+import {ErrorUnauthorizedComponent} from './error-unauthorized.component';
+
+const appRoutes: Routes = [
+  {path: '', component: AppComponent},
+  {path: 'companies', component: CompanyListComponent},
+  {path: 'Unauthorized', component: ErrorUnauthorizedComponent}
+];
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CompanyListComponent,
+    ErrorUnauthorizedComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AuthModule.forRoot(),
-    RouterModule.forRoot([])
+    RouterModule.forRoot(appRoutes)
   ],
   providers: [],
   bootstrap: [AppComponent]
