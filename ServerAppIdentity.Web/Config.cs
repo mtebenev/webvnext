@@ -1,4 +1,4 @@
-﻿// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
+// Copyright (c) Brock Allen & Dominick Baier. All rights reserved.
 // Licensed under the Apache License, Version 2.0. See LICENSE in the project root for license information.
 
 using IdentityServer4;
@@ -9,38 +9,38 @@ using System.Security.Claims;
 
 namespace QuickstartIdentityServer
 {
-    public class Config
+  public class Config
+  {
+    // scopes define the resources in your system
+    public static IEnumerable<IdentityResource> GetIdentityResources()
     {
-        // scopes define the resources in your system
-        public static IEnumerable<IdentityResource> GetIdentityResources()
-        {
-            return new List<IdentityResource>
+      return new List<IdentityResource>
             {
                 new IdentityResources.OpenId(),
                 new IdentityResources.Profile(),
             };
-        }
+    }
 
-        public static IEnumerable<ApiResource> GetApiResources()
-        {
-            return new List<ApiResource>
+    public static IEnumerable<ApiResource> GetApiResources()
+    {
+      return new List<ApiResource>
             {
                 new ApiResource("api1", "My API")
             };
-        }
+    }
 
-        // clients want to access resources (aka scopes)
-        public static IEnumerable<Client> GetClients()
-        {
-            // client credentials client
-            return new List<Client>
+    // clients want to access resources (aka scopes)
+    public static IEnumerable<Client> GetClients()
+    {
+      // client credentials client
+      return new List<Client>
             {
                 new Client
                 {
                     ClientId = "client",
                     AllowedGrantTypes = GrantTypes.ClientCredentials,
 
-                    ClientSecrets = 
+                    ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
@@ -53,7 +53,7 @@ namespace QuickstartIdentityServer
                     ClientId = "ro.client",
                     AllowedGrantTypes = GrantTypes.ResourceOwnerPassword,
 
-                    ClientSecrets = 
+                    ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
@@ -67,7 +67,7 @@ namespace QuickstartIdentityServer
                     ClientName = "MVC Client",
                     AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
 
-                    ClientSecrets = 
+                    ClientSecrets =
                     {
                         new Secret("secret".Sha256())
                     },
@@ -75,7 +75,7 @@ namespace QuickstartIdentityServer
                     RedirectUris = { "http://localhost:5002/signin-oidc" },
                     PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
 
-                    AllowedScopes = 
+                    AllowedScopes =
                     {
                         IdentityServerConstants.StandardScopes.OpenId,
                         IdentityServerConstants.StandardScopes.Profile,
@@ -87,14 +87,14 @@ namespace QuickstartIdentityServer
                 // JavaScript Client
                 new Client
                 {
-                    ClientId = "js",
-                    ClientName = "JavaScript Client",
+                    ClientId = "angularclient",
+                    ClientName = "angularclient",
                     AllowedGrantTypes = GrantTypes.Implicit,
                     AllowAccessTokensViaBrowser = true,
 
-                    RedirectUris = { "http://localhost:5003/callback.html" },
-                    PostLogoutRedirectUris = { "http://localhost:5003/index.html" },
-                    AllowedCorsOrigins = { "http://localhost:5003" },
+                    RedirectUris = { "http://localhost:4200" },
+                    PostLogoutRedirectUris = { "http://localhost:4200/Unauthorized" },
+                    AllowedCorsOrigins = { "http://localhost:4200" },
 
                     AllowedScopes =
                     {
@@ -104,11 +104,11 @@ namespace QuickstartIdentityServer
                     },
                 }
             };
-        }
+    }
 
-        public static List<TestUser> GetUsers()
-        {
-            return new List<TestUser>
+    public static List<TestUser> GetUsers()
+    {
+      return new List<TestUser>
             {
                 new TestUser
                 {
@@ -135,6 +135,6 @@ namespace QuickstartIdentityServer
                     }
                 }
             };
-        }
     }
+  }
 }

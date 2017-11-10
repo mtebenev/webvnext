@@ -29,7 +29,9 @@ export class AppModule {
   private configureAuthentication(): void {
 
     let openIDImplicitFlowConfiguration = new OpenIDImplicitFlowConfiguration();
+
     openIDImplicitFlowConfiguration.stsServer = 'http://localhost:59613';
+    // openIDImplicitFlowConfiguration.stsServer = 'http://localhost:63160';
     openIDImplicitFlowConfiguration.redirect_url = 'http://localhost:4200';
     openIDImplicitFlowConfiguration.client_id = 'angularclient';
     openIDImplicitFlowConfiguration.response_type = 'id_token token';
@@ -46,6 +48,7 @@ export class AppModule {
     openIDImplicitFlowConfiguration.log_console_debug_active = false;
     openIDImplicitFlowConfiguration.max_id_token_iat_offset_allowed_in_seconds = 10;
     openIDImplicitFlowConfiguration.override_well_known_configuration = false;
+    // openIDImplicitFlowConfiguration.override_well_known_configuration_url = 'http://localhost:63160/wellknownconfiguration.json';
     openIDImplicitFlowConfiguration.override_well_known_configuration_url = 'http://localhost:59613/wellknownconfiguration.json';
     // openIDImplicitFlowConfiguration.storage = localStorage;
 

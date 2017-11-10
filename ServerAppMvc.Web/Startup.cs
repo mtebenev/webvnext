@@ -1,11 +1,13 @@
 using System.Threading.Tasks;
 using AutoMapper;
+using IdentityServer4;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.IdentityModel.Tokens;
 using Mt.WebVNext.AppEngine.AutoMapperConfig;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel;
@@ -37,13 +39,27 @@ namespace Mt.WebVNext.ServerAppMvc.Web
         .AddInMemoryIdentityResources(IdentityServerConfig.GetIdentityResources())
         .AddTestUsers(IdentityServerConfig.GetUsers());
 
-      services.AddAuthentication("Bearer")
-        .AddIdentityServerAuthentication(options =>
+      services.AddAuthentication()
+        .AddGoogle("Google", options =>
         {
-          options.Authority = "http://localhost:59613";
-          options.RequireHttpsMetadata = false;
+          options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
 
-          options.ApiName = "api1";
+          options.ClientId = "434483408261-55tc8n0cs4ff1fe21ea8df2o443v2iuc.apps.googleusercontent.com";
+          options.ClientSecret = "3gcoTrEDPPJ0ukn_aYYT6PWo";
+        })
+        .AddOpenIdConnect("oidc", "OpenID Connect", options =>
+        {
+          options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
+          options.SignOutScheme = IdentityServerConstants.SignoutScheme;
+
+          options.Authority = "https://demo.identityserver.io/";
+          options.ClientId = "implicit";
+
+          options.TokenValidationParameters = new TokenValidationParameters
+          {
+            NameClaimType = "name",
+            RoleClaimType = "role"
+          };
         });
 
       ConfigureContainer(services);
