@@ -10,11 +10,12 @@ import {CompanyListComponent} from './contact-manager/company-list.component';
 import {ErrorUnauthorizedComponent} from './error-unauthorized.component';
 
 import {CompanyHttpService} from './services/contact-manager/company-http.service';
+import {RouteGuardAuthOidc} from './services/route-guard-auth-oidc.service';
 
 const appRoutes: Routes = [
-  {path: '', component: CompanyListComponent},
-  {path: 'companies', component: CompanyListComponent},
-  {path: 'home', component: CompanyListComponent},
+  {path: 'companies', component: CompanyListComponent, canActivate: [RouteGuardAuthOidc]},
+  {path: 'home', component: CompanyListComponent, canActivate: [RouteGuardAuthOidc]},
+  {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'Unauthorized', component: ErrorUnauthorizedComponent}
 ];
 
@@ -31,7 +32,8 @@ const appRoutes: Routes = [
     RouterModule.forRoot(appRoutes)
   ],
   providers: [
-    CompanyHttpService
+    CompanyHttpService,
+    RouteGuardAuthOidc
   ],
   bootstrap: [AppComponent]
 })

@@ -13,25 +13,17 @@ export class AppComponent implements OnDestroy {
 
   public output: string;
 
-  constructor(private httpClient: HttpClient, public oidcSecurityService: OidcSecurityService) {
-    if (this.oidcSecurityService.moduleSetup) {
-      this.doCallbackLogicIfRequired();
-    } else {
-      this.oidcSecurityService.onModuleSetup.subscribe(() => {
-        this.doCallbackLogicIfRequired();
-      });
-    }
+  constructor(private httpClient: HttpClient) {
   }
 
   /**
    * OnDestroy
    */
   public ngOnDestroy(): void {
-    this.oidcSecurityService.onModuleSetup.unsubscribe();
   }
 
   public handleLoadContactsClick(): void {
-
+/*
     let headers = new HttpHeaders()
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json');
@@ -50,8 +42,10 @@ export class AppComponent implements OnDestroy {
         alert('error loading data!');
         this.output = JSON.stringify(error);
       });
+      */
   }
 
+  /*
   public handleLoginClick() {
     this.oidcSecurityService.authorize();
   }
@@ -59,9 +53,6 @@ export class AppComponent implements OnDestroy {
   public handleLogoutClick() {
     this.oidcSecurityService.logoff();
   }
+  */
 
-  private doCallbackLogicIfRequired() {
-    if (window.location.hash)
-      this.oidcSecurityService.authorizedCallback();
-  }
 }
