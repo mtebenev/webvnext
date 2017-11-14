@@ -4,6 +4,8 @@ import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
+import {HttpServiceBase} from '../../core/http-service-base';
+
 export interface ICompanyDto {
   name: string;
   description: string;
@@ -13,24 +15,25 @@ export interface ICompanyDto {
  * Company-related HTTP methods
  */
 @Injectable()
-export class CompanyHttpService {
+export class CompanyHttpService extends HttpServiceBase {
 
-  constructor(private httpClient: HttpClient, private oidcSecurityService: OidcSecurityService) {
-    alert('created company http server');
+  constructor(httpClient: HttpClient, oidcSecurityService: OidcSecurityService) {
+    super(oidcSecurityService, httpClient, 'http://localhost:52563/api', 'companies');
   }
 
+  /**
+   * Load companies of the current user
+   */
   public getCompanies(): Observable<ICompanyDto[]> {
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Accept', 'application/json');
+    //throw new Error('before');
 
-    const token = this.oidcSecurityService.getToken();
-    if (token !== '') {
-      const tokenValue = 'Bearer ' + token;
-      headers = headers.set('Authorization', tokenValue);
-    }
-    alert(token);
+    return this.doGet();
 
-    return this.httpClient.get<ICompanyDto[]>('http://localhost:52563/api/companies', {headers: headers});
+    /*
+    return this.doGet().map(x => {
+      //console.error('some error occurred');
+      throw new Error('error description');
+    });
+    */
   }
 }
