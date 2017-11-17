@@ -1,6 +1,6 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule, Routes} from '@angular/router';
-import {NgModule} from '@angular/core';
+import {NgModule, ErrorHandler} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 
 import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration} from 'angular-auth-oidc-client';
@@ -11,6 +11,7 @@ import {ErrorUnauthorizedComponent} from './error-unauthorized.component';
 
 import {CompanyHttpService} from './services/contact-manager/company-http.service';
 import {RouteGuardAuthOidc} from './services/route-guard-auth-oidc.service';
+import {CommonErrorHandler} from './core/common-error-handler';
 
 const appRoutes: Routes = [
   {path: 'companies', component: CompanyListComponent, canActivate: [RouteGuardAuthOidc]},
@@ -33,7 +34,11 @@ const appRoutes: Routes = [
   ],
   providers: [
     CompanyHttpService,
-    RouteGuardAuthOidc
+    RouteGuardAuthOidc,
+    {
+      provide: ErrorHandler,
+      useClass: CommonErrorHandler
+    }
   ],
   bootstrap: [AppComponent]
 })

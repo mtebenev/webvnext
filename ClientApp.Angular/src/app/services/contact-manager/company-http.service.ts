@@ -24,16 +24,8 @@ export class CompanyHttpService extends HttpServiceBase {
   /**
    * Load companies of the current user
    */
-  public getCompanies(): Observable<ICompanyDto[]> {
-    //throw new Error('before');
+  public getCompanies(): Promise<ICompanyDto[]> {
 
-    return this.doGet();
-
-    /*
-    return this.doGet().map(x => {
-      //console.error('some error occurred');
-      throw new Error('error description');
-    });
-    */
+    return this.doGet<ICompanyDto[]>().toPromise();
   }
 }
