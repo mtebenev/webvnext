@@ -30,12 +30,34 @@ namespace Mt.WebVNext.AppEngine.DataServices
       return company;
     }
 
+    public async Task UpdateCompanyAsync(CompanyDto companyDto)
+    {
+      var company = await _dbContext.Companies.FindAsync(companyDto.CompanyId);
+      company.Name = companyDto.Name;
+      company.Description = companyDto.Description;
+
+      await _dbContext.SaveChangesAsync();
+    }
+
     public async Task<IList<Company>> GetCompaniesByUserAsync(int userId)
     {
       return await _dbContext.Companies
         .Where(c => c.UserId == userId)
         .AsNoTracking()
         .ToListAsync();
+    }
+
+    public Task<Company> GetCompanyAsync(int companyId)
+    {
+      return _dbContext.Companies.FindAsync(companyId);
+    }
+
+    public async Task DeleteCompanyAsync(int companyId)
+    {
+      var company = await _dbContext.Companies.FindAsync(companyId);
+      _dbContext.Companies.Remove(company);
+
+      await _dbContext.SaveChangesAsync();
     }
   }
 }

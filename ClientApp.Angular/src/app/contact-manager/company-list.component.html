@@ -7,8 +7,14 @@ Company list goes here
 <div>
   <div *ngFor="let company of companies">
     {{company.name}}
+
+    <a [routerLink]="['/companies', company.companyId]">Edit</a>
+    <button (click)="handleDeleteCompanyClick(company.companyId)">Delete</button>
   </div>
 </div>
 <div>
   Company count: {{companyCount}}
+</div>
+<div>
+  <a [routerLink]="['/companies/new']">New Company</a>
 </div>

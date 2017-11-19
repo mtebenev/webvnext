@@ -16,8 +16,23 @@ namespace Mt.WebVNext.AppEngine.DataServices
     Task<Company> CreateCompanyAsync(int userId, CompanyDto companyDto);
 
     /// <summary>
+    /// Update an existing company
+    /// </summary>
+    Task UpdateCompanyAsync(CompanyDto companyDto);
+
+    /// <summary>
     /// Retrieves companies for specified user
     /// </summary>
     Task<IList<Company>> GetCompaniesByUserAsync(int userId);
+
+    /// <summary>
+    /// Retrieves a single company
+    /// </summary>
+    Task<Company> GetCompanyAsync(int companyId);
+
+    /// <summary>
+    /// Delete an existing company
+    /// </summary>
+    Task DeleteCompanyAsync(int companyId);
   }
 }

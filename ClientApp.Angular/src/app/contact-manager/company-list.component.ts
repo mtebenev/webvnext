@@ -31,7 +31,6 @@ export class CompanyListComponent {
     return this._companyCount;
   }
 
-
   public async handleLoadCompaniesClick(): Promise<void> {
 
     this._companyCount = -1;
@@ -40,4 +39,12 @@ export class CompanyListComponent {
     this._companies = await this.companyHttpService.getCompanies();
     this._companyCount = this._companies.length;
   }
+
+  public async handleDeleteCompanyClick(companyId: number): Promise<void> {
+
+    if (confirm('Are you sure to delete the company')) {
+      await this.companyHttpService.deleteCompany(companyId);
+    }
+  }
+
 }

@@ -2,11 +2,14 @@ import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule, ErrorHandler} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
+import {FormsModule} from '@angular/forms';
 
 import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration} from 'angular-auth-oidc-client';
 
 import {AppComponent} from './app.component';
 import {CompanyListComponent} from './contact-manager/company-list.component';
+import {CompanyNewComponent} from './contact-manager/company-new.component';
+import {CompanyEditComponent} from './contact-manager/company-edit.component';
 import {ErrorUnauthorizedComponent} from './error-unauthorized.component';
 
 import {CompanyHttpService} from './services/contact-manager/company-http.service';
@@ -15,6 +18,8 @@ import {CommonErrorHandler} from './core/common-error-handler';
 
 const appRoutes: Routes = [
   {path: 'companies', component: CompanyListComponent, canActivate: [RouteGuardAuthOidc]},
+  {path: 'companies/new', component: CompanyNewComponent, canActivate: [RouteGuardAuthOidc]},
+  {path: 'companies/:companyId', component: CompanyEditComponent, canActivate: [RouteGuardAuthOidc]},
   {path: 'home', component: CompanyListComponent, canActivate: [RouteGuardAuthOidc]},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'Unauthorized', component: ErrorUnauthorizedComponent}
@@ -24,13 +29,16 @@ const appRoutes: Routes = [
   declarations: [
     AppComponent,
     CompanyListComponent,
+    CompanyNewComponent,
+    CompanyEditComponent,
     ErrorUnauthorizedComponent
   ],
   imports: [
     BrowserModule,
     HttpClientModule,
     AuthModule.forRoot(),
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes),
+    FormsModule
   ],
   providers: [
     CompanyHttpService,

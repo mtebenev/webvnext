@@ -27,8 +27,50 @@ namespace ServerApi.Controllers
       var companies = await _companyDataService
         .GetCompaniesByUserAsync(userId);
 
-      var result = companies.Select(c => new CompanyDto {CompanyId = c.CompanyId, Name = c.Name, Description = c.Description}).ToArray();
+      var result = companies.Select(c => new CompanyDto { CompanyId = c.CompanyId, Name = c.Name, Description = c.Description }).ToArray();
       return result;
     }
+
+    [HttpGet("{companyId}")]
+    public async Task<CompanyDto> GetCompany(int companyId)
+    {
+      // TODO: use automapper
+      var userId = this.GetCurrentUserId();
+      var company = await _companyDataService
+        .GetCompanyAsync(companyId);
+
+      var result = new CompanyDto { CompanyId = company.CompanyId, Name = company.Name, Description = company.Description };
+      return result;
+    }
+
+    [HttpPost]
+    public async Task<CompanyDto> CreateCompany([FromBody] CompanyDto companyDto)
+    {
+      // TODO: use automapper
+      var userId = this.GetCurrentUserId();
+      var company = await _companyDataService.CreateCompanyAsync(userId, companyDto);
+
+      return new CompanyDto
+      {
+        CompanyId = company.CompanyId,
+        Name = company.Name,
+        Description = company.Description
+      };
+    }
+
+    [HttpPut]
+    public async Task UpdateCompany([FromBody] CompanyDto companyDto)
+    {
+      await _companyDataService.UpdateCompanyAsync(companyDto);
+    }
+
+    [HttpDelete]
+    public async Task DeleteCompany(int companyId)
+    {
+      // TODO: use automapper
+      var userId = this.GetCurrentUserId();
+      await _companyDataService.DeleteCompanyAsync(companyId);
+    }
+
   }
 }
