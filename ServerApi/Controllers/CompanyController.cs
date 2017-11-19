@@ -20,7 +20,7 @@ namespace ServerApi.Controllers
     }
 
     [HttpGet]
-    public async Task<CompanyDto[]> GetCompanies()
+    public async Task<CompanyDto[]> GetCompaniesAsync()
     {
       // TODO: use automapper
       var userId = this.GetCurrentUserId();
@@ -32,7 +32,7 @@ namespace ServerApi.Controllers
     }
 
     [HttpGet("{companyId}")]
-    public async Task<CompanyDto> GetCompany(int companyId)
+    public async Task<CompanyDto> GetCompanyAsync(int companyId)
     {
       // TODO: use automapper
       var userId = this.GetCurrentUserId();
@@ -44,7 +44,7 @@ namespace ServerApi.Controllers
     }
 
     [HttpPost]
-    public async Task<CompanyDto> CreateCompany([FromBody] CompanyDto companyDto)
+    public async Task<CompanyDto> CreateCompanyAsync([FromBody] CompanyDto companyDto)
     {
       // TODO: use automapper
       var userId = this.GetCurrentUserId();
@@ -59,7 +59,7 @@ namespace ServerApi.Controllers
     }
 
     [HttpPut]
-    public async Task UpdateCompany([FromBody] CompanyDto companyDto)
+    public async Task UpdateCompanyAsync([FromBody] CompanyDto companyDto)
     {
       await _companyDataService.UpdateCompanyAsync(companyDto);
     }

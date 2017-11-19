@@ -20,7 +20,7 @@ namespace ServerApi.Controllers
     }
 
     [HttpGet]
-    public async Task<ContactDto[]> GetContacts()
+    public async Task<ContactDto[]> GetContactsAsync()
     {
       // TODO: use automapper
       var userId = this.GetCurrentUserId();
@@ -32,7 +32,7 @@ namespace ServerApi.Controllers
     }
 
     [HttpPost]
-    public async Task<ContactDto> CreateCompany([FromBody] ContactDto contactDto)
+    public async Task<ContactDto> CreateContactAsync([FromBody] ContactDto contactDto)
     {
       // TODO: use automapper
       var userId = this.GetCurrentUserId();

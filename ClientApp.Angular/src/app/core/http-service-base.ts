@@ -26,10 +26,7 @@ export abstract class HttpServiceBase {
       headers = headers.set('Authorization', tokenValue);
     }
 
-    let url = 'http://localhost:52563/api/companies';
-    if (action)
-      url += '/' + action;
-
+    let url = this.createMethodUrl(action);
     return this.httpClient.get<TResult>(url, {params: params, headers: headers});
   }
 
@@ -48,7 +45,8 @@ export abstract class HttpServiceBase {
       headers = headers.set('Authorization', tokenValue);
     }
 
-    return this.httpClient.post<TResult>('http://localhost:52563/api/companies', payload, {headers: headers});
+    let url = this.createMethodUrl(null);
+    return this.httpClient.post<TResult>(url, payload, {headers: headers});
   }
 
   protected doPut<TPayload>(params?: {[index: string]: string}, payload?: TPayload): Observable<void> {
@@ -63,7 +61,8 @@ export abstract class HttpServiceBase {
       headers = headers.set('Authorization', tokenValue);
     }
 
-    return this.httpClient.put<void>('http://localhost:52563/api/companies', payload, {headers: headers});
+    let url = this.createMethodUrl(null);
+    return this.httpClient.put<void>(url, payload, {headers: headers});
   }
 
   /**
@@ -81,6 +80,16 @@ export abstract class HttpServiceBase {
       headers = headers.set('Authorization', tokenValue);
     }
 
-    return this.httpClient.delete<void>('http://localhost:52563/api/companies', {headers: headers, params: params});
+    let url = this.createMethodUrl(null);
+    return this.httpClient.delete<void>(url, {headers: headers, params: params});
+  }
+
+  private createMethodUrl(action: string): string {
+
+    let result = `${this.baseUrl}/${this.serviceName}`;
+    if (action)
+      result += '/' + action;
+
+    return result;
   }
 }

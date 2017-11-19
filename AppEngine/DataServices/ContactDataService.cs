@@ -36,6 +36,7 @@ namespace Mt.WebVNext.AppEngine.DataServices
     {
 
       var contact = _mapper.Map<Contact>(contactDto);
+      contact.UserId = userId;
       _dbContext.Contacts.Add(contact);
       await _dbContext.SaveChangesAsync();
 
