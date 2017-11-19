@@ -5,7 +5,6 @@ import {CompanyHttpService, ICompanyDto} from '@services/contact-manager/company
 @Component({
   templateUrl: './company-new.component.html'
 })
-
 export class CompanyNewComponent {
 
   public name: string;

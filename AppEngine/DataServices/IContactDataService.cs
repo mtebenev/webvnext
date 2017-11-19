@@ -9,7 +9,7 @@ namespace Mt.WebVNext.AppEngine.DataServices
     /// <summary>
     /// Get existing contacts for specified user
     /// </summary>
-    Task<Contact[]> GetContactsAsync(int userId);
+    Task<Contact[]> GetContactsByUserAsync(int userId);
 
     /// <summary>
     /// Get specific contact
@@ -25,6 +25,5 @@ namespace Mt.WebVNext.AppEngine.DataServices
     /// Creates a new contact for specific user
     /// </summary>
     Task UpdateContactAsync(ContactDto contactDto);
-
   }
 }

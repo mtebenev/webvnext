@@ -1,9 +1,6 @@
-import {Component, OnInit, Injectable} from '@angular/core';
+import {Component, OnInit} from '@angular/core';
 
-import 'rxjs/add/operator/catch';
-import 'rxjs/add/operator/first';
-
-import {CompanyHttpService, ICompanyDto} from '../services/contact-manager/company-http.service';
+import {CompanyHttpService, ICompanyDto} from '@services/contact-manager/company-http.service';
 
 /**
  * Displays companies of current user
@@ -11,13 +8,11 @@ import {CompanyHttpService, ICompanyDto} from '../services/contact-manager/compa
 @Component({
   templateUrl: './company-list.component.html'
 })
-export class CompanyListComponent {
+export class CompanyListComponent implements OnInit {
 
   private _companies: ICompanyDto[];
-  private _companyCount: number;
 
   constructor(private companyHttpService: CompanyHttpService) {
-    this._companyCount = -1;
   }
 
   /**
@@ -27,17 +22,8 @@ export class CompanyListComponent {
     return this._companies;
   }
 
-  public get companyCount(): number {
-    return this._companyCount;
-  }
-
-  public async handleLoadCompaniesClick(): Promise<void> {
-
-    this._companyCount = -1;
-    this._companies = [];
-
-    this._companies = await this.companyHttpService.getCompanies();
-    this._companyCount = this._companies.length;
+  public ngOnInit(): void {
+    this.loadCompanies();
   }
 
   public async handleDeleteCompanyClick(companyId: number): Promise<void> {
@@ -47,4 +33,9 @@ export class CompanyListComponent {
     }
   }
 
+  private async loadCompanies(): Promise<void> {
+
+    this._companies = [];
+    this._companies = await this.companyHttpService.getCompanies();
+  }
 }

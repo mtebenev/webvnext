@@ -1,5 +1,7 @@
+using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
+using Microsoft.EntityFrameworkCore;
 using Mt.WebVNext.DataModel;
 using Mt.WebVNext.DataModel.Dto.ContactManager;
 using Mt.WebVNext.DataModel.Entities.ContactManager;
@@ -17,9 +19,12 @@ namespace Mt.WebVNext.AppEngine.DataServices
       _mapper = mapper;
     }
 
-    public Task<Contact[]> GetContactsAsync(int userId)
+    public async Task<Contact[]> GetContactsByUserAsync(int userId)
     {
-      throw new System.NotImplementedException();
+      return await _dbContext.Contacts
+        .Where(c => c.UserId == userId)
+        .AsNoTracking()
+        .ToArrayAsync();
     }
 
     public Task<Contact> GetContactAsync(int contactId)

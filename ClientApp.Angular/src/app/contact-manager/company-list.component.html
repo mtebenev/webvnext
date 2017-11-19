@@ -1,6 +1,3 @@
-Company list goes here
-<button (click)="handleLoadCompaniesClick()">Load Companies</button>
-
 <div>
   Companies:
 </div>
@@ -11,9 +8,6 @@ Company list goes here
     <a [routerLink]="['/companies', company.companyId]">Edit</a>
     <button (click)="handleDeleteCompanyClick(company.companyId)">Delete</button>
   </div>
-</div>
-<div>
-  Company count: {{companyCount}}
 </div>
 <div>
   <a [routerLink]="['/companies/new']">New Company</a>

@@ -23,7 +23,7 @@ namespace Mt.WebVNext.AppEngine.DataServices
     /// <summary>
     /// Retrieves companies for specified user
     /// </summary>
-    Task<IList<Company>> GetCompaniesByUserAsync(int userId);
+    Task<Company[]> GetCompaniesByUserAsync(int userId);
 
     /// <summary>
     /// Retrieves a single company

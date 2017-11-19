@@ -1,0 +1,11 @@
+<div *ngIf="contact">
+  First name: <input type="text"
+               [(ngModel)]="contact.firstName">
+</div>
+<div>
+  Last name: <input type="text"
+                    [(ngModel)]="contact.lastName">
+</div>
+<div>
+  <button (click)="handleCreateClick()">Create</button>
+</div>

@@ -39,12 +39,12 @@ namespace Mt.WebVNext.AppEngine.DataServices
       await _dbContext.SaveChangesAsync();
     }
 
-    public async Task<IList<Company>> GetCompaniesByUserAsync(int userId)
+    public async Task<Company[]> GetCompaniesByUserAsync(int userId)
     {
       return await _dbContext.Companies
         .Where(c => c.UserId == userId)
         .AsNoTracking()
-        .ToListAsync();
+        .ToArrayAsync();
     }
 
     public Task<Company> GetCompanyAsync(int companyId)

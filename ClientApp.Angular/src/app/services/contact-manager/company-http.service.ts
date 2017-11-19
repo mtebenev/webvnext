@@ -4,7 +4,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
-import {HttpServiceBase} from '../../core/http-service-base';
+import {HttpServiceBase} from '@core/http-service-base';
 
 export interface ICompanyDto {
   companyId: number;

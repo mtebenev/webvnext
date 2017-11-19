@@ -10,9 +10,12 @@ import {AppComponent} from './app.component';
 import {CompanyListComponent} from './contact-manager/company-list.component';
 import {CompanyNewComponent} from './contact-manager/company-new.component';
 import {CompanyEditComponent} from './contact-manager/company-edit.component';
+import {ContactListComponent} from './contact-manager/contact-list.component';
+import {ContactNewComponent} from './contact-manager/contact-new.component';
 import {ErrorUnauthorizedComponent} from './error-unauthorized.component';
 
-import {CompanyHttpService} from './services/contact-manager/company-http.service';
+import {CompanyHttpService} from '@services/contact-manager/company-http.service';
+import {ContactHttpService} from '@services/contact-manager/contact-http.service';
 import {RouteGuardAuthOidc} from './services/route-guard-auth-oidc.service';
 import {CommonErrorHandler} from './core/common-error-handler';
 
@@ -20,6 +23,8 @@ const appRoutes: Routes = [
   {path: 'companies', component: CompanyListComponent, canActivate: [RouteGuardAuthOidc]},
   {path: 'companies/new', component: CompanyNewComponent, canActivate: [RouteGuardAuthOidc]},
   {path: 'companies/:companyId', component: CompanyEditComponent, canActivate: [RouteGuardAuthOidc]},
+  {path: 'contacts', component: ContactListComponent, canActivate: [RouteGuardAuthOidc]},
+  {path: 'contacts/new', component: ContactNewComponent, canActivate: [RouteGuardAuthOidc]},
   {path: 'home', component: CompanyListComponent, canActivate: [RouteGuardAuthOidc]},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'Unauthorized', component: ErrorUnauthorizedComponent}
@@ -31,6 +36,8 @@ const appRoutes: Routes = [
     CompanyListComponent,
     CompanyNewComponent,
     CompanyEditComponent,
+    ContactListComponent,
+    ContactNewComponent,
     ErrorUnauthorizedComponent
   ],
   imports: [
@@ -42,6 +49,7 @@ const appRoutes: Routes = [
   ],
   providers: [
     CompanyHttpService,
+    ContactHttpService,
     RouteGuardAuthOidc,
     {
       provide: ErrorHandler,
