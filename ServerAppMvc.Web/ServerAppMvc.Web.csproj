@@ -6,8 +6,17 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <Folder Include="Api\" />
-    <Folder Include="WebApp\" />
+    <Compile Remove="Api\**" />
+    <Compile Remove="WebApp\**" />
+    <Content Remove="Api\**" />
+    <Content Remove="WebApp\**" />
+    <EmbeddedResource Remove="Api\**" />
+    <EmbeddedResource Remove="WebApp\**" />
+    <None Remove="Api\**" />
+    <None Remove="WebApp\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <Folder Include="wwwroot\" />
   </ItemGroup>
 

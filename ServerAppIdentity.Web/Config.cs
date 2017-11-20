@@ -63,25 +63,18 @@ namespace QuickstartIdentityServer
                 // OpenID Connect hybrid flow and client credentials client (MVC)
                 new Client
                 {
-                    ClientId = "mvc",
-                    ClientName = "MVC Client",
-                    AllowedGrantTypes = GrantTypes.HybridAndClientCredentials,
+                  ClientId = "mvc",
+                  ClientName = "MVC Client",
+                  AllowedGrantTypes = GrantTypes.Implicit,
 
-                    ClientSecrets =
-                    {
-                        new Secret("secret".Sha256())
-                    },
+                  RedirectUris = {"http://localhost:59613/signin-oidc"},
+                  PostLogoutRedirectUris = {"http://localhost:59613/signout-callback-oidc"},
 
-                    RedirectUris = { "http://localhost:5002/signin-oidc" },
-                    PostLogoutRedirectUris = { "http://localhost:5002/signout-callback-oidc" },
-
-                    AllowedScopes =
-                    {
-                        IdentityServerConstants.StandardScopes.OpenId,
-                        IdentityServerConstants.StandardScopes.Profile,
-                        "api1"
-                    },
-                    AllowOfflineAccess = true
+                  AllowedScopes =
+                  {
+                    IdentityServerConstants.StandardScopes.OpenId,
+                    IdentityServerConstants.StandardScopes.Profile
+                  }
                 },
 
                 // JavaScript Client

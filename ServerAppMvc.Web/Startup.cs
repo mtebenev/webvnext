@@ -1,11 +1,10 @@
+using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
-using IdentityServer4;
 using Microsoft.ApplicationInsights.Extensibility;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
-using Microsoft.IdentityModel.Tokens;
 using Mt.WebVNext.AppEngine.Configuration;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel;
@@ -27,37 +26,24 @@ namespace Mt.WebVNext.ServerAppMvc.Web
       TelemetryConfiguration.Active.DisableTelemetry = true;
 
       services.AddMvc();
-      services.AddCors();
 
-      services
-        .AddIdentityServer()
-        .AddDeveloperSigningCredential()
-        .AddInMemoryApiResources(IdentityServerConfig.GetApiResources())
-        .AddInMemoryClients(IdentityServerConfig.GetClients())
-        .AddInMemoryIdentityResources(IdentityServerConfig.GetIdentityResources())
-        .AddTestUsers(IdentityServerConfig.GetUsers());
+      JwtSecurityTokenHandler.DefaultInboundClaimTypeMap.Clear();
 
-      services.AddAuthentication()
-        .AddGoogle("Google", options =>
+      services.AddAuthentication(options =>
         {
-          options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-
-          options.ClientId = "434483408261-55tc8n0cs4ff1fe21ea8df2o443v2iuc.apps.googleusercontent.com";
-          options.ClientSecret = "3gcoTrEDPPJ0ukn_aYYT6PWo";
+          options.DefaultScheme = "Cookies";
+          options.DefaultChallengeScheme = "oidc";
         })
-        .AddOpenIdConnect("oidc", "OpenID Connect", options =>
+        .AddCookie("Cookies")
+        .AddOpenIdConnect("oidc", options =>
         {
-          options.SignInScheme = IdentityServerConstants.ExternalCookieAuthenticationScheme;
-          options.SignOutScheme = IdentityServerConstants.SignoutScheme;
+          options.SignInScheme = "Cookies";
 
-          options.Authority = "https://demo.identityserver.io/";
-          options.ClientId = "implicit";
+          options.Authority = "http://localhost:63161";
+          options.RequireHttpsMetadata = false;
 
-          options.TokenValidationParameters = new TokenValidationParameters
-          {
-            NameClaimType = "name",
-            RoleClaimType = "role"
-          };
+          options.ClientId = "mvc";
+          options.SaveTokens = true;
         });
 
       ConfigureContainer(services);
@@ -74,18 +60,10 @@ namespace Mt.WebVNext.ServerAppMvc.Web
         app.UseExceptionHandler("/Home/Error");
       }
 
-      app.UseCors(builder =>
-        {
-          builder
-            .WithOrigins("http://localhost:4200")
-            .AllowAnyHeader()
-            .AllowAnyMethod();
-        });
-
-      app.UseIdentityServer();
 
       app.UseDefaultFiles();
       app.UseStaticFiles();
+      app.UseAuthentication();
 
       app.UseMvc(routes =>
       {
