@@ -6,6 +6,7 @@ import {FormsModule} from '@angular/forms';
 
 import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration} from 'angular-auth-oidc-client';
 
+import {environment} from '@environments/environment';
 import {AppComponent} from './app.component';
 import {CompanyListComponent} from './contact-manager/company-list.component';
 import {CompanyNewComponent} from './contact-manager/company-new.component';
@@ -68,13 +69,12 @@ export class AppModule {
 
     let openIDImplicitFlowConfiguration = new OpenIDImplicitFlowConfiguration();
 
-    // openIDImplicitFlowConfiguration.stsServer = 'http://localhost:59613';
-    openIDImplicitFlowConfiguration.stsServer = 'http://localhost:63161';
-    openIDImplicitFlowConfiguration.redirect_url = 'http://localhost:4200';
+    openIDImplicitFlowConfiguration.stsServer = environment.identityServerConfig.serverUrl;
+    openIDImplicitFlowConfiguration.redirect_url = environment.identityServerConfig.clientBaseUrl;
     openIDImplicitFlowConfiguration.client_id = 'angularclient';
     openIDImplicitFlowConfiguration.response_type = 'id_token token';
     openIDImplicitFlowConfiguration.scope = 'openid profile api1';
-    openIDImplicitFlowConfiguration.post_logout_redirect_uri = 'http://localhost:4200/Unauthorized';
+    openIDImplicitFlowConfiguration.post_logout_redirect_uri = `${environment.identityServerConfig.clientBaseUrl}/Unauthorized`;
     openIDImplicitFlowConfiguration.start_checksession = false;
     openIDImplicitFlowConfiguration.silent_renew = true;
     openIDImplicitFlowConfiguration.silent_renew_offset_in_seconds = 0;
@@ -86,9 +86,7 @@ export class AppModule {
     openIDImplicitFlowConfiguration.log_console_debug_active = false;
     openIDImplicitFlowConfiguration.max_id_token_iat_offset_allowed_in_seconds = 10;
     openIDImplicitFlowConfiguration.override_well_known_configuration = false;
-    openIDImplicitFlowConfiguration.override_well_known_configuration_url = 'http://localhost:63161/wellknownconfiguration.json';
-    //openIDImplicitFlowConfiguration.override_well_known_configuration_url = 'http://localhost:59613/wellknownconfiguration.json';
-    // openIDImplicitFlowConfiguration.storage = localStorage;
+    openIDImplicitFlowConfiguration.override_well_known_configuration_url = `${environment.identityServerConfig.serverUrl}/wellknownconfiguration.json`;
 
     this.oidcSecurityService.setupModule(openIDImplicitFlowConfiguration);
   }

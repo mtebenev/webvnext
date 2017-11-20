@@ -1,8 +1,10 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
-using Mt.WebVNext.AppEngine.AutoMapperConfig;
+using Mt.WebVNext.AppEngine.Configuration;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel;
 
@@ -10,8 +12,23 @@ namespace Mt.WebVNext.ServerAppApi.Web
 {
   public class Startup
   {
+    public IConfiguration Configuration { get; private set; }
+
+    public Startup(IHostingEnvironment hostingEnvironment)
+    {
+      var configurationbuilder = new ConfigurationBuilder()
+        .SetBasePath(hostingEnvironment.ContentRootPath)
+        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+      Configuration = configurationbuilder.Build();
+    }
+
     public void ConfigureServices(IServiceCollection services)
     {
+      services
+        .AddOptions()
+        .Configure<AppOptions>(Configuration);
+
       services.AddMvc();
 
       services.AddAuthentication("Bearer")
@@ -51,8 +68,9 @@ namespace Mt.WebVNext.ServerAppApi.Web
     /// </summary>
     private void ConfigureContainer(IServiceCollection services)
     {
+      var appConnectionString = Configuration.GetConnectionString("application");
       // TODO: use shared configuration with common host
-      services.AddDbContext<AppDataContext>(options => options.UseSqlServer("Data Source=localhost;Initial Catalog=webvnext;Integrated Security=true;"));
+      services.AddDbContext<AppDataContext>(options => options.UseSqlServer(appConnectionString));
       services.AddScoped<IContactDataService, ContactDataService>();
       services.AddScoped<ICompanyDataService, CompanyDataService>();
 

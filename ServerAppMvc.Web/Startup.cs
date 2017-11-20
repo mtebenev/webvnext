@@ -6,7 +6,7 @@ using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
-using Mt.WebVNext.AppEngine.AutoMapperConfig;
+using Mt.WebVNext.AppEngine.Configuration;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
