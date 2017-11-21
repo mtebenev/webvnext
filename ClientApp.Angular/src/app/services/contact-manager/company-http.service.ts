@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
+import {environment} from '@environments/environment';
 import {HttpServiceBase} from '@core/http-service-base';
 
 export interface ICompanyDto {
@@ -19,7 +20,7 @@ export interface ICompanyDto {
 export class CompanyHttpService extends HttpServiceBase {
 
   constructor(httpClient: HttpClient, oidcSecurityService: OidcSecurityService) {
-    super(oidcSecurityService, httpClient, 'http://localhost:52563/api', 'companies');
+    super(oidcSecurityService, httpClient, environment.apiBaseUrl, 'companies');
   }
 
   /**

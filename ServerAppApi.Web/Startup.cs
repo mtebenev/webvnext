@@ -1,6 +1,5 @@
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Hosting;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -12,29 +11,24 @@ namespace Mt.WebVNext.ServerAppApi.Web
 {
   public class Startup
   {
-    public IConfiguration Configuration { get; private set; }
-
-    public Startup(IHostingEnvironment hostingEnvironment)
+    public Startup(IConfiguration configuration)
     {
-      var configurationbuilder = new ConfigurationBuilder()
-        .SetBasePath(hostingEnvironment.ContentRootPath)
-        .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
-
-      Configuration = configurationbuilder.Build();
+      Configuration = configuration;
     }
+
+    public IConfiguration Configuration { get; }
 
     public void ConfigureServices(IServiceCollection services)
     {
-      services
-        .AddOptions()
-        .Configure<AppOptions>(Configuration);
+      var appOptions = Configuration.Get<AppOptions>();
+
 
       services.AddMvc();
 
       services.AddAuthentication("Bearer")
         .AddIdentityServerAuthentication(options =>
         {
-          options.Authority = "http://localhost:63161";
+          options.Authority = appOptions.IdentityServerUrl;
           options.RequireHttpsMetadata = false;
 
           options.ApiName = "api1";
@@ -45,7 +39,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
         // this defines a CORS policy called "default"
         options.AddPolicy("default", policy =>
         {
-          policy.WithOrigins("http://localhost:4200")
+          policy.WithOrigins(appOptions.ApiClientUrls)
             .AllowAnyHeader()
             .AllowAnyMethod();
         });
@@ -59,7 +53,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
       app.UseCors("default");
 
       app.UseAuthentication();
-
+      app.UseStaticFiles();
       app.UseMvc();
     }
 
@@ -70,7 +64,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
     {
       var appConnectionString = Configuration.GetConnectionString("application");
       // TODO: use shared configuration with common host
-      services.AddDbContext<AppDataContext>(options => options.UseSqlServer(appConnectionString));
+      services.AddDbContext<AppDataContext>(options => options.UseInMemoryDatabase(appConnectionString));
       services.AddScoped<IContactDataService, ContactDataService>();
       services.AddScoped<ICompanyDataService, CompanyDataService>();
 

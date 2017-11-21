@@ -10,4 +10,8 @@
     <DefaultItemExcludes>node_modules/**;$(DefaultItemExcludes)</DefaultItemExcludes>
   </PropertyGroup>
 
+  <ItemGroup>
+    <PackageReference Include="NgAspNetCore.Client.Targets" Version="0.1.0-preview" />
+  </ItemGroup>
+
 </Project>

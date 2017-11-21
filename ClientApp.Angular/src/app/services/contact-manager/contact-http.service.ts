@@ -4,6 +4,7 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
+import {environment} from '@environments/environment';
 import {HttpServiceBase} from '@core/http-service-base';
 
 export interface IContactDto {
@@ -19,7 +20,7 @@ export interface IContactDto {
 export class ContactHttpService extends HttpServiceBase {
 
   constructor(httpClient: HttpClient, oidcSecurityService: OidcSecurityService) {
-    super(oidcSecurityService, httpClient, 'http://localhost:52563/api', 'contacts');
+    super(oidcSecurityService, httpClient, environment.apiBaseUrl, 'contacts');
   }
 
   /**
