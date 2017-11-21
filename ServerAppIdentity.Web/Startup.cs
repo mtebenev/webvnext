@@ -1,24 +1,36 @@
 using IdentityServer4;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.IdentityModel.Tokens;
+using Mt.WebVNext.ServerAppIdentity.Web.Configuration;
 using QuickstartIdentityServer;
 
 namespace Mt.WebVNext.ServerAppIdentity.Web
 {
   public class Startup
   {
+    public Startup(IConfiguration configuration)
+    {
+      Configuration = configuration;
+    }
+
+    public IConfiguration Configuration { get; }
+
     public void ConfigureServices(IServiceCollection services)
     {
+      var appOptions = Configuration.Get<AppOptions>();
+
       services.AddMvc();
+
 
       // configure identity server with in-memory stores, keys, clients and scopes
       services.AddIdentityServer()
         .AddDeveloperSigningCredential()
         .AddInMemoryIdentityResources(Config.GetIdentityResources())
         .AddInMemoryApiResources(Config.GetApiResources())
-        .AddInMemoryClients(Config.GetClients())
+        .AddInMemoryClients(appOptions.Clients)
         .AddTestUsers(Config.GetUsers());
 
       services.AddAuthentication()

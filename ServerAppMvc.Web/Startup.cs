@@ -9,6 +9,7 @@ using Mt.WebVNext.AppEngine.Configuration;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel;
 using IConfiguration = Microsoft.Extensions.Configuration.IConfiguration;
+using Microsoft.Extensions.Configuration;
 
 namespace Mt.WebVNext.ServerAppMvc.Web
 {
@@ -39,7 +40,7 @@ namespace Mt.WebVNext.ServerAppMvc.Web
         {
           options.SignInScheme = "Cookies";
 
-          options.Authority = "http://localhost:63161";
+          options.Authority = Configuration.Get<AppOptions>().IdentityServerUrl;
           options.RequireHttpsMetadata = false;
 
           options.ClientId = "mvc";
@@ -79,7 +80,7 @@ namespace Mt.WebVNext.ServerAppMvc.Web
     private void ConfigureContainer(IServiceCollection services)
     {
       // TODO: use shared configuration with API host
-      services.AddDbContext<AppDataContext>(options => options.UseSqlServer("Data Source=localhost;Initial Catalog=webvnext;Integrated Security=true;"));
+      services.AddDbContext<AppDataContext>(options => options.UseInMemoryDatabase("Data Source=localhost;Initial Catalog=webvnext;Integrated Security=true;"));
       services.AddScoped<IContactDataService, ContactDataService>();
       services.AddScoped<ICompanyDataService, CompanyDataService>();
 
