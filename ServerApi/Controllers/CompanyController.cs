@@ -68,7 +68,6 @@ namespace ServerApi.Controllers
     public async Task DeleteCompany(int companyId)
     {
       // TODO: use automapper
-      var userId = this.GetCurrentUserId();
       await _companyDataService.DeleteCompanyAsync(companyId);
     }
 

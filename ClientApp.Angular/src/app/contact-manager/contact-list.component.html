@@ -4,6 +4,9 @@
 <div>
   <div *ngFor="let contact of contacts">
     {{contact.firstName}} {{contact.lastName}}
+
+    <a [routerLink]="['/contacts', contact.contactId]">Edit</a>
+    <button (click)="handleDeleteContactClick(contact.contactId)">Delete</button>
   </div>
 </div>
 <div>

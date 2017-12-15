@@ -1,26 +1,39 @@
 import {Component, OnInit} from '@angular/core';
+import {FormGroup} from '@angular/forms';
 
 import {CompanyHttpService, ICompanyDto} from '@services/contact-manager/company-http.service';
+import {AppNavigationService} from '@services/app-navigation.service';
 
 @Component({
   templateUrl: './company-new.component.html'
 })
 export class CompanyNewComponent {
 
-  public name: string;
-  public description: string;
+  private _company: ICompanyDto;
 
-  constructor(private companyHttpService: CompanyHttpService) {
+  constructor(private companyHttpService: CompanyHttpService, private appNavigationService: AppNavigationService) {
+    this._company = {
+      companyId: 0,
+      name: null,
+      description: null
+    };
   }
 
-  public async handleCreateClick(): Promise<void> {
+  /**
+   * Bound company
+   */
+  public get company(): ICompanyDto {
+    return this._company;
+  }
 
-    let companyDto: ICompanyDto = {
-      companyId: 0,
-      name: this.name,
-      description: this.description
-    };
+  /**
+   * Invoked when user submits the form
+   */
+  public async handleFormSubmit(form: FormGroup): Promise<void> {
 
-    await this.companyHttpService.createCompany(companyDto);
+    if (form.valid) {
+      await this.companyHttpService.createCompany(this._company);
+      this.appNavigationService.goToCompanyList();
+    }
   }
 }

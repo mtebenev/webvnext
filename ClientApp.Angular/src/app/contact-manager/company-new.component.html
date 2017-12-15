@@ -1,11 +1,23 @@
-<div>
-    Name: <input type="text"
-                 [(ngModel)]="name">
-</div>
-<div>
-    Description: <input type="text"
-                        [(ngModel)]="description">
-</div>
-<div>
-  <button (click)="handleCreateClick()">Create</button>
-</div>
+<form (ngSubmit)="handleFormSubmit(form)"
+      #form="ngForm">
+  <div>
+    <mat-form-field>
+      <input matInput
+            name="name"
+            placeholder="Name"
+            [(ngModel)]="company.name"
+            required>
+    </mat-form-field>
+  </div>
+  <div>
+    <mat-form-field>
+      <input matInput
+            name="description"
+            placeholder="Description"
+            [(ngModel)]="company.description">
+    </mat-form-field>
+  </div>
+  <div>
+    <button mat-button>Create</button>
+  </div>
+</form>

@@ -26,6 +26,13 @@ export class ContactListComponent implements OnInit {
     this.loadContacts();
   }
 
+  public async handleDeleteContactClick(contactId: number): Promise<void> {
+
+    if (confirm('Are you sure to delete the contact?')) {
+      await this.contactHttpService.deleteContact(contactId);
+    }
+  }
+
   private async loadContacts(): Promise<void> {
 
     this._contacts = [];

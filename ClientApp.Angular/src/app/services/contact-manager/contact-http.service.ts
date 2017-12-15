@@ -32,9 +32,33 @@ export class ContactHttpService extends HttpServiceBase {
   }
 
   /**
+   * Load specific contact of the current user
+   */
+  public getContact(contactId: number): Promise<IContactDto> {
+
+    return this.doGet<IContactDto>(contactId.toString(), {contactId: contactId.toString()}).toPromise();
+  }
+
+  /**
    * Create a new contact for the current user
    */
   public createContact(contactDto: IContactDto): Promise<{}> {
     return this.doPost(contactDto).toPromise();
+  }
+
+  /**
+   * Updates an existing contact
+   */
+  public updateContact(contactDto: IContactDto): Promise<void> {
+    return this.doPut({contactId: contactDto.contactId.toString()}, contactDto).toPromise();
+  }
+
+  /**
+   * Delete contact of the current user
+   */
+  public deleteContact(contactId: number): Promise<void> {
+
+    let params = new HttpParams().set('contactId', contactId.toString());
+    return this.doDelete(params).toPromise();
   }
 }

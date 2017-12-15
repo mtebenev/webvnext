@@ -29,7 +29,7 @@ namespace Mt.WebVNext.AppEngine.DataServices
 
     public Task<Contact> GetContactAsync(int contactId)
     {
-      throw new System.NotImplementedException();
+      return _dbContext.Contacts.FindAsync(contactId);
     }
 
     public async Task<Contact> CreateContactAsync(int userId, ContactDto contactDto)
@@ -43,9 +43,21 @@ namespace Mt.WebVNext.AppEngine.DataServices
       return contact;
     }
 
-    public Task UpdateContactAsync(ContactDto contactDto)
+    public async Task UpdateContactAsync(ContactDto contactDto)
     {
-      throw new System.NotImplementedException();
+      var contact = await _dbContext.Contacts.FindAsync(contactDto.ContactId);
+      contact.FirstName = contactDto.FirstName;
+      contact.LastName = contactDto.LastName;
+
+      await _dbContext.SaveChangesAsync();
+    }
+
+    public async Task DeleteContactAsync(int contactId)
+    {
+      var contact = await _dbContext.Contacts.FindAsync(contactId);
+      _dbContext.Contacts.Remove(contact);
+
+      await _dbContext.SaveChangesAsync();
     }
   }
 }

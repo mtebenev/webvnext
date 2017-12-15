@@ -3,8 +3,12 @@ import {RouterModule, Routes} from '@angular/router';
 import {NgModule, ErrorHandler} from '@angular/core';
 import {HttpClientModule} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+
+import {MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule} from '@angular/material';
 
 import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration} from 'angular-auth-oidc-client';
+import {AppNavigationService} from '@services/app-navigation.service';
 
 import {environment} from '@environments/environment';
 import {AppComponent} from './app.component';
@@ -13,6 +17,8 @@ import {CompanyNewComponent} from './contact-manager/company-new.component';
 import {CompanyEditComponent} from './contact-manager/company-edit.component';
 import {ContactListComponent} from './contact-manager/contact-list.component';
 import {ContactNewComponent} from './contact-manager/contact-new.component';
+import {ContactEditComponent} from './contact-manager/contact-edit.component';
+import {AdminComponent} from './admin/admin.component';
 import {ErrorUnauthorizedComponent} from './error-unauthorized.component';
 
 import {CompanyHttpService} from '@services/contact-manager/company-http.service';
@@ -26,7 +32,9 @@ const appRoutes: Routes = [
   {path: 'companies/:companyId', component: CompanyEditComponent, canActivate: [RouteGuardAuthOidc]},
   {path: 'contacts', component: ContactListComponent, canActivate: [RouteGuardAuthOidc]},
   {path: 'contacts/new', component: ContactNewComponent, canActivate: [RouteGuardAuthOidc]},
+  {path: 'contacts/:contactId', component: ContactEditComponent, canActivate: [RouteGuardAuthOidc]},
   {path: 'home', component: CompanyListComponent, canActivate: [RouteGuardAuthOidc]},
+  {path: 'admin', component: AdminComponent, canActivate: [RouteGuardAuthOidc]},
   {path: '', redirectTo: '/home', pathMatch: 'full'},
   {path: 'Unauthorized', component: ErrorUnauthorizedComponent}
 ];
@@ -39,16 +47,24 @@ const appRoutes: Routes = [
     CompanyEditComponent,
     ContactListComponent,
     ContactNewComponent,
+    ContactEditComponent,
+    AdminComponent,
     ErrorUnauthorizedComponent
   ],
   imports: [
     BrowserModule,
+    BrowserAnimationsModule,
     HttpClientModule,
     AuthModule.forRoot(),
     RouterModule.forRoot(appRoutes),
-    FormsModule
+    FormsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatToolbarModule
   ],
   providers: [
+    AppNavigationService,
     CompanyHttpService,
     ContactHttpService,
     RouteGuardAuthOidc,

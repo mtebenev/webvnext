@@ -31,6 +31,18 @@ namespace ServerApi.Controllers
       return result;
     }
 
+    [HttpGet("{contactId}")]
+    public async Task<ContactDto> GetContactAsync(int contactId)
+    {
+      // TODO: use automapper
+      var userId = this.GetCurrentUserId();
+      var contact = await _contactDataService
+        .GetContactAsync(contactId);
+
+      var result = new ContactDto {ContactId = contact.ContactId, FirstName = contact.FirstName, LastName = contact.LastName};
+      return result;
+    }
+
     [HttpPost]
     public async Task<ContactDto> CreateContactAsync([FromBody] ContactDto contactDto)
     {
@@ -44,6 +56,19 @@ namespace ServerApi.Controllers
         FirstName = contact.FirstName,
         LastName = contact.LastName
       };
+    }
+
+    [HttpPut]
+    public async Task UpdateContactAsync([FromBody] ContactDto contactDto)
+    {
+      await _contactDataService.UpdateContactAsync(contactDto);
+    }
+
+    [HttpDelete]
+    public async Task DeleteContactAsync(int contactId)
+    {
+      // TODO: use automapper
+      await _contactDataService.DeleteContactAsync(contactId);
     }
   }
 }
