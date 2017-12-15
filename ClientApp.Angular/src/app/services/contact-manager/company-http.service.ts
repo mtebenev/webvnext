@@ -36,7 +36,7 @@ export class CompanyHttpService extends HttpServiceBase {
    */
   public getCompany(companyId: number): Promise<ICompanyDto> {
 
-    return this.doGet<ICompanyDto>(companyId.toString(), {companyId: companyId.toString()}).toPromise();
+    return this.doGet<ICompanyDto>(companyId.toString()).toPromise();
   }
 
   /**

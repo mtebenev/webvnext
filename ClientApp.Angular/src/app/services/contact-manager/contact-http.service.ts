@@ -36,7 +36,7 @@ export class ContactHttpService extends HttpServiceBase {
    */
   public getContact(contactId: number): Promise<IContactDto> {
 
-    return this.doGet<IContactDto>(contactId.toString(), {contactId: contactId.toString()}).toPromise();
+    return this.doGet<IContactDto>(contactId.toString()).toPromise();
   }
 
   /**
