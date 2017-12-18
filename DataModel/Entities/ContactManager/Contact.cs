@@ -19,5 +19,8 @@ namespace Mt.WebVNext.DataModel.Entities.ContactManager
 
 		public string Email { get; set; }
 		public string Phone { get; set; }
+
+    public int CompanyId { get; set; }
+    public Company Company { get; set; }
 	}
 }

@@ -64,7 +64,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
     {
       var appConnectionString = Configuration.GetConnectionString("application");
       // TODO: use shared configuration with common host
-      services.AddDbContext<AppDataContext>(options => options.UseInMemoryDatabase(appConnectionString));
+      services.AddDbContext<AppDataContext>(options => options.UseSqlServer(appConnectionString));
       services.AddScoped<IContactDataService, ContactDataService>();
       services.AddScoped<ICompanyDataService, CompanyDataService>();
 

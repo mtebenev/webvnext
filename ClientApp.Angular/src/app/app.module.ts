@@ -1,13 +1,16 @@
 import {BrowserModule} from '@angular/platform-browser';
 import {RouterModule, Routes} from '@angular/router';
 import {NgModule, ErrorHandler} from '@angular/core';
-import {HttpClientModule} from '@angular/common/http';
+import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule} from '@angular/material';
+import {MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule} from '@angular/material';
 
 import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration} from 'angular-auth-oidc-client';
+import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
+import {TranslateHttpLoader} from '@ngx-translate/http-loader';
+
 import {AppNavigationService} from '@services/app-navigation.service';
 
 import {environment} from '@environments/environment';
@@ -61,7 +64,15 @@ const appRoutes: Routes = [
     MatButtonModule,
     MatFormFieldModule,
     MatInputModule,
-    MatToolbarModule
+    MatToolbarModule,
+    MatSelectModule,
+    TranslateModule.forRoot({
+      loader: {
+        provide: TranslateLoader,
+        useFactory: createTranslationLoader,
+        deps: [HttpClient]
+      }
+    })
   ],
   providers: [
     AppNavigationService,
@@ -106,4 +117,8 @@ export class AppModule {
 
     this.oidcSecurityService.setupModule(openIDImplicitFlowConfiguration);
   }
+}
+
+export function createTranslationLoader(httpClient: HttpClient): TranslateHttpLoader {
+  return new TranslateHttpLoader(httpClient);
 }

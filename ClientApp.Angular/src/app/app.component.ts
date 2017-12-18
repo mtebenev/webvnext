@@ -1,6 +1,7 @@
 import {Component, OnInit, OnDestroy} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 
+import {TranslateService} from '@ngx-translate/core';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 @Component({
@@ -13,7 +14,10 @@ export class AppComponent implements OnDestroy {
 
   public output: string;
 
-  constructor(private httpClient: HttpClient) {
+  constructor(private httpClient: HttpClient, private translateService: TranslateService) {
+
+    translateService.setDefaultLang('en');
+    translateService.use('en');
   }
 
   /**

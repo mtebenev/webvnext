@@ -3,6 +3,7 @@ import {FormGroup} from '@angular/forms';
 
 import {ContactHttpService, IContactDto} from '@services/contact-manager/contact-http.service';
 import {AppNavigationService} from '@services/app-navigation.service';
+import {ICompanyDto, CompanyHttpService} from '@services/contact-manager/company-http.service';
 
 @Component({
   templateUrl: './contact-new.component.html'
@@ -10,14 +11,18 @@ import {AppNavigationService} from '@services/app-navigation.service';
 export class ContactNewComponent {
 
   private _contact: IContactDto;
+  private _companies: ICompanyDto[];
 
-  constructor(private contactHttpService: ContactHttpService, private appNavigationService: AppNavigationService) {
+  constructor(private contactHttpService: ContactHttpService, private companyHttpService: CompanyHttpService, private appNavigationService: AppNavigationService) {
 
     this._contact = {
       contactId: 0,
       firstName: null,
-      lastName: null
+      lastName: null,
+      companyId: null
     };
+
+    this.loadCompanies();
   }
 
   /**
@@ -25,6 +30,13 @@ export class ContactNewComponent {
    */
   public get contact(): IContactDto {
     return this._contact;
+  }
+
+  /**
+   * Bound companies
+   */
+  public get companies(): ICompanyDto[] {
+    return this._companies;
   }
 
   /**
@@ -36,5 +48,11 @@ export class ContactNewComponent {
       await this.contactHttpService.createContact(this._contact);
       this.appNavigationService.goToContactList();
     }
+  }
+
+  private async loadCompanies(): Promise<void> {
+
+    this._companies = await this.companyHttpService.getCompanies();
+
   }
 }
