@@ -1,14 +1,17 @@
 <div>
-  {{ 'CONTACT_MANAGER.CONTACT_LIST.TITLE' | translate }}
+  {{ 'CONTACT_MANAGER.COMPANY_LIST.VIEW_TITLE' | translate }}
 </div>
 <div>
-  <div *ngFor="let company of companies">
-    {{company.name}}
+  <a [routerLink]="['/companies/new']">{{ 'CONTACT_MANAGER.COMPANY_LIST.CREATE_COMPANY' | translate }}</a>
+</div>
+<div>
+  <mat-list>
+    <mat-list-item *ngFor="let company of companies">
+      {{company.name}}
 
-    <a [routerLink]="['/companies', company.companyId]">Edit</a>
-    <button (click)="handleDeleteCompanyClick(company.companyId)">Delete</button>
-  </div>
-</div>
-<div>
-  <a [routerLink]="['/companies/new']">New Company</a>
+      <a [routerLink]="['/companies', company.companyId]">{{ 'COMMON.BUTTONS.EDIT' | translate }}</a>
+      <button mat-button
+              (click)="handleDeleteCompanyClick(company.companyId)">{{ 'COMMON.BUTTONS.DELETE' | translate }}</button>
+    </mat-list-item>
+  </mat-list>
 </div>

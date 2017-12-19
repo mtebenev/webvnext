@@ -1,14 +1,17 @@
 <div>
-  Contacts:
+  {{ 'CONTACT_MANAGER.CONTACT_LIST.VIEW_TITLE' | translate }}
 </div>
 <div>
-  <div *ngFor="let contact of contacts">
-    {{contact.firstName}} {{contact.lastName}}
+  <a [routerLink]="['/contacts/new']">{{ 'CONTACT_MANAGER.CONTACT_LIST.CREATE_CONTACT' | translate }}</a>
+</div>
+<div>
+  <mat-list>
+    <mat-list-item *ngFor="let contact of contacts">
+      {{contact.firstName}} {{contact.lastName}}
 
-    <a [routerLink]="['/contacts', contact.contactId]">Edit</a>
-    <button (click)="handleDeleteContactClick(contact.contactId)">Delete</button>
-  </div>
-</div>
-<div>
-  <a [routerLink]="['/contacts/new']">New Contact</a>
+      <a [routerLink]="['/contacts', contact.contactId]">{{ 'COMMON.BUTTONS.EDIT' | translate }}</a>
+      <button mat-button
+              (click)="handleDeleteContactClick(contact.contactId)">{{ 'COMMON.BUTTONS.DELETE' | translate }}</button>
+    </mat-list-item>
+  </mat-list>
 </div>

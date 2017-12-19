@@ -1,11 +1,7 @@
 import {BrowserModule} from '@angular/platform-browser';
-import {RouterModule, Routes} from '@angular/router';
 import {NgModule, ErrorHandler} from '@angular/core';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
-import {FormsModule} from '@angular/forms';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
-
-import {MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule} from '@angular/material';
 
 import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration} from 'angular-auth-oidc-client';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
@@ -15,13 +11,6 @@ import {AppNavigationService} from '@services/app-navigation.service';
 
 import {environment} from '@environments/environment';
 import {AppComponent} from './app.component';
-import {CompanyListComponent} from './contact-manager/company-list.component';
-import {CompanyNewComponent} from './contact-manager/company-new.component';
-import {CompanyEditComponent} from './contact-manager/company-edit.component';
-import {ContactListComponent} from './contact-manager/contact-list.component';
-import {ContactNewComponent} from './contact-manager/contact-new.component';
-import {ContactEditComponent} from './contact-manager/contact-edit.component';
-import {AdminComponent} from './admin/admin.component';
 import {ErrorUnauthorizedComponent} from './error-unauthorized.component';
 
 import {CompanyHttpService} from '@services/contact-manager/company-http.service';
@@ -29,43 +18,23 @@ import {ContactHttpService} from '@services/contact-manager/contact-http.service
 import {RouteGuardAuthOidc} from './services/route-guard-auth-oidc.service';
 import {CommonErrorHandler} from './core/common-error-handler';
 
-const appRoutes: Routes = [
-  {path: 'companies', component: CompanyListComponent, canActivate: [RouteGuardAuthOidc]},
-  {path: 'companies/new', component: CompanyNewComponent, canActivate: [RouteGuardAuthOidc]},
-  {path: 'companies/:companyId', component: CompanyEditComponent, canActivate: [RouteGuardAuthOidc]},
-  {path: 'contacts', component: ContactListComponent, canActivate: [RouteGuardAuthOidc]},
-  {path: 'contacts/new', component: ContactNewComponent, canActivate: [RouteGuardAuthOidc]},
-  {path: 'contacts/:contactId', component: ContactEditComponent, canActivate: [RouteGuardAuthOidc]},
-  {path: 'home', component: CompanyListComponent, canActivate: [RouteGuardAuthOidc]},
-  {path: 'admin', component: AdminComponent, canActivate: [RouteGuardAuthOidc]},
-  {path: '', redirectTo: '/home', pathMatch: 'full'},
-  {path: 'Unauthorized', component: ErrorUnauthorizedComponent}
-];
+import {SharedModule} from './shared/shared.module';
+import {AppRoutingModule} from './app-routing.module';
+import {ContactManagerModule} from './contact-manager/contact-manager.module';
 
 @NgModule({
   declarations: [
     AppComponent,
-    CompanyListComponent,
-    CompanyNewComponent,
-    CompanyEditComponent,
-    ContactListComponent,
-    ContactNewComponent,
-    ContactEditComponent,
-    AdminComponent,
     ErrorUnauthorizedComponent
   ],
   imports: [
+    SharedModule,
+    ContactManagerModule, // Eager-loaded initial module
+    AppRoutingModule,
     BrowserModule,
     BrowserAnimationsModule,
     HttpClientModule,
     AuthModule.forRoot(),
-    RouterModule.forRoot(appRoutes),
-    FormsModule,
-    MatButtonModule,
-    MatFormFieldModule,
-    MatInputModule,
-    MatToolbarModule,
-    MatSelectModule,
     TranslateModule.forRoot({
       loader: {
         provide: TranslateLoader,
@@ -105,7 +74,7 @@ export class AppModule {
     openIDImplicitFlowConfiguration.start_checksession = false;
     openIDImplicitFlowConfiguration.silent_renew = true;
     openIDImplicitFlowConfiguration.silent_renew_offset_in_seconds = 0;
-    openIDImplicitFlowConfiguration.post_login_route = '/home';
+    openIDImplicitFlowConfiguration.post_login_route = '/';
     openIDImplicitFlowConfiguration.forbidden_route = '/Forbidden';
     openIDImplicitFlowConfiguration.unauthorized_route = '/Unauthorized';
     openIDImplicitFlowConfiguration.auto_userinfo = true;

@@ -1,12 +1,19 @@
 {
   "COMMON": {
     "BUTTONS": {
-      "CREATE": "Create"
+      "CREATE": "Create",
+      "EDIT": "Edit",
+      "DELETE": "Delete"
     }
   },
   "CONTACT_MANAGER": {
+    "COMPANY_LIST": {
+      "VIEW_TITLE": "Companies",
+      "CREATE_COMPANY": "New Company"
+    },
     "CONTACT_LIST": {
-      "TITLE": "Company List"
+      "VIEW_TITLE": "Contacts",
+      "CREATE_CONTACT": "New Contact"
     },
     "CONTACT_NEW": {
       "VIEW_TITLE": "New Company",
