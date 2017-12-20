@@ -22,7 +22,6 @@ namespace Mt.WebVNext.ServerAppApi.Web
     {
       var appOptions = Configuration.Get<AppOptions>();
 
-
       services.AddMvc();
 
       services.AddAuthentication("Bearer")

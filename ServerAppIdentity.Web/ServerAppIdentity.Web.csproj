@@ -3,6 +3,7 @@
   <PropertyGroup>
     <TargetFramework>netcoreapp2.0</TargetFramework>
     <RootNamespace>Mt.WebVNext.ServerAppIdentity.Web</RootNamespace>
+    <UserSecretsId>b1a00633-6b7a-4b00-adee-2d015a19bd9a</UserSecretsId>
   </PropertyGroup>
 
   <ItemGroup>

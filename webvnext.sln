@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.27004.2006
+VisualStudioVersion = 15.0.27130.2010
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "DataModel", "DataModel\DataModel.csproj", "{76D0965E-20DB-4833-AED4-94ED25EDEF4A}"
 EndProject
@@ -17,7 +17,13 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerApi", "ServerApi\Serv
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerAppIdentity.Web", "ServerAppIdentity.Web\ServerAppIdentity.Web.csproj", "{7722BF89-750E-4508-BF18-70B466BF4651}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ServerAppApi.Web", "ServerAppApi.Web\ServerAppApi.Web.csproj", "{2E54E121-8B92-4812-9965-8A75B73AB12E}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ServerAppApi.Web", "ServerAppApi.Web\ServerAppApi.Web.csproj", "{2E54E121-8B92-4812-9965-8A75B73AB12E}"
+EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "config", "config", "{D628E7BE-B2ED-4A6B-8C1B-25E913B464D8}"
+	ProjectSection(SolutionItems) = preProject
+		config\appsettings.Development.json = config\appsettings.Development.json
+		config\appsettings.json = config\appsettings.json
+	EndProjectSection
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
