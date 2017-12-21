@@ -1,17 +1,25 @@
 import {NgModule} from '@angular/core';
 
+import {FileUploadModule} from 'ng2-file-upload';
+
 import {SharedModule} from '../shared/shared.module';
 import {AdminRoutingModule} from './admin-routing.module';
 
-import {AdminComponent} from './admin.component';
+import {AdminComponent, DataUploadComponent} from './index';
+
+const moduleComponents = [
+  AdminComponent,
+  DataUploadComponent
+];
 
 @NgModule({
   declarations: [
-    AdminComponent,
+    ...moduleComponents,
   ],
   imports: [
     SharedModule,
-    AdminRoutingModule
+    AdminRoutingModule,
+    FileUploadModule
   ]
 })
 export class AdminModule {

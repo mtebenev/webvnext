@@ -21,5 +21,10 @@
       "FIRST_NAME_PLACEHOLDER": "First name",
       "LAST_NAME_PLACEHOLDER": "Last name"
     }
+  },
+  "ADMIN": {
+    "DATA_UPLOAD": {
+      "LABEL_UPLOAD_CONTACTS": "Upload contacts"
+    }
   }
 }
