@@ -1,9 +1,10 @@
-using System.Linq;
 using System.Threading.Tasks;
+using AutoMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel.Dto.ContactManager;
+using Mt.WebVNext.DataModel.Entities.ContactManager;
 using ServerApi.Core;
 
 namespace ServerApi.Controllers
@@ -13,21 +14,22 @@ namespace ServerApi.Controllers
   public class ContactsApiController : Controller
   {
     private readonly IContactDataService _contactDataService;
+    private readonly IMapper _mapper;
 
-    public ContactsApiController(IContactDataService contactDataService)
+    public ContactsApiController(IContactDataService contactDataService, IMapper mapper)
     {
       _contactDataService = contactDataService;
+      _mapper = mapper;
     }
 
     [HttpGet]
-    public async Task<ContactDto[]> GetContactsAsync()
+    public async Task<PagedResult<ContactDto>> GetContactsAsync(ContactQueryParamsDto queryParams)
     {
-      // TODO: use automapper
       var userId = this.GetCurrentUserId();
       var contacts = await _contactDataService
-        .GetContactsByUserAsync(userId);
+        .GetContactsByUserAsync(userId, queryParams);
 
-      var result = contacts.Select(c => new ContactDto { ContactId = c.ContactId, FirstName = c.FirstName, LastName = c.LastName }).ToArray();
+      var result = contacts.Project<Contact, ContactDto>(_mapper.ConfigurationProvider);
       return result;
     }
 

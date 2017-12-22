@@ -6,12 +6,18 @@ import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 import {environment} from '@environments/environment';
 import {HttpServiceBase} from '@core/http-service-base';
+import {IPagedResultDto} from '@core/ipaged-result-dto';
 
 export interface IContactDto {
   contactId: number;
   firstName: string;
   lastName: string;
   companyId: number;
+}
+
+export interface IContactQueryParamsDto {
+  pageNumber: number;
+  pageSize: number;
 }
 
 /**
@@ -27,9 +33,15 @@ export class ContactHttpService extends HttpServiceBase {
   /**
    * Load contacts of the current user
    */
-  public getContacts(): Promise<IContactDto[]> {
+  public getContacts(queryParams: IContactQueryParamsDto): Promise<IPagedResultDto<IContactDto>> {
 
-    return this.doGet<IContactDto[]>(null).toPromise();
+    let stringifiedParams = {
+      pageNumber: queryParams.pageNumber.toString(),
+      pageSize: queryParams.pageSize.toString()
+    };
+
+    let httpParams = new HttpParams({fromObject: stringifiedParams});
+    return this.doGet<IPagedResultDto<IContactDto>>(null, stringifiedParams).toPromise();
   }
 
   /**

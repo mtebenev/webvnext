@@ -3,6 +3,14 @@ import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 import {Observable} from 'rxjs/Observable';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
+export type AngularHttpParams = HttpParams | {
+  [param: string]: string | string[];
+};
+
+export type AngularHttpHeaderes = HttpHeaders | {
+  [header: string]: string | string[];
+};
+
 /**
  * Provides common functionality for HTTP services in application
  */
@@ -14,18 +22,9 @@ export abstract class HttpServiceBase {
   /**
    * Use to perform GET request
    */
-  protected doGet<TResult>(action: string, params?: {[index: string]: string}): Observable<TResult> {
+  protected doGet<TResult>(action: string, params?: AngularHttpParams): Observable<TResult> {
 
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Accept', 'application/json');
-
-    const token = this.oidcSecurityService.getToken();
-    if (token !== '') {
-      const tokenValue = 'Bearer ' + token;
-      headers = headers.set('Authorization', tokenValue);
-    }
-
+    let headers = this.prepareRequestHeaders();
     let url = this.createMethodUrl(action);
     return this.httpClient.get<TResult>(url, {params: params, headers: headers});
   }
@@ -35,32 +34,14 @@ export abstract class HttpServiceBase {
    */
   protected doPost<TPayload, TResult>(payload: TPayload): Observable<TResult> {
 
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Accept', 'application/json');
-
-    const token = this.oidcSecurityService.getToken();
-    if (token !== '') {
-      const tokenValue = 'Bearer ' + token;
-      headers = headers.set('Authorization', tokenValue);
-    }
-
+    let headers = this.prepareRequestHeaders();
     let url = this.createMethodUrl(null);
     return this.httpClient.post<TResult>(url, payload, {headers: headers});
   }
 
   protected doPut<TPayload>(params?: {[index: string]: string}, payload?: TPayload): Observable<void> {
 
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Accept', 'application/json');
-
-    const token = this.oidcSecurityService.getToken();
-    if (token !== '') {
-      const tokenValue = 'Bearer ' + token;
-      headers = headers.set('Authorization', tokenValue);
-    }
-
+    let headers = this.prepareRequestHeaders();
     let url = this.createMethodUrl(null);
     return this.httpClient.put<void>(url, payload, {headers: headers});
   }
@@ -70,16 +51,7 @@ export abstract class HttpServiceBase {
    */
   protected doDelete<TPayload>(params: HttpParams): Observable<void> {
 
-    let headers = new HttpHeaders()
-      .set('Content-Type', 'application/json')
-      .set('Accept', 'application/json');
-
-    const token = this.oidcSecurityService.getToken();
-    if (token !== '') {
-      const tokenValue = 'Bearer ' + token;
-      headers = headers.set('Authorization', tokenValue);
-    }
-
+    let headers = this.prepareRequestHeaders();
     let url = this.createMethodUrl(null);
     return this.httpClient.delete<void>(url, {headers: headers, params: params});
   }
@@ -91,5 +63,22 @@ export abstract class HttpServiceBase {
       result += '/' + action;
 
     return result;
+  }
+
+  /**
+   * Prepares headers for HTTP requests. Sets authentication token.
+   */
+  private prepareRequestHeaders(): AngularHttpHeaderes {
+    let headers = new HttpHeaders()
+      .set('Content-Type', 'application/json')
+      .set('Accept', 'application/json');
+
+    const token = this.oidcSecurityService.getToken();
+    if (token !== '') {
+      const tokenValue = 'Bearer ' + token;
+      headers = headers.set('Authorization', tokenValue);
+    }
+
+    return headers;
   }
 }

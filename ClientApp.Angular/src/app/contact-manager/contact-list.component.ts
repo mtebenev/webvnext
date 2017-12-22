@@ -1,6 +1,7 @@
 import {Component, OnInit} from '@angular/core';
 
-import {ContactHttpService, IContactDto} from '@services/contact-manager/contact-http.service';
+import {ContactHttpService, IContactDto, IContactQueryParamsDto} from '@services/contact-manager/contact-http.service';
+import {IPagedResultDto} from '@core/ipaged-result-dto';
 
 /**
  * Displays contacts of current user
@@ -10,7 +11,7 @@ import {ContactHttpService, IContactDto} from '@services/contact-manager/contact
 })
 export class ContactListComponent implements OnInit {
 
-  private _contacts: IContactDto[];
+  private _contacts: IPagedResultDto<IContactDto>;
 
   constructor(private contactHttpService: ContactHttpService) {
   }
@@ -18,7 +19,7 @@ export class ContactListComponent implements OnInit {
   /**
    * Bound companies
    */
-  public get contacts(): IContactDto[] {
+  public get contacts(): IPagedResultDto<IContactDto> {
     return this._contacts;
   }
 
@@ -35,7 +36,12 @@ export class ContactListComponent implements OnInit {
 
   private async loadContacts(): Promise<void> {
 
-    this._contacts = [];
-    this._contacts = await this.contactHttpService.getContacts();
+    this._contacts = null;
+    let queryParams: IContactQueryParamsDto = {
+      pageNumber: 0,
+      pageSize: 10
+    };
+
+    this._contacts = await this.contactHttpService.getContacts(queryParams);
   }
 }

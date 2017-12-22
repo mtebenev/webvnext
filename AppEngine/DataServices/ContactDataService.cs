@@ -19,12 +19,12 @@ namespace Mt.WebVNext.AppEngine.DataServices
       _mapper = mapper;
     }
 
-    public async Task<Contact[]> GetContactsByUserAsync(int userId)
+    public async Task<PagedResult<Contact>> GetContactsByUserAsync(int userId, ContactQueryParamsDto queryParams)
     {
       return await _dbContext.Contacts
         .Where(c => c.UserId == userId)
         .AsNoTracking()
-        .ToArrayAsync();
+        .GetPagedAsync(queryParams.PageNumber, queryParams.PageSize);
     }
 
     public Task<Contact> GetContactAsync(int contactId)

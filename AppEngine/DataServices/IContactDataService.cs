@@ -9,7 +9,7 @@ namespace Mt.WebVNext.AppEngine.DataServices
     /// <summary>
     /// Get existing contacts for specified user
     /// </summary>
-    Task<Contact[]> GetContactsByUserAsync(int userId);
+    Task<PagedResult<Contact>> GetContactsByUserAsync(int userId, ContactQueryParamsDto queryParams);
 
     /// <summary>
     /// Get specific contact

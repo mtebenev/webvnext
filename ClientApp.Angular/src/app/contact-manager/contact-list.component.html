@@ -5,8 +5,8 @@
   <a [routerLink]="['/contacts/new']">{{ 'CONTACT_MANAGER.CONTACT_LIST.CREATE_CONTACT' | translate }}</a>
 </div>
 <div>
-  <mat-list>
-    <mat-list-item *ngFor="let contact of contacts">
+  <mat-list *ngIf="contacts">
+    <mat-list-item *ngFor="let contact of contacts.rows">
       {{contact.firstName}} {{contact.lastName}}
 
       <a [routerLink]="['/contacts', contact.contactId]">{{ 'COMMON.BUTTONS.EDIT' | translate }}</a>
