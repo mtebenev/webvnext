@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Mt.WebVNext.AppEngine.AppServices;
 using Mt.WebVNext.AppEngine.Configuration;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel;
@@ -66,6 +67,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
       services.AddDbContext<AppDataContext>(options => options.UseSqlServer(appConnectionString));
       services.AddScoped<IContactDataService, ContactDataService>();
       services.AddScoped<ICompanyDataService, CompanyDataService>();
+      services.AddScoped<IDataImportService, DataImportService>();
 
       // Automapper
       var autoMapperConfig = new MapperConfiguration(cfg =>

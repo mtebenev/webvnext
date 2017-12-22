@@ -3,6 +3,8 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Mt.Utils.AspNet;
+using Mt.WebVNext.AppEngine.AppServices;
+using ServerApi.Core;
 
 namespace ServerApi.Controllers
 {
@@ -11,19 +13,27 @@ namespace ServerApi.Controllers
   [Route("api/adminData")]
   public class AdminDataController : Controller
   {
-    public AdminDataController()
+    private readonly IDataImportService _dataImportService;
+
+    public AdminDataController(IDataImportService dataImportService)
     {
+      _dataImportService = dataImportService;
     }
 
     [HttpPost]
     [DisableFormValueModelBinding]
     public async Task<IActionResult> PostContactDataAsync()
     {
-      byte[] fileBytes;
       using(var memoryStream = new MemoryStream())
       {
-        var formValueProvider = await Request.StreamFile(memoryStream);
-        fileBytes = memoryStream.ToArray();
+        await Request.StreamFile(memoryStream);
+        memoryStream.Seek(0, SeekOrigin.Begin);
+
+        using(var streamReder = new StreamReader(memoryStream))
+        {
+          var userId = this.GetCurrentUserId();
+          await _dataImportService.ImportContactsAsync(streamReder, userId);
+        }
       }
 
       return Ok();
