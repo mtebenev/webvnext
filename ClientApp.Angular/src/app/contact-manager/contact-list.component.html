@@ -4,8 +4,13 @@
 <div>
   <a [routerLink]="['/contacts/new']">{{ 'CONTACT_MANAGER.CONTACT_LIST.CREATE_CONTACT' | translate }}</a>
 </div>
-<div>
-  <mat-list *ngIf="contacts">
+<div *ngIf="contacts">
+  <mat-paginator [length]="contacts.totalRowCount"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="handlePageChange($event)">
+  </mat-paginator>
+  <mat-list>
     <mat-list-item *ngFor="let contact of contacts.rows">
       {{contact.firstName}} {{contact.lastName}}
 

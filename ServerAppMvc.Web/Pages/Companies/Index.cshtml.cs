@@ -27,7 +27,7 @@ namespace Mt.WebVNext.ServerAppMvc.Web.Pages.Companies
       // TODO: use automapper
       var userId = this.GetCurrentUserId();
       var companies = await _companyDataService
-        .GetCompaniesByUserAsync(userId);
+        .GetCompaniesByUserAsync(userId, TODO);
 
       Companies = companies.Select(c => new CompanyDto {CompanyId = c.CompanyId, Name = c.Name, Description = c.Description}).ToList();
     }

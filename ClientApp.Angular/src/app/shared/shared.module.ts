@@ -4,7 +4,7 @@ import {FormsModule} from '@angular/forms';
 
 import {TranslateModule} from '@ngx-translate/core';
 
-import {MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule, MatListModule} from '@angular/material';
+import {MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule, MatListModule, MatPaginatorModule} from '@angular/material';
 
 const angularModules = [
   CommonModule,
@@ -18,6 +18,7 @@ const materialModules = [
   MatToolbarModule,
   MatSelectModule,
   MatListModule,
+  MatPaginatorModule
 ];
 
 @NgModule({

@@ -4,9 +4,14 @@
 <div>
   <a [routerLink]="['/companies/new']">{{ 'CONTACT_MANAGER.COMPANY_LIST.CREATE_COMPANY' | translate }}</a>
 </div>
-<div>
+<div *ngIf="companies">
+  <mat-paginator [length]="companies.totalRowCount"
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="handlePageChange($event)">
+  </mat-paginator>
   <mat-list>
-    <mat-list-item *ngFor="let company of companies">
+    <mat-list-item *ngFor="let company of companies.rows">
       {{company.name}}
 
       <a [routerLink]="['/companies', company.companyId]">{{ 'COMMON.BUTTONS.EDIT' | translate }}</a>

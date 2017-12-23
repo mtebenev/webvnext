@@ -6,11 +6,17 @@ import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 import {environment} from '@environments/environment';
 import {HttpServiceBase} from '@core/http-service-base';
+import {IPagedResultDto} from '@core/ipaged-result-dto';
 
 export interface ICompanyDto {
   companyId: number;
   name: string;
   description: string;
+}
+
+export interface ICompanyQueryParamsDto {
+  pageNumber: number;
+  pageSize: number;
 }
 
 /**
@@ -26,9 +32,15 @@ export class CompanyHttpService extends HttpServiceBase {
   /**
    * Load companies of the current user
    */
-  public getCompanies(): Promise<ICompanyDto[]> {
+  public getCompanies(queryParams: ICompanyQueryParamsDto): Promise<IPagedResultDto<ICompanyDto>> {
 
-    return this.doGet<ICompanyDto[]>(null).toPromise();
+    let stringifiedParams = {
+      pageNumber: queryParams.pageNumber.toString(),
+      pageSize: queryParams.pageSize.toString()
+    };
+
+    let httpParams = new HttpParams({fromObject: stringifiedParams});
+    return this.doGet<IPagedResultDto<ICompanyDto>>(null, stringifiedParams).toPromise();
   }
 
   /**

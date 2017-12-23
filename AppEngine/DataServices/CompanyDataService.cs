@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using AutoMapper;
@@ -20,6 +19,14 @@ namespace Mt.WebVNext.AppEngine.DataServices
       _mapper = mapper;
     }
 
+    public async Task<PagedResult<Company>> GetCompaniesByUserAsync(int userId, CompanyQueryParamsDto queryParams)
+    {
+      return await _dbContext.Companies
+        .Where(c => c.UserId == userId)
+        .AsNoTracking()
+        .GetPagedAsync(queryParams.PageNumber, queryParams.PageSize);
+    }
+
     public async Task<Company> CreateCompanyAsync(int userId, CompanyDto companyDto)
     {
       var company = _mapper.Map<Company>(companyDto);
@@ -37,14 +44,6 @@ namespace Mt.WebVNext.AppEngine.DataServices
       company.Description = companyDto.Description;
 
       await _dbContext.SaveChangesAsync();
-    }
-
-    public async Task<Company[]> GetCompaniesByUserAsync(int userId)
-    {
-      return await _dbContext.Companies
-        .Where(c => c.UserId == userId)
-        .AsNoTracking()
-        .ToArrayAsync();
     }
 
     public Task<Company> GetCompanyAsync(int companyId)

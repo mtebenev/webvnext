@@ -11,6 +11,11 @@ namespace Mt.WebVNext.AppEngine.DataServices
   public interface ICompanyDataService
   {
     /// <summary>
+    /// Retrieves companies for specified user
+    /// </summary>
+    Task<PagedResult<Company>> GetCompaniesByUserAsync(int userId, CompanyQueryParamsDto queryParams);
+
+    /// <summary>
     /// Create a new company
     /// </summary>
     Task<Company> CreateCompanyAsync(int userId, CompanyDto companyDto);
@@ -19,11 +24,6 @@ namespace Mt.WebVNext.AppEngine.DataServices
     /// Update an existing company
     /// </summary>
     Task UpdateCompanyAsync(CompanyDto companyDto);
-
-    /// <summary>
-    /// Retrieves companies for specified user
-    /// </summary>
-    Task<Company[]> GetCompaniesByUserAsync(int userId);
 
     /// <summary>
     /// Retrieves a single company

@@ -1,6 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 
-import {CompanyHttpService, ICompanyDto} from '@services/contact-manager/company-http.service';
+import {PageEvent} from '@angular/material';
+
+import {CompanyHttpService, ICompanyDto, ICompanyQueryParamsDto} from '@services/contact-manager/company-http.service';
+import {IPagedResultDto} from '@core/ipaged-result-dto';
 
 /**
  * Displays companies of current user
@@ -10,22 +13,39 @@ import {CompanyHttpService, ICompanyDto} from '@services/contact-manager/company
 })
 export class CompanyListComponent implements OnInit {
 
-  private _companies: ICompanyDto[];
+  private currentPage: number;
+  private _pageSize: number;
+  private _companies: IPagedResultDto<ICompanyDto>;
 
   constructor(private companyHttpService: CompanyHttpService) {
+    this.currentPage = 0;
+    this._pageSize = 10;
+  }
+
+  /**
+   * OnInit
+   */
+  public ngOnInit(): void {
+    this.loadCompanies();
   }
 
   /**
    * Bound companies
    */
-  public get companies(): ICompanyDto[] {
+  public get companies(): IPagedResultDto<ICompanyDto> {
     return this._companies;
   }
 
-  public ngOnInit(): void {
-    this.loadCompanies();
+  /**
+   * Bound page size
+   */
+  public get pageSize(): number {
+    return this._pageSize;
   }
 
+  /**
+   * Invoked when user clicks DELETE button on a company
+   */
   public async handleDeleteCompanyClick(companyId: number): Promise<void> {
 
     if (confirm('Are you sure to delete the company')) {
@@ -33,9 +53,24 @@ export class CompanyListComponent implements OnInit {
     }
   }
 
+  /**
+   * Invoked when user changes current page in pager control
+   */
+  public handlePageChange(event: PageEvent): void {
+
+    this.currentPage = event.pageIndex;
+    this._pageSize = event.pageSize;
+
+    this.loadCompanies();
+  }
+
   private async loadCompanies(): Promise<void> {
 
-    this._companies = [];
-    this._companies = await this.companyHttpService.getCompanies();
+    let queryParams: ICompanyQueryParamsDto = {
+      pageNumber: this.currentPage,
+      pageSize: this._pageSize
+    };
+
+    this._companies = await this.companyHttpService.getCompanies(queryParams);
   }
 }

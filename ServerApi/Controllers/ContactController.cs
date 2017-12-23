@@ -36,28 +36,21 @@ namespace ServerApi.Controllers
     [HttpGet("{contactId}")]
     public async Task<ContactDto> GetContactAsync(int contactId)
     {
-      // TODO: use automapper
-      var userId = this.GetCurrentUserId();
       var contact = await _contactDataService
         .GetContactAsync(contactId);
 
-      var result = new ContactDto {ContactId = contact.ContactId, FirstName = contact.FirstName, LastName = contact.LastName};
+      var result = _mapper.Map<ContactDto>(contact);
       return result;
     }
 
     [HttpPost]
     public async Task<ContactDto> CreateContactAsync([FromBody] ContactDto contactDto)
     {
-      // TODO: use automapper
       var userId = this.GetCurrentUserId();
       var contact = await _contactDataService.CreateContactAsync(userId, contactDto);
 
-      return new ContactDto
-      {
-        ContactId = contact.ContactId,
-        FirstName = contact.FirstName,
-        LastName = contact.LastName
-      };
+      var result = _mapper.Map<ContactDto>(contact);
+      return result;
     }
 
     [HttpPut]
@@ -69,7 +62,6 @@ namespace ServerApi.Controllers
     [HttpDelete]
     public async Task DeleteContactAsync(int contactId)
     {
-      // TODO: use automapper
       await _contactDataService.DeleteContactAsync(contactId);
     }
   }
