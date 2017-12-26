@@ -21,8 +21,6 @@ export class ContactNewComponent {
       lastName: null,
       companyId: null
     };
-
-    this.loadCompanies();
   }
 
   /**
@@ -48,11 +46,5 @@ export class ContactNewComponent {
       await this.contactHttpService.createContact(this._contact);
       this.appNavigationService.goToContactList();
     }
-  }
-
-  private async loadCompanies(): Promise<void> {
-
-    this._companies = await this.companyHttpService.getCompanies();
-
   }
 }

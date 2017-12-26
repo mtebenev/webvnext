@@ -1,14 +1,17 @@
 import {NgModule} from '@angular/core';
 import {CommonModule} from '@angular/common';
 import {FormsModule} from '@angular/forms';
+import {RouterModule} from '@angular/router';
 
 import {TranslateModule} from '@ngx-translate/core';
 
 import {MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule, MatListModule, MatPaginatorModule} from '@angular/material';
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 const angularModules = [
   CommonModule,
-  FormsModule
+  FormsModule,
+  RouterModule
 ];
 
 const materialModules = [
@@ -18,10 +21,13 @@ const materialModules = [
   MatToolbarModule,
   MatSelectModule,
   MatListModule,
-  MatPaginatorModule
+  MatPaginatorModule,
+  FlexLayoutModule
 ];
 
 @NgModule({
+  declarations: [
+  ],
   imports: [
     ...angularModules,
     ...materialModules,
@@ -31,8 +37,7 @@ const materialModules = [
     ...angularModules,
     ...materialModules,
     TranslateModule
-  ],
-  declarations: []
+  ]
 })
 export class SharedModule {
 }

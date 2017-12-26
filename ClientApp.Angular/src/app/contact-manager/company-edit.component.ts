@@ -26,7 +26,9 @@ export class CompanyEditComponent implements OnInit {
   public ngOnInit(): void {
     this.activatedRoute.params
       .subscribe(params => {
-        this.loadCompany(params.companyId);
+        if (params.companyId) {
+          this.loadCompany(params.companyId);
+        }
       });
   }
 

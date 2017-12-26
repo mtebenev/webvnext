@@ -2,7 +2,9 @@ import {NgModule} from '@angular/core';
 
 import {SharedModule} from '../shared/shared.module';
 import {ContactManagerRoutingModule} from './contact-manager-routing.module';
-import {CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent} from './index';
+import {
+  CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent
+} from './index';
 
 const moduleComponents = [
   CompanyListComponent,
@@ -21,6 +23,10 @@ const moduleComponents = [
     SharedModule,
     ContactManagerRoutingModule
   ],
+  entryComponents: [
+    ContactListComponent,
+    CompanyListComponent
+  ]
 })
 export class ContactManagerModule {
 }
