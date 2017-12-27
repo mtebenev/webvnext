@@ -1,0 +1,17 @@
+<ng-container *ngIf="isStackedLayout;then stackedLayout;else sideLayout">
+</ng-container>
+
+<ng-template #stackedLayout>
+
+  <company-list *ngIf="showMasterView"></company-list>
+  <ng-container *ngIf="!showMasterView">
+    <router-outlet></router-outlet>
+  </ng-container>
+
+</ng-template>
+<ng-template #sideLayout>
+  <div fxLayout="row">
+    <company-list></company-list>
+    <router-outlet></router-outlet>
+  </div>
+</ng-template>

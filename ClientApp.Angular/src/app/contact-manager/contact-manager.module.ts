@@ -3,7 +3,8 @@ import {NgModule} from '@angular/core';
 import {SharedModule} from '../shared/shared.module';
 import {ContactManagerRoutingModule} from './contact-manager-routing.module';
 import {
-  CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent
+  CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent,
+  CompanyContainerMasterComponent
 } from './index';
 
 const moduleComponents = [
@@ -13,6 +14,7 @@ const moduleComponents = [
   ContactListComponent,
   ContactNewComponent,
   ContactEditComponent,
+  CompanyContainerMasterComponent
 ];
 
 @NgModule({
@@ -24,8 +26,6 @@ const moduleComponents = [
     ContactManagerRoutingModule
   ],
   entryComponents: [
-    ContactListComponent,
-    CompanyListComponent
   ]
 })
 export class ContactManagerModule {

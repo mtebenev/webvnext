@@ -9,6 +9,7 @@ import {IPagedResultDto} from '@core/ipaged-result-dto';
  * Displays companies of current user
  */
 @Component({
+  selector: 'company-list',
   templateUrl: './company-list.component.html'
 })
 export class CompanyListComponent implements OnInit {

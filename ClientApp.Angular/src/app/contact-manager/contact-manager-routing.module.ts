@@ -2,14 +2,15 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule, UrlSegment, UrlSegmentGroup, Route, UrlMatchResult} from '@angular/router';
 
 import {
-  CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent
+  CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent,
+  CompanyContainerMasterComponent
 } from './index';
 import {RouteGuardAuthOidc} from '@services/route-guard-auth-oidc.service';
 
 const routes: Routes = [
   {
     path: 'companies',
-    component: CompanyListComponent,
+    component: CompanyContainerMasterComponent,
     canActivate: [RouteGuardAuthOidc],
 
     children: [
