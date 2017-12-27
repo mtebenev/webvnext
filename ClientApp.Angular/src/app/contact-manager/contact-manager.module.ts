@@ -4,7 +4,7 @@ import {SharedModule} from '../shared/shared.module';
 import {ContactManagerRoutingModule} from './contact-manager-routing.module';
 import {
   CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent,
-  CompanyContainerMasterComponent
+  CompaniesComponent, ContactsComponent
 } from './index';
 
 const moduleComponents = [
@@ -14,7 +14,8 @@ const moduleComponents = [
   ContactListComponent,
   ContactNewComponent,
   ContactEditComponent,
-  CompanyContainerMasterComponent
+  CompaniesComponent,
+  ContactsComponent
 ];
 
 @NgModule({
@@ -26,6 +27,8 @@ const moduleComponents = [
     ContactManagerRoutingModule
   ],
   entryComponents: [
+    CompanyListComponent,
+    ContactListComponent
   ]
 })
 export class ContactManagerModule {

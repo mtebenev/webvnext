@@ -3,14 +3,14 @@ import {Routes, RouterModule, UrlSegment, UrlSegmentGroup, Route, UrlMatchResult
 
 import {
   CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent,
-  CompanyContainerMasterComponent
+  CompaniesComponent, ContactsComponent
 } from './index';
 import {RouteGuardAuthOidc} from '@services/route-guard-auth-oidc.service';
 
 const routes: Routes = [
   {
     path: 'companies',
-    component: CompanyContainerMasterComponent,
+    component: CompaniesComponent,
     canActivate: [RouteGuardAuthOidc],
 
     children: [
@@ -27,7 +27,7 @@ const routes: Routes = [
 
   {
     path: 'contacts',
-    component: ContactListComponent,
+    component: ContactsComponent,
     canActivate: [RouteGuardAuthOidc],
     children: [
       {

@@ -3,7 +3,9 @@
 
 <ng-template #stackedLayout>
 
-  <company-list *ngIf="showMasterView"></company-list>
+  <ng-container *ngIf="showMasterView">
+    <ng-container *ngComponentOutlet="masterComponentType"></ng-container>
+  </ng-container>
   <ng-container *ngIf="!showMasterView">
     <router-outlet></router-outlet>
   </ng-container>
@@ -11,7 +13,7 @@
 </ng-template>
 <ng-template #sideLayout>
   <div fxLayout="row">
-    <company-list></company-list>
+    <ng-container *ngComponentOutlet="masterComponentType"></ng-container>
     <router-outlet></router-outlet>
   </div>
 </ng-template>

@@ -8,6 +8,8 @@ import {TranslateModule} from '@ngx-translate/core';
 import {MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule, MatListModule, MatPaginatorModule} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
+import {MasterDetailsComponent} from './components/master-details.component';
+
 const angularModules = [
   CommonModule,
   FormsModule,
@@ -27,6 +29,7 @@ const materialModules = [
 
 @NgModule({
   declarations: [
+    MasterDetailsComponent
   ],
   imports: [
     ...angularModules,
@@ -36,7 +39,8 @@ const materialModules = [
   exports: [
     ...angularModules,
     ...materialModules,
-    TranslateModule
+    TranslateModule,
+    MasterDetailsComponent
   ]
 })
 export class SharedModule {
