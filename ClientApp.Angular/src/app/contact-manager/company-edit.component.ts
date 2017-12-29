@@ -43,6 +43,16 @@ export class CompanyEditComponent implements OnInit {
     }
   }
 
+  /**
+   * Invoked when user clicks DELETE button on a company
+   */
+  public async handleDeleteClick(): Promise<void> {
+
+    if (confirm('Are you sure to delete the company')) {
+      await this.companyHttpService.deleteCompany(this._company.companyId);
+    }
+  }
+
   private async loadCompany(companyId: number): Promise<void> {
 
     this._company = await this.companyHttpService.getCompany(companyId);

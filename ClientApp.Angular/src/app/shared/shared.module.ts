@@ -5,7 +5,9 @@ import {RouterModule} from '@angular/router';
 
 import {TranslateModule} from '@ngx-translate/core';
 
-import {MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule, MatListModule, MatPaginatorModule} from '@angular/material';
+import {
+  MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule, MatListModule, MatPaginatorModule, MatIconModule
+} from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {MasterDetailsComponent} from './components/master-details.component';
@@ -19,11 +21,12 @@ const angularModules = [
 const materialModules = [
   MatButtonModule,
   MatFormFieldModule,
+  MatIconModule,
   MatInputModule,
-  MatToolbarModule,
-  MatSelectModule,
   MatListModule,
   MatPaginatorModule,
+  MatSelectModule,
+  MatToolbarModule,
   FlexLayoutModule
 ];
 

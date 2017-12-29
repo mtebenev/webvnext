@@ -1,22 +1,28 @@
-<div>
-  {{ 'CONTACT_MANAGER.COMPANY_LIST.VIEW_TITLE' | translate }}
-</div>
-<div>
-  <a [routerLink]="['/companies/new']">{{ 'CONTACT_MANAGER.COMPANY_LIST.CREATE_COMPANY' | translate }}</a>
-</div>
-<div *ngIf="companies">
-  <mat-paginator [length]="companies.totalRowCount"
-                 [pageSize]="pageSize"
-                 [pageSizeOptions]="[5, 10, 25, 100]"
-                 (page)="handlePageChange($event)">
-  </mat-paginator>
-  <mat-list>
-    <mat-list-item *ngFor="let company of companies.rows">
-      {{company.name}}
+<div *ngIf="companies"
+     class="mat-elevation-z1">
+  <mat-toolbar>
+    <span>{{ 'CONTACT_MANAGER.COMPANY_LIST.VIEW_TITLE' | translate }}</span>
+  </mat-toolbar>
+  <div>
+    <a [routerLink]="['/companies/new']">{{ 'CONTACT_MANAGER.COMPANY_LIST.CREATE_COMPANY' | translate }}</a>
+  </div>
 
-      <a [routerLink]="['/companies', company.companyId]">{{ 'COMMON.BUTTONS.EDIT' | translate }}</a>
-      <button mat-button
-              (click)="handleDeleteCompanyClick(company.companyId)">{{ 'COMMON.BUTTONS.DELETE' | translate }}</button>
+  <mat-paginator [length]="companies.totalRowCount"
+                [pageSize]="pageSize"
+                [pageSizeOptions]="[5, 10, 25, 100]"
+                (page)="handlePageChange($event)">
+  </mat-paginator>
+
+  <mat-nav-list>
+    <mat-list-item *ngFor="let company of companies.rows"
+                  [routerLink]="['/companies', company.companyId]">
+      <a>{{company.name}}</a>
     </mat-list-item>
-  </mat-list>
+  </mat-nav-list>
 </div>
+
+<a mat-fab
+   color="primary"
+   routerLink="/companies/new">
+  <mat-icon>add</mat-icon>
+</a>

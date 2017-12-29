@@ -1,5 +1,12 @@
 <ng-container *ngIf="company">
-  <form (ngSubmit)="handleFormSubmit(form)"
+  <mat-toolbar>
+    <span> {{company.name}} </span>
+    <button mat-icon-button
+            (click)="handleDeleteClick(company.companyId)">
+      <mat-icon>delete</mat-icon>
+    </button>
+</mat-toolbar>
+    <form (ngSubmit)="handleFormSubmit(form)"
         #form="ngForm">
     <div>
       <mat-form-field>

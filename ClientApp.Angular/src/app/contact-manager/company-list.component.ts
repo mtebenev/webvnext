@@ -45,16 +45,6 @@ export class CompanyListComponent implements OnInit {
   }
 
   /**
-   * Invoked when user clicks DELETE button on a company
-   */
-  public async handleDeleteCompanyClick(companyId: number): Promise<void> {
-
-    if (confirm('Are you sure to delete the company')) {
-      await this.companyHttpService.deleteCompany(companyId);
-    }
-  }
-
-  /**
    * Invoked when user changes current page in pager control
    */
   public handlePageChange(event: PageEvent): void {
