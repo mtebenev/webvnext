@@ -9,14 +9,18 @@ namespace Mt.WebVNext.AppEngine.DataServices
 {
   public class PagedResult<T> where T : class
   {
-    public PagedResult(T[] rows, int totalRowCount)
+    public PagedResult(T[] rows, int totalRowCount, int pageIndex, int totalPages)
     {
       Rows = rows;
       TotalRowCount = totalRowCount;
+      PageIndex = pageIndex;
+      TotalPages = totalPages;
     }
 
     public int TotalRowCount { get; private set; }
     public T[] Rows { get; private set; }
+    public int PageIndex { get; private set; }
+    public int TotalPages { get; private set; }
   }
 
   /// <summary>
@@ -34,12 +38,13 @@ namespace Mt.WebVNext.AppEngine.DataServices
 
       var rowCount = await query.CountAsync();
       var recordsToSkip = page * pageSize;
+      var totalPages = (int) Math.Ceiling(rowCount / (double) pageSize);
 
       var resultRows = await query.Skip(recordsToSkip)
         .Take(pageSize)
         .ToArrayAsync();
 
-      return new PagedResult<T>(resultRows, rowCount);
+      return new PagedResult<T>(resultRows, rowCount, page, totalPages);
     }
   }
 
@@ -54,7 +59,7 @@ namespace Mt.WebVNext.AppEngine.DataServices
         .ProjectTo<U>(mapperConfigurationProvider)
         .ToArray();
 
-      var result = new PagedResult<U>(projectedItems, pagedResult.TotalRowCount);
+      var result = new PagedResult<U>(projectedItems, pagedResult.TotalRowCount, pagedResult.PageIndex, pagedResult.TotalPages);
       return result;
     }
   }

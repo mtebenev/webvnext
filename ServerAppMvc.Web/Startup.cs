@@ -80,7 +80,9 @@ namespace Mt.WebVNext.ServerAppMvc.Web
     private void ConfigureContainer(IServiceCollection services)
     {
       // TODO: use shared configuration with API host
-      services.AddDbContext<AppDataContext>(options => options.UseInMemoryDatabase("Data Source=localhost;Initial Catalog=webvnext;Integrated Security=true;"));
+      var appConnectionString = Configuration.GetConnectionString("application");
+
+      services.AddDbContext<AppDataContext>(options => options.UseSqlServer(appConnectionString));
       services.AddScoped<IContactDataService, ContactDataService>();
       services.AddScoped<ICompanyDataService, CompanyDataService>();
 

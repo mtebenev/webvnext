@@ -15,7 +15,7 @@
     </tr>
   </thead>
   <tbody>
-    @foreach(var company in Model.Companies)
+    @foreach(var company in Model.Companies.Rows)
     {
       <tr>
         <td>@company.CompanyId</td>
@@ -33,5 +33,19 @@
     }
   </tbody>
 </table>
+
+@{
+  var prevDisabled = !Model.Companies.HasPreviousPage ? "disabled" : "";
+  var nextDisabled = !Model.Companies.HasNextPage ? "disabled" : "";
+}
+
+<a asp-route-pageNumber="@(Model.Companies.PageIndex - 1)"
+   class="btn btn-default @prevDisabled">
+  Previous
+</a>
+<a asp-route-pageNumber="@(Model.Companies.PageIndex + 1)"
+   class="btn btn-default @nextDisabled">
+  Next
+</a>
 
 <a asp-page="./Create">Create New Company</a>
