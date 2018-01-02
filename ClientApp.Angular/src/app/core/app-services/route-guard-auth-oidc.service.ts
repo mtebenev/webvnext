@@ -4,7 +4,7 @@ import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular
 import {Observable} from 'rxjs/Observable';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
-import {Deferred} from '../core/deferred';
+import {Deferred} from '@common/deferred';
 
 /**
  * Authentication guard based on 'angular-auth-oidc-client' library

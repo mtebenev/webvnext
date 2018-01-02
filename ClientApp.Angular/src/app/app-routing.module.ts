@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
 import {ContactManagerModule} from './contact-manager/contact-manager.module';
-import {RouteGuardAuthOidc} from '@services/route-guard-auth-oidc.service';
+import {RouteGuardAuthOidc} from '@app-services/route-guard-auth-oidc.service';
 
 const routes: Routes = [
   {

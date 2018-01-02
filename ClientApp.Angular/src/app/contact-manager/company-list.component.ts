@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 
 import {PageEvent} from '@angular/material';
 
-import {CompanyHttpService, ICompanyDto, ICompanyQueryParamsDto} from '@services/contact-manager/company-http.service';
-import {IPagedResultDto} from '@core/ipaged-result-dto';
+import {CompanyHttpService, ICompanyDto, ICompanyQueryParamsDto} from '@http-services/contact-manager/company-http.service';
+import {IPagedResultDto} from '@common/ipaged-result-dto';
 
 /**
  * Displays companies of current user

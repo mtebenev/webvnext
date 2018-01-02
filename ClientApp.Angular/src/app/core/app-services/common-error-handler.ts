@@ -1,6 +1,6 @@
 import {ErrorHandler} from '@angular/core';
 
-import {SimpleLogger} from './simple-logger';
+import {SimpleLogger} from '@common/simple-logger';
 
 export class CommonErrorHandler implements ErrorHandler {
 

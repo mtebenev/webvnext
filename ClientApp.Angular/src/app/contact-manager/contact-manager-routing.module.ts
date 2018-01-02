@@ -5,7 +5,7 @@ import {
   CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent,
   CompaniesComponent, ContactsComponent
 } from './index';
-import {RouteGuardAuthOidc} from '@services/route-guard-auth-oidc.service';
+import {RouteGuardAuthOidc} from '@app-services/route-guard-auth-oidc.service';
 
 const routes: Routes = [
   {

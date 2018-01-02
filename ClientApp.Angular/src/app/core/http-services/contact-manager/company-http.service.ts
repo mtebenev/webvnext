@@ -5,8 +5,8 @@ import {Observable} from 'rxjs/Observable';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 import {environment} from '@environments/environment';
-import {HttpServiceBase} from '@core/http-service-base';
-import {IPagedResultDto} from '@core/ipaged-result-dto';
+import {HttpServiceBase} from '@common/http-service-base';
+import {IPagedResultDto} from '@common/ipaged-result-dto';
 
 export interface ICompanyDto {
   companyId: number;

@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
-import {ContactHttpService, IContactDto} from '@services/contact-manager/contact-http.service';
-import {AppNavigationService} from '@services/app-navigation.service';
-import {ICompanyDto, CompanyHttpService} from '@services/contact-manager/company-http.service';
+import {AppNavigationService} from '@app-services/app-navigation.service';
+import {ContactHttpService, IContactDto} from '@http-services/contact-manager/contact-http.service';
+import {ICompanyDto, CompanyHttpService} from '@http-services/contact-manager/company-http.service';
 
 @Component({
   templateUrl: './contact-new.component.html'

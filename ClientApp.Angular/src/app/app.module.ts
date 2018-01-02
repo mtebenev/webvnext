@@ -7,20 +7,15 @@ import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration} from '
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
-import {AppNavigationService} from '@services/app-navigation.service';
-
 import {environment} from '@environments/environment';
 import {AppComponent} from './app.component';
 import {ErrorUnauthorizedComponent} from './error-unauthorized.component';
 
-import {CompanyHttpService} from '@services/contact-manager/company-http.service';
-import {ContactHttpService} from '@services/contact-manager/contact-http.service';
-import {RouteGuardAuthOidc} from './services/route-guard-auth-oidc.service';
-import {CommonErrorHandler} from './core/common-error-handler';
-
+import {CoreModule} from './core/core.module';
 import {SharedModule} from './shared/shared.module';
 import {AppRoutingModule} from './app-routing.module';
 import {ContactManagerModule} from './contact-manager/contact-manager.module';
+import {CommonErrorHandler} from '@app-services/common-error-handler';
 
 @NgModule({
   declarations: [
@@ -28,6 +23,7 @@ import {ContactManagerModule} from './contact-manager/contact-manager.module';
     ErrorUnauthorizedComponent
   ],
   imports: [
+    CoreModule.forRoot(),
     SharedModule,
     ContactManagerModule, // Eager-loaded initial module
     AppRoutingModule,
@@ -41,14 +37,10 @@ import {ContactManagerModule} from './contact-manager/contact-manager.module';
         useFactory: createTranslationLoader,
         deps: [HttpClient]
       }
-    })
+    }),
   ],
   providers: [
-    AppNavigationService,
-    CompanyHttpService,
-    ContactHttpService,
-    RouteGuardAuthOidc,
-    {
+		{
       provide: ErrorHandler,
       useClass: CommonErrorHandler
     }

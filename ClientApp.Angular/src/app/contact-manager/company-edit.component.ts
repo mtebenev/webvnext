@@ -2,8 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 
-import {CompanyHttpService, ICompanyDto} from '@services/contact-manager/company-http.service';
-import {AppNavigationService} from '@services/app-navigation.service';
+import {CompanyHttpService, ICompanyDto} from '@http-services/contact-manager/company-http.service';
+import {AppNavigationService} from '@app-services/app-navigation.service';
 
 @Component({
   templateUrl: './company-edit.component.html'
