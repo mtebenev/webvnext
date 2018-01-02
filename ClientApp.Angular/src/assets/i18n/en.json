@@ -7,6 +7,7 @@
     }
   },
   "CONTACT_MANAGER": {
+    "MODULE_TITLE": "Contact Manager",
     "COMPANY_LIST": {
       "VIEW_TITLE": "Companies",
       "CREATE_COMPANY": "New Company"
@@ -23,6 +24,7 @@
     }
   },
   "ADMIN": {
+    "MODULE_TITLE": "Administration",
     "DATA_UPLOAD": {
       "LABEL_UPLOAD_CONTACTS": "Upload contacts"
     }

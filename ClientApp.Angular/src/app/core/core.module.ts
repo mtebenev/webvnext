@@ -1,8 +1,14 @@
 import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
 
+import {SharedModule} from '../shared/shared.module';
+
+// App components
+import {AppHeaderComponent} from './components/app-header.component';
+
 // App services
 import {AppNavigationService} from '@app-services/app-navigation.service';
 import {RouteGuardAuthOidc} from '@app-services/route-guard-auth-oidc.service';
+import {ViewContextService} from '@app-services/view-context.service';
 
 // Http services
 import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
@@ -11,7 +17,8 @@ import {ContactHttpService} from '@http-services/contact-manager/contact-http.se
 
 const appServices = [
 	RouteGuardAuthOidc,
-	AppNavigationService
+	AppNavigationService,
+	ViewContextService
 ];
 
 const httpServices = [
@@ -20,9 +27,15 @@ const httpServices = [
 ];
 
 @NgModule({
-	imports: [],
-	declarations: [],
-	exports: [],
+	imports: [
+		SharedModule
+	],
+	declarations: [
+		AppHeaderComponent
+	],
+	exports: [
+		AppHeaderComponent
+	],
 	providers: [
 		...appServices,
 		...httpServices

@@ -6,8 +6,6 @@ export class ViewContextService {
 	/**
 	 * Displayed in main application header
 	 */
-	public get ModuleTitle(): string {
-		return 'THIS IS MODULE TITLE';
-	}
+	public moduleTitle: string;
 
 }

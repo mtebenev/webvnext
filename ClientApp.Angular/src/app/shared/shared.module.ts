@@ -11,6 +11,7 @@ import {
 import {FlexLayoutModule} from '@angular/flex-layout';
 
 import {MasterDetailsComponent} from './components/master-details.component';
+import {SetViewContextOptionsDirective} from './components/set-view-context-options.directive';
 
 const angularModules = [
   CommonModule,
@@ -30,9 +31,14 @@ const materialModules = [
   FlexLayoutModule
 ];
 
+const sharedComponents = [
+  MasterDetailsComponent,
+  SetViewContextOptionsDirective
+]
+
 @NgModule({
   declarations: [
-    MasterDetailsComponent
+    ...sharedComponents
   ],
   imports: [
     ...angularModules,
@@ -42,8 +48,8 @@ const materialModules = [
   exports: [
     ...angularModules,
     ...materialModules,
-    TranslateModule,
-    MasterDetailsComponent
+    ...sharedComponents,
+    TranslateModule
   ]
 })
 export class SharedModule {
