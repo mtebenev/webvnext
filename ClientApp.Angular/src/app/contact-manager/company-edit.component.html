@@ -1,10 +1,12 @@
 <ng-container *ngIf="company">
-  <mat-toolbar>
+  <mat-toolbar fxLayout  fxLayoutAlign="space-between center">
     <span> {{company.name}} </span>
-    <button mat-icon-button
-            (click)="handleDeleteClick(company.companyId)">
-      <mat-icon>delete</mat-icon>
-    </button>
+    <div fxLayout fxLayoutAlign="end">
+      <button mat-icon-button
+              (click)="handleDeleteClick(company.companyId)">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
   </mat-toolbar>
   <form (ngSubmit)="handleFormSubmit(form)"
         #form="ngForm">

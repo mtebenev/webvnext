@@ -13,7 +13,11 @@
 </ng-template>
 <ng-template #sideLayout>
   <div fxLayout="row">
-    <ng-container *ngComponentOutlet="masterComponentType"></ng-container>
-    <router-outlet></router-outlet>
+    <div fxFlex>
+      <ng-container *ngComponentOutlet="masterComponentType"></ng-container>
+    </div>
+    <div fxFlex>
+      <router-outlet></router-outlet>
+    </div>
   </div>
 </ng-template>
