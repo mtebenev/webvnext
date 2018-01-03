@@ -4,6 +4,7 @@ import {SharedModule} from '../shared/shared.module';
 
 // App components
 import {AppHeaderComponent} from './components/app-header.component';
+import {AppSidebarComponent} from './components/app-sidebar.component';
 
 // App services
 import {AppNavigationService} from '@app-services/app-navigation.service';
@@ -26,15 +27,20 @@ const httpServices = [
 	ContactHttpService
 ];
 
+const appComponents = [
+	AppHeaderComponent,
+	AppSidebarComponent
+];
+
 @NgModule({
 	imports: [
 		SharedModule
 	],
 	declarations: [
-		AppHeaderComponent
+		...appComponents
 	],
 	exports: [
-		AppHeaderComponent
+		...appComponents
 	],
 	providers: [
 		...appServices,

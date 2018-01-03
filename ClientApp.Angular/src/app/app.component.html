@@ -1,4 +1,16 @@
-<app-header></app-header>
+<app-header (onMenuButtonClick)="handleMenuButtonClick()"></app-header>
 <div class="container">
-  <router-outlet></router-outlet>
+
+  <mat-sidenav-container class="example-sidenav-container"
+                         [style.marginTop.px]="isMobileMode ? 56 : 0">
+    <mat-sidenav [mode]="isMobileMode ? 'over' : 'side'"
+                 [fixedInViewport]="isMobileMode"
+                 fixedTopGap="56">
+      <app-sidebar></app-sidebar>
+    </mat-sidenav>
+
+    <mat-sidenav-content>
+      <router-outlet></router-outlet>
+    </mat-sidenav-content>
+  </mat-sidenav-container>
 </div>

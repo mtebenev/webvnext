@@ -6,9 +6,11 @@ import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 
 import {
-  MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule, MatListModule, MatPaginatorModule, MatIconModule
+  MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule, MatListModule, MatPaginatorModule, MatIconModule,
+  MatSidenavModule
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
+import {LayoutModule} from '@angular/cdk/layout';
 
 import {MasterDetailsComponent} from './components/master-details.component';
 import {SetViewContextOptionsDirective} from './components/set-view-context-options.directive';
@@ -27,8 +29,10 @@ const materialModules = [
   MatListModule,
   MatPaginatorModule,
   MatSelectModule,
+  MatSidenavModule,
   MatToolbarModule,
-  FlexLayoutModule
+  FlexLayoutModule,
+  LayoutModule
 ];
 
 const sharedComponents = [

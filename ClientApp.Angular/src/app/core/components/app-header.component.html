@@ -1,6 +1,8 @@
 <mat-toolbar color="primary">
+  <button mat-icon-button
+          (click)="handleMenuButtonClick()">
+    <mat-icon>menu</mat-icon>
+  </button>
+
   <span>{{ moduleTitle }}</span>
-    <a routerLink="/companies">Companies</a>
-    <a routerLink="/contacts">Contacts</a>
-    <a routerLink="/admin">Admin</a>
 </mat-toolbar>
