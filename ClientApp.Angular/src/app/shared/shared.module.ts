@@ -10,7 +10,6 @@ import {
   MatSidenavModule
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
-import {LayoutModule} from '@angular/cdk/layout';
 
 import {MasterDetailsComponent} from './components/master-details.component';
 import {SetViewContextOptionsDirective} from './components/set-view-context-options.directive';
@@ -31,8 +30,7 @@ const materialModules = [
   MatSelectModule,
   MatSidenavModule,
   MatToolbarModule,
-  FlexLayoutModule,
-  LayoutModule
+  FlexLayoutModule
 ];
 
 const sharedComponents = [

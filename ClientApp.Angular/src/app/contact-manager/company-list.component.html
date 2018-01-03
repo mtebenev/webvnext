@@ -3,9 +3,6 @@
   <mat-toolbar>
     <span>{{ 'CONTACT_MANAGER.COMPANY_LIST.VIEW_TITLE' | translate }}</span>
   </mat-toolbar>
-  <div>
-    <a [routerLink]="['/companies/new']">{{ 'CONTACT_MANAGER.COMPANY_LIST.CREATE_COMPANY' | translate }}</a>
-  </div>
 
   <mat-paginator [length]="companies.totalRowCount"
                 [pageSize]="pageSize"

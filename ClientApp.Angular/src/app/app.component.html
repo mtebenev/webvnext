@@ -1,11 +1,9 @@
 <app-header (onMenuButtonClick)="handleMenuButtonClick()"></app-header>
 <div class="container">
 
-  <mat-sidenav-container class="example-sidenav-container"
-                         [style.marginTop.px]="isMobileMode ? 56 : 0">
+  <mat-sidenav-container class="sidenav-container">
     <mat-sidenav [mode]="isMobileMode ? 'over' : 'side'"
-                 [fixedInViewport]="isMobileMode"
-                 fixedTopGap="56">
+                 [fixedInViewport]="isMobileMode">
       <app-sidebar></app-sidebar>
     </mat-sidenav>
 

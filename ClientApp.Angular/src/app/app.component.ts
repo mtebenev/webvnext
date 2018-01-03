@@ -1,9 +1,11 @@
-import {Component, ChangeDetectorRef, ViewChild} from '@angular/core';
+import {Component, ViewChild} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import {MediaMatcher} from '@angular/cdk/layout';
+import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 
 import {MatSidenav} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
+
+import {ISubscription} from 'rxjs/Subscription';
 
 @Component({
   selector: 'app-root',
@@ -12,23 +14,21 @@ import {TranslateService} from '@ngx-translate/core';
 })
 export class AppComponent {
 
-  private _mobileModeQuery: MediaQueryList;
-  private _mobileQueryListener: () => void;
+  private _mediaSubscription: ISubscription;
   private _isMobileMode: boolean;
 
-  constructor(private httpClient: HttpClient, private translateService: TranslateService, changeDetectorRef: ChangeDetectorRef, mediaMatcher: MediaMatcher) {
+  constructor(private httpClient: HttpClient, private translateService: TranslateService, private media: ObservableMedia) {
 
     translateService.setDefaultLang('en');
     translateService.use('en');
 
     // Listen to media change to redraw sidebar
-    this._mobileQueryListener = () => {
-      this._isMobileMode = this._mobileModeQuery.matches;
-      changeDetectorRef.detectChanges();
-    }
-    this._mobileModeQuery = mediaMatcher.matchMedia('(max-width: 600px)');
-    this._mobileModeQuery.addListener(this._mobileQueryListener);
-    this._isMobileMode = this._mobileModeQuery.matches;
+    // Note MTE: in original Material sample there's ChangeDetectorRef used. Really need that?
+    this._mediaSubscription = media.subscribe((mediaChange: MediaChange) => {
+      this._isMobileMode = this.media.isActive('lt-sm');
+    });
+
+    this._isMobileMode = this.media.isActive('lt-sm'); // Initial layout
   }
 
   @ViewChild(MatSidenav)
@@ -38,7 +38,10 @@ export class AppComponent {
    * OnDestroy
    */
   public ngOnDestroy(): void {
-    this._mobileModeQuery.removeListener(this._mobileQueryListener);
+
+    if (this._mediaSubscription) {
+      this._mediaSubscription.unsubscribe();
+    }
   }
 
   /**

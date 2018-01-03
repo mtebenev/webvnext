@@ -5,10 +5,11 @@
             (click)="handleDeleteClick(company.companyId)">
       <mat-icon>delete</mat-icon>
     </button>
-</mat-toolbar>
-    <form (ngSubmit)="handleFormSubmit(form)"
+  </mat-toolbar>
+  <form (ngSubmit)="handleFormSubmit(form)"
         #form="ngForm">
-    <div>
+
+        <div>
       <mat-form-field>
         <input matInput
               name="name"

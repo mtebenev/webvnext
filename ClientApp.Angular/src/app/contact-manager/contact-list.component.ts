@@ -45,16 +45,6 @@ export class ContactListComponent implements OnInit {
   }
 
   /**
-   * Invoked when user clicks DELETE button on a contact
-   */
-  public async handleDeleteContactClick(contactId: number): Promise<void> {
-
-    if (confirm('Are you sure to delete the contact?')) {
-      await this.contactHttpService.deleteContact(contactId);
-    }
-  }
-
-  /**
    * Invoked when user changes current page in pager control
    */
   public handlePageChange(event: PageEvent): void {

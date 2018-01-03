@@ -44,6 +44,16 @@ export class ContactEditComponent implements OnInit {
     }
   }
 
+  /**
+   * Invoked when user clicks DELETE button on a contact
+   */
+  public async handleDeleteClick(contactId: number): Promise<void> {
+
+    if (confirm('Are you sure to delete the contact?')) {
+      await this.contactHttpService.deleteContact(contactId);
+    }
+  }
+
   private async loadContact(contactId: number): Promise<void> {
 
     this._contact = await this.contactHttpService.getContact(contactId);

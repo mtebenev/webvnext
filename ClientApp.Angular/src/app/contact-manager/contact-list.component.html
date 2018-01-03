@@ -1,22 +1,26 @@
-<div>
-  {{ 'CONTACT_MANAGER.CONTACT_LIST.VIEW_TITLE' | translate }}
-</div>
-<div>
-  <a [routerLink]="['/contacts/new']">{{ 'CONTACT_MANAGER.CONTACT_LIST.CREATE_CONTACT' | translate }}</a>
-</div>
-<div *ngIf="contacts">
+<div *ngIf="contacts"
+     class="mat-elevation-z1">
+  <mat-toolbar>
+    <span>{{ 'CONTACT_MANAGER.CONTACT_LIST.VIEW_TITLE' | translate }}</span>
+  </mat-toolbar>
+
   <mat-paginator [length]="contacts.totalRowCount"
                  [pageSize]="pageSize"
                  [pageSizeOptions]="[5, 10, 25, 100]"
                  (page)="handlePageChange($event)">
   </mat-paginator>
-  <mat-list>
-    <mat-list-item *ngFor="let contact of contacts.rows">
-      {{contact.firstName}} {{contact.lastName}}
 
-      <a [routerLink]="['/contacts', contact.contactId]">{{ 'COMMON.BUTTONS.EDIT' | translate }}</a>
-      <button mat-button
-              (click)="handleDeleteContactClick(contact.contactId)">{{ 'COMMON.BUTTONS.DELETE' | translate }}</button>
+  <mat-nav-list>
+    <mat-list-item *ngFor="let contact of contacts.rows"
+                  [routerLink]="['/contacts', contact.contactId]">
+      <a>{{contact.firstName}} {{contact.lastName}}</a>
     </mat-list-item>
-  </mat-list>
+  </mat-nav-list>
 </div>
+
+<a mat-fab
+   color="primary"
+   routerLink="/contacts/new"
+   style="position:fixed;right:50px;bottom:50px">
+  <mat-icon>add</mat-icon>
+</a>

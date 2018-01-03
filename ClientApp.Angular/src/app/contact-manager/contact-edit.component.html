@@ -1,4 +1,11 @@
 <ng-container *ngIf="contact">
+  <mat-toolbar>
+    <span> {{contact.firstName}} {{contact.lastName}} </span>
+    <button mat-icon-button
+            (click)="handleDeleteClick(contact.contactId)">
+            <mat-icon>delete</mat-icon>
+    </button>
+  </mat-toolbar>
   <form (ngSubmit)="handleFormSubmit(form)"
         #form="ngForm">
     <div>
