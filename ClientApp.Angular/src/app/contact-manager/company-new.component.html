@@ -1,7 +1,11 @@
+<div>
+  {{ 'CONTACT_MANAGER.COMPANY_NEW.VIEW_TITLE' | translate }}
+</div>
 <form (ngSubmit)="handleFormSubmit(form)"
+      class="m-3"
       #form="ngForm">
   <div>
-    <mat-form-field>
+    <mat-form-field class="w-100">
       <input matInput
             name="name"
             placeholder="Name"
@@ -10,14 +14,14 @@
     </mat-form-field>
   </div>
   <div>
-    <mat-form-field>
+    <mat-form-field class="w-100">
       <input matInput
             name="description"
             placeholder="Description"
             [(ngModel)]="company.description">
     </mat-form-field>
   </div>
-  <div>
+  <div fxLayout fxLayoutAlign="end">
     <button mat-button>Create</button>
   </div>
 </form>

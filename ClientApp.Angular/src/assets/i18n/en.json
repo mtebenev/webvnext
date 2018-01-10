@@ -12,12 +12,15 @@
       "VIEW_TITLE": "Companies",
       "CREATE_COMPANY": "New Company"
     },
+    "COMPANY_NEW": {
+      "VIEW_TITLE": "New Company"
+    },
     "CONTACT_LIST": {
       "VIEW_TITLE": "Contacts",
       "CREATE_CONTACT": "New Contact"
     },
     "CONTACT_NEW": {
-      "VIEW_TITLE": "New Company",
+      "VIEW_TITLE": "New Contact",
       "SELECT_COMPANY_PLACEHOLDER": "Select company",
       "FIRST_NAME_PLACEHOLDER": "First name",
       "LAST_NAME_PLACEHOLDER": "Last name"

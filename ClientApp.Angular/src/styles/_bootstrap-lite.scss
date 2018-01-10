@@ -1,0 +1,15 @@
+// Imports some utilities missing in Angular Material
+
+// Note: this adds only normalize styles with minimal impact (~4kb unminified)
+@import "~bootstrap/scss/bootstrap-reboot";
+
+// Explicitly define container class (i.e. no grid)
+.container {
+  @include make-container();
+  @include make-container-max-widths();
+}
+
+// Utilities
+@import "~bootstrap/scss/utilities/position";
+@import "~bootstrap/scss/utilities/sizing";
+@import "~bootstrap/scss/utilities/spacing";
