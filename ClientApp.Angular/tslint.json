@@ -16,6 +16,7 @@
     "prefer-const": false,
     "quotemark": [true, "single"],
     "trailing-comma": false,
-    "variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"]
+		"variable-name": [true, "ban-keywords", "check-format", "allow-leading-underscore"],
+		"whitespace": [true, "check-decl", "check-operator", "check-separator", "check-rest-spread", "check-type", "check-typecast", "check-type-operator", "check-preblock"]
   }
 }

@@ -3,7 +3,7 @@ import {Routes, RouterModule, UrlSegment, UrlSegmentGroup, Route, UrlMatchResult
 
 import {
   CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent,
-  CompaniesComponent, ContactsComponent
+  CompaniesComponent, CompanyDetailsComponent, ContactsComponent
 } from './index';
 import {RouteGuardAuthOidc} from '@app-services/route-guard-auth-oidc.service';
 
@@ -16,11 +16,15 @@ const routes: Routes = [
     children: [
       {
         path: 'new',
-        component: CompanyNewComponent
+        component: CompanyDetailsComponent
+      },
+      {
+        path: ':companyId/edit',
+      component: CompanyDetailsComponent
       },
       {
         path: ':companyId',
-        component: CompanyEditComponent,
+        component: CompanyDetailsComponent,
       },
     ]
   },

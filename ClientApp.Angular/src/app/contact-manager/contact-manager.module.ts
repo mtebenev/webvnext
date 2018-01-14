@@ -4,7 +4,7 @@ import {SharedModule} from '../shared/shared.module';
 import {ContactManagerRoutingModule} from './contact-manager-routing.module';
 import {
   CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent,
-  CompaniesComponent, ContactsComponent
+  CompaniesComponent, ContactsComponent, CompanyDetailsComponent
 } from './index';
 
 const moduleComponents = [
@@ -15,6 +15,7 @@ const moduleComponents = [
   ContactNewComponent,
   ContactEditComponent,
   CompaniesComponent,
+  CompanyDetailsComponent,
   ContactsComponent
 ];
 

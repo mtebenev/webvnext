@@ -18,6 +18,13 @@ export class AppNavigationService {
     this.router.navigate(['/companies']);
   }
 
+	/**
+	 * Navigates to a specific company
+	 */
+  public goToCompanyEdit(companyId: number): void {
+    this.router.navigate(['/companies', companyId.toString(), 'edit']);
+  }
+
   /**
    * Navigates to contact list
    */

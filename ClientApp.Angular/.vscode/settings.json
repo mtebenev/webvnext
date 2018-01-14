@@ -11,5 +11,6 @@
     "bin/": true,
     "dist/": true,
     "obj/": true
-  }
+  },
+  "files.trimTrailingWhitespace": true
 }

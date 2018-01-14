@@ -1,0 +1,85 @@
+<ng-container *ngIf="company">
+  <mat-toolbar fxLayout  fxLayoutAlign="space-between center">
+    <span> {{company.name}} </span>
+    <div fxLayout fxLayoutAlign="end">
+      <button mat-icon-button
+              (click)="handleEditClick()">
+        <mat-icon>mode_edit</mat-icon>
+      </button>
+      <button mat-icon-button
+              (click)="handleDeleteClick()">
+        <mat-icon>delete</mat-icon>
+      </button>
+    </div>
+	</mat-toolbar>
+
+	<!-- Main content container -->
+	<div class="m-3"
+	     [ngSwitch]="viewMode">
+
+		<!-- View mode -->
+		<div *ngSwitchCase="1">
+			<div>
+				COMPANY: {{company.name}}
+			</div>
+			<div>
+				DESCRIPTION: {{company.description}}
+			</div>
+		</div>
+
+		<!-- Edit mode -->
+		<div *ngSwitchCase="2">
+			<form (ngSubmit)="handleFormSubmit(form)"
+    		    #form="ngForm">
+
+        <div>
+					<mat-form-field class="w-100">
+						<input matInput
+									name="name"
+									placeholder="Name"
+									[(ngModel)]="company.name"
+									required>
+					</mat-form-field>
+		    </div>
+				<div>
+					<mat-form-field class="w-100">
+						<input matInput
+									name="description"
+									placeholder="Description"
+									[(ngModel)]="company.description">
+					</mat-form-field>
+				</div>
+				<div fxLayout fxLayoutAlign="end">
+					<button mat-button>Update</button>
+				</div>
+		  </form>
+		</div>
+
+		<!-- New mode -->
+		<div *ngSwitchCase="3">
+			<form (ngSubmit)="handleFormSubmit(form)"
+						#form="ngForm">
+				<div>
+					<mat-form-field class="w-100">
+						<input matInput
+									name="name"
+									placeholder="Name"
+									[(ngModel)]="company.name"
+									required>
+					</mat-form-field>
+				</div>
+				<div>
+					<mat-form-field class="w-100">
+						<input matInput
+									name="description"
+									placeholder="Description"
+									[(ngModel)]="company.description">
+					</mat-form-field>
+				</div>
+				<div fxLayout fxLayoutAlign="end">
+					<button mat-button>Create</button>
+				</div>
+			</form>
+		</div>
+	</div>
+</ng-container>
