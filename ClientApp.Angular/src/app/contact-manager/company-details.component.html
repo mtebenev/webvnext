@@ -2,11 +2,13 @@
   <mat-toolbar fxLayout  fxLayoutAlign="space-between center">
     <span> {{company.name}} </span>
     <div fxLayout fxLayoutAlign="end">
-      <button mat-icon-button
+			<button mat-icon-button
+							*ngIf="viewMode==='view'"
               (click)="handleEditClick()">
         <mat-icon>mode_edit</mat-icon>
       </button>
-      <button mat-icon-button
+			<button mat-icon-button
+							*ngIf="viewMode==='view'"
               (click)="handleDeleteClick()">
         <mat-icon>delete</mat-icon>
       </button>
@@ -18,7 +20,7 @@
 	     [ngSwitch]="viewMode">
 
 		<!-- View mode -->
-		<div *ngSwitchCase="1">
+		<div *ngSwitchCase="'view'">
 			<div>
 				COMPANY: {{company.name}}
 			</div>
@@ -28,7 +30,7 @@
 		</div>
 
 		<!-- Edit mode -->
-		<div *ngSwitchCase="2">
+		<div *ngSwitchCase="'edit'">
 			<form (ngSubmit)="handleFormSubmit(form)"
     		    #form="ngForm">
 
@@ -56,7 +58,7 @@
 		</div>
 
 		<!-- New mode -->
-		<div *ngSwitchCase="3">
+		<div *ngSwitchCase="'new'">
 			<form (ngSubmit)="handleFormSubmit(form)"
 						#form="ngForm">
 				<div>

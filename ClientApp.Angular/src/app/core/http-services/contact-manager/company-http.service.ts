@@ -54,8 +54,8 @@ export class CompanyHttpService extends HttpServiceBase {
   /**
    * Create a new company for the current user
    */
-  public createCompany(companyDto: ICompanyDto): Promise<{}> {
-    return this.doPost(companyDto).toPromise();
+  public createCompany(companyDto: ICompanyDto): Promise<ICompanyDto> {
+    return this.doPost<ICompanyDto, ICompanyDto>(companyDto).toPromise();
   }
 
   /**

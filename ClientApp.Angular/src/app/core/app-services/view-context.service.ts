@@ -6,6 +6,6 @@ export class ViewContextService {
 	/**
 	 * Displayed in main application header
 	 */
-	public moduleTitle: string;
+  public moduleTitle: string;
 
 }

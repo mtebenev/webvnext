@@ -19,10 +19,17 @@ export class AppNavigationService {
   }
 
 	/**
-	 * Navigates to a specific company
+	 * Navigates to a specific company (edit mode)
 	 */
   public goToCompanyEdit(companyId: number): void {
     this.router.navigate(['/companies', companyId.toString(), 'edit']);
+  }
+
+  /**
+   * Navigates to a specific company (view mode)
+   */
+  public goToCompanyView(companyId: number): void {
+    this.router.navigate(['/companies', companyId.toString()]);
   }
 
   /**
