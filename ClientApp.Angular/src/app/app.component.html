@@ -1,14 +1,28 @@
-<app-header (onMenuButtonClick)="handleMenuButtonClick()"></app-header>
-<div class="container">
+<div fxFlexFill
+		 fxLayout="column"
+		 fxLayoutAlign="start stretch">
 
-  <mat-sidenav-container class="sidenav-container">
-    <mat-sidenav [mode]="isMobileMode ? 'over' : 'side'"
-                 [fixedInViewport]="isMobileMode">
-      <app-sidebar></app-sidebar>
-    </mat-sidenav>
+	<!-- Header -->
+	<app-header (onMenuButtonClick)="handleMenuButtonClick()"></app-header>
 
-    <mat-sidenav-content>
-      <router-outlet></router-outlet>
-    </mat-sidenav-content>
-  </mat-sidenav-container>
-</div>
+	<!-- Main content -->
+	<div fxFlex
+			 fxLayout="row"
+			 fxLayoutAlign="start stretch">
+
+			<div class="container">
+
+					<mat-sidenav-container fxFlexFill
+					                       class="sidenav-container">
+						<mat-sidenav [mode]="isMobileMode ? 'over' : 'side'"
+                         [fixedInViewport]="isMobileMode">
+							<app-sidebar></app-sidebar>
+						</mat-sidenav>
+
+						<mat-sidenav-content>
+							<router-outlet></router-outlet>
+						</mat-sidenav-content>
+					</mat-sidenav-container>
+				</div>
+
+	</div>
