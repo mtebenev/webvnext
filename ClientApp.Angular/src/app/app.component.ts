@@ -1,6 +1,5 @@
 import {Component, ViewChild} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
-import {HttpClient, HttpHeaders} from '@angular/common/http';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 
 import {MatSidenav} from '@angular/material';
@@ -20,7 +19,7 @@ export class AppComponent {
   private _subscriptionMedia: ISubscription;
   private _isMobileMode: boolean;
 
-  constructor(private httpClient: HttpClient, private translateService: TranslateService, private media: ObservableMedia, router: Router) {
+  constructor(translateService: TranslateService, private media: ObservableMedia, router: Router) {
 
     translateService.setDefaultLang('en');
     translateService.use('en');

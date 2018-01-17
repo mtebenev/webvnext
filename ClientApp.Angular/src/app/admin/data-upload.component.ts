@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {FileUploader, FileUploaderOptions, FileItem} from 'ng2-file-upload';

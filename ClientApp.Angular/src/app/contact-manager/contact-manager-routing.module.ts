@@ -1,9 +1,8 @@
 import {NgModule} from '@angular/core';
-import {Routes, RouterModule, UrlSegment, UrlSegmentGroup, Route, UrlMatchResult} from '@angular/router';
+import {Routes, RouterModule} from '@angular/router';
 
 import {
-  CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent,
-  CompaniesComponent, CompanyDetailsComponent, ContactsComponent
+  ContactEditComponent, ContactNewComponent, CompaniesComponent, CompanyDetailsComponent, ContactsComponent
 } from './index';
 import {RouteGuardAuthOidc} from '@app-services/route-guard-auth-oidc.service';
 
