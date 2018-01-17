@@ -12,5 +12,7 @@
     "dist/": true,
     "obj/": true
   },
-  "files.trimTrailingWhitespace": true
+	"files.trimTrailingWhitespace": true,
+	"tslint.enable": true,
+	"tslint.alwaysShowStatus": true
 }

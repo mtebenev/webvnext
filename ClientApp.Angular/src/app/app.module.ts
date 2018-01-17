@@ -40,7 +40,7 @@ import {CommonErrorHandler} from '@app-services/common-error-handler';
     }),
   ],
   providers: [
-		{
+    {
       provide: ErrorHandler,
       useClass: CommonErrorHandler
     }

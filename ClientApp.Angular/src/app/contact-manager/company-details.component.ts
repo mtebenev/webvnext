@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
+import {ActivatedRoute} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 
 import {CompanyHttpService, ICompanyDto} from '@http-services/contact-manager/company-http.service';
-import {AppNavigationService} from '@app-services/app-navigation.service';
+import {AppNavigationService, ConfirmationUi} from '@app-services/index';
 
 enum ViewMode {
   None = 'none',
@@ -22,8 +22,9 @@ export class CompanyDetailsComponent implements OnInit {
   private _companyHttpService: CompanyHttpService;
   private _appNavigationService: AppNavigationService;
   private _viewMode: ViewMode;
+  private _confirmationUi: ConfirmationUi;
 
-  constructor(activatedRoute: ActivatedRoute, companyHttpService: CompanyHttpService, appNavigationService: AppNavigationService) {
+  constructor(activatedRoute: ActivatedRoute, companyHttpService: CompanyHttpService, appNavigationService: AppNavigationService, confirmationUi: ConfirmationUi) {
 
     this._activatedRoute = activatedRoute;
     this._companyHttpService = companyHttpService;
@@ -44,7 +45,7 @@ export class CompanyDetailsComponent implements OnInit {
   /**
    * OnInit
    */
-  public ngOnInit(): void {
+  public ngOnInit() {
 
     this._activatedRoute.url
       .subscribe(url => {
@@ -102,7 +103,8 @@ export class CompanyDetailsComponent implements OnInit {
    */
   public async handleDeleteClick(): Promise<void> {
 
-    if(confirm('Are you sure to delete the company')) {
+    let isConfirmed = await this._confirmationUi.confirm('CONTACT_MANAGER.COMPANY_DETAILS.MSG_DELETE_COMPANY');
+    if(isConfirmed) {
       await this._companyHttpService.deleteCompany(this._company.companyId);
     }
   }

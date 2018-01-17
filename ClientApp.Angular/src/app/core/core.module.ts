@@ -15,52 +15,51 @@ import {ViewContextService} from '@app-services/view-context.service';
 import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
 import {ContactHttpService} from '@http-services/contact-manager/contact-http.service';
 
-
 const appServices = [
-	RouteGuardAuthOidc,
-	AppNavigationService,
-	ViewContextService
+  RouteGuardAuthOidc,
+  AppNavigationService,
+  ViewContextService
 ];
 
 const httpServices = [
-	CompanyHttpService,
-	ContactHttpService
+  CompanyHttpService,
+  ContactHttpService
 ];
 
 const appComponents = [
-	AppHeaderComponent,
-	AppSidebarComponent
+  AppHeaderComponent,
+  AppSidebarComponent
 ];
 
 @NgModule({
-	imports: [
-		SharedModule
-	],
-	declarations: [
-		...appComponents
-	],
-	exports: [
-		...appComponents
-	],
-	providers: [
-		...appServices,
-		...httpServices
-	]
+  imports: [
+    SharedModule
+  ],
+  declarations: [
+    ...appComponents
+  ],
+  exports: [
+    ...appComponents
+  ],
+  providers: [
+    ...appServices,
+    ...httpServices
+  ]
 })
 export class CoreModule {
 
-	constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
-		if (parentModule) {
-			throw new Error(
-				'CoreModule is already loaded. Import it in the AppModule only');
-		}
-	}
+  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+    if(parentModule) {
+      throw new Error(
+        'CoreModule is already loaded. Import it in the AppModule only');
+    }
+  }
 
-	public static forRoot(): ModuleWithProviders {
-		return {
-			ngModule: CoreModule,
-			providers: [
-			]
-		};
-	}
+  public static forRoot(): ModuleWithProviders {
+    return {
+      ngModule: CoreModule,
+      providers: [
+      ]
+    };
+  }
 }

@@ -12,8 +12,9 @@
       "VIEW_TITLE": "Companies",
       "CREATE_COMPANY": "New Company"
     },
-    "COMPANY_NEW": {
-      "VIEW_TITLE": "New Company"
+    "COMPANY_DETAILS": {
+			"VIEW_TITLE": "New Company",
+			"MSG_DELETE_COMPANY": "Are you sure you want to delete the company?"
     },
     "CONTACT_LIST": {
       "VIEW_TITLE": "Contacts",
