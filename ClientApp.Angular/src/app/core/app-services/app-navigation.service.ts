@@ -18,9 +18,9 @@ export class AppNavigationService {
     this.router.navigate(['/companies']);
   }
 
-	/**
-	 * Navigates to a specific company (edit mode)
-	 */
+  /**
+   * Navigates to a specific company (edit mode)
+   */
   public goToCompanyEdit(companyId: number): void {
     this.router.navigate(['/companies', companyId.toString(), 'edit']);
   }

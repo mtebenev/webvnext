@@ -3,9 +3,9 @@
  */
 export class ViewContextService {
 
-	/**
-	 * Displayed in main application header
-	 */
+  /**
+   * Displayed in main application header
+   */
   public moduleTitle: string;
 
 }

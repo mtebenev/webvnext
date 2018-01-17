@@ -13,6 +13,7 @@ export class CommonErrorHandler implements ErrorHandler {
 
   public handleError(error: any): void {
 
+    // tslint:disable-next-line:no-console
     console.error('Error caught in CommonErrorHandler');
     this.logger.logError(error);
   }

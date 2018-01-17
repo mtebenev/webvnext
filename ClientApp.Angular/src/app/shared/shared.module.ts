@@ -36,7 +36,7 @@ const materialModules = [
 const sharedComponents = [
   MasterDetailsComponent,
   SetViewContextOptionsDirective
-]
+];
 
 @NgModule({
   declarations: [

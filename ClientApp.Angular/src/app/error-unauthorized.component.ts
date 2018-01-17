@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 
 @Component({
   templateUrl: './error-unauthorized.component.html'
@@ -8,9 +8,4 @@ import {Component, OnInit} from '@angular/core';
  * Displays authorization error
  */
 export class ErrorUnauthorizedComponent {
-
-  constructor() {
-
-  }
-
 }
