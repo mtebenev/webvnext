@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
 import {AppNavigationService} from '@app-services/app-navigation.service';
@@ -13,7 +13,7 @@ export class ContactNewComponent {
   private _contact: IContactDto;
   private _companies: ICompanyDto[];
 
-  constructor(private contactHttpService: ContactHttpService, private companyHttpService: CompanyHttpService, private appNavigationService: AppNavigationService) {
+  constructor(private contactHttpService: ContactHttpService, companyHttpService: CompanyHttpService, private appNavigationService: AppNavigationService) {
 
     this._contact = {
       contactId: 0,

@@ -1,5 +1,5 @@
 import {Component, Input, OnInit, OnDestroy, Type} from '@angular/core';
-import {MediaChange, ObservableMedia} from '@angular/flex-layout';
+import {ObservableMedia} from '@angular/flex-layout';
 import {ActivatedRoute, Router} from '@angular/router';
 
 import {ISubscription} from 'rxjs/Subscription';

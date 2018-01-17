@@ -1,4 +1,4 @@
-import {Component, OnInit} from '@angular/core';
+import {Component} from '@angular/core';
 import {FormGroup} from '@angular/forms';
 
 import {CompanyHttpService, ICompanyDto} from '@http-services/contact-manager/company-http.service';

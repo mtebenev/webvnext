@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
-import {Observable} from 'rxjs/Observable';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 import {environment} from '@environments/environment';
@@ -10,9 +9,9 @@ import {IPagedResultDto} from '@common/ipaged-result-dto';
 
 export interface IContactDto {
   contactId: number;
-  firstName: string;
-  lastName: string;
-  companyId: number;
+  firstName: string | null;
+  lastName: string | null;
+  companyId: number | null;
 }
 
 export interface IContactQueryParamsDto {
@@ -40,7 +39,6 @@ export class ContactHttpService extends HttpServiceBase {
       pageSize: queryParams.pageSize.toString()
     };
 
-    let httpParams = new HttpParams({fromObject: stringifiedParams});
     return this.doGet<IPagedResultDto<IContactDto>>(null, stringifiedParams).toPromise();
   }
 

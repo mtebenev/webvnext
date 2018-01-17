@@ -29,7 +29,6 @@ export class CompanyDetailsComponent implements OnInit {
     this._activatedRoute = activatedRoute;
     this._companyHttpService = companyHttpService;
     this._appNavigationService = appNavigationService;
-    this._company = null;
     this._viewMode = ViewMode.None;
 
   }
@@ -57,10 +56,10 @@ export class CompanyDetailsComponent implements OnInit {
           ? routeSnapshot.url[routeSnapshot.url.length - 1]
           : null;
 
-        if(lastUrlSegment.path === 'new') {
+        if(lastUrlSegment && lastUrlSegment.path === 'new') {
           this._viewMode = ViewMode.New;
           this._company = {companyId: 0, name: null, description: null};
-        } else if(lastUrlSegment.path === 'edit')
+        } else if(lastUrlSegment && lastUrlSegment.path === 'edit')
           this._viewMode = ViewMode.Edit;
         else if(companyId)
           this._viewMode = ViewMode.View;

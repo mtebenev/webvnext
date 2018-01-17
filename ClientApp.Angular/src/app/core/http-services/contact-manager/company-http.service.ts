@@ -1,7 +1,6 @@
 import {Injectable} from '@angular/core';
-import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
+import {HttpClient, HttpParams} from '@angular/common/http';
 
-import {Observable} from 'rxjs/Observable';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 import {environment} from '@environments/environment';
@@ -10,8 +9,8 @@ import {IPagedResultDto} from '@common/ipaged-result-dto';
 
 export interface ICompanyDto {
   companyId: number;
-  name: string;
-  description: string;
+  name: string | null;
+  description: string | null;
 }
 
 export interface ICompanyQueryParamsDto {
@@ -39,7 +38,6 @@ export class CompanyHttpService extends HttpServiceBase {
       pageSize: queryParams.pageSize.toString()
     };
 
-    let httpParams = new HttpParams({fromObject: stringifiedParams});
     return this.doGet<IPagedResultDto<ICompanyDto>>(null, stringifiedParams).toPromise();
   }
 
