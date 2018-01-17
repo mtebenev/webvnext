@@ -1,4 +1,4 @@
-import {ModuleWithProviders, NgModule, Optional, SkipSelf} from '@angular/core';
+import {ModuleWithProviders, NgModule, Optional, SkipSelf, Provider} from '@angular/core';
 
 import {SharedModule} from '../shared/shared.module';
 
@@ -7,18 +7,20 @@ import {AppHeaderComponent} from './components/app-header.component';
 import {AppSidebarComponent} from './components/app-sidebar.component';
 
 // App services
-import {AppNavigationService} from '@app-services/app-navigation.service';
-import {RouteGuardAuthOidc} from '@app-services/route-guard-auth-oidc.service';
-import {ViewContextService} from '@app-services/view-context.service';
+import {AppNavigationService, ViewContextService, ConfirmationUi, ConfirmationUiService, RouteGuardAuthOidc} from '@app-services/index';
 
 // Http services
 import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
 import {ContactHttpService} from '@http-services/contact-manager/contact-http.service';
 
-const appServices = [
+const appServiceProviders: Provider[] = [
   RouteGuardAuthOidc,
   AppNavigationService,
-  ViewContextService
+  ViewContextService,
+  {
+    provide: ConfirmationUi,
+    useClass: ConfirmationUiService
+  }
 ];
 
 const httpServices = [
@@ -42,13 +44,13 @@ const appComponents = [
     ...appComponents
   ],
   providers: [
-    ...appServices,
-    ...httpServices
+    ...appServiceProviders,
+    ...httpServices,
   ]
 })
 export class CoreModule {
 
-  constructor(@Optional() @SkipSelf() parentModule: CoreModule) {
+  constructor( @Optional() @SkipSelf() parentModule: CoreModule) {
     if(parentModule) {
       throw new Error(
         'CoreModule is already loaded. Import it in the AppModule only');

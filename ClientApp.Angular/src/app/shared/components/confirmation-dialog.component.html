@@ -1,0 +1,7 @@
+<h2 mat-dialog-title>{{ 'CONTACT_MANAGER.MODULE_TITLE' | translate }}</h2>
+<mat-dialog-content>{{content}}</mat-dialog-content>
+
+<mat-dialog-actions fxLayout fxLayoutAlign="end">
+  <button mat-button [mat-dialog-close]="true">{{ 'COMMON.BUTTONS.OK' | translate }}</button>
+  <button mat-button [mat-dialog-close]="false">{{ 'COMMON.BUTTONS.CANCEL' | translate }}</button>
+</mat-dialog-actions>

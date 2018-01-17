@@ -3,7 +3,9 @@
     "BUTTONS": {
       "CREATE": "Create",
       "EDIT": "Edit",
-      "DELETE": "Delete"
+      "DELETE": "Delete",
+      "OK": "OK",
+      "CANCEL": "Cancel"
     }
   },
   "CONTACT_MANAGER": {

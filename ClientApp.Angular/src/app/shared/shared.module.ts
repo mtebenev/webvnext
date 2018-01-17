@@ -7,12 +7,11 @@ import {TranslateModule} from '@ngx-translate/core';
 
 import {
   MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule, MatListModule, MatPaginatorModule, MatIconModule,
-  MatSidenavModule
+  MatSidenavModule, MatDialogModule
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
-import {MasterDetailsComponent} from './components/master-details.component';
-import {SetViewContextOptionsDirective} from './components/set-view-context-options.directive';
+import {MasterDetailsComponent, SetViewContextOptionsDirective, ConfirmationDialogComponent} from './components/index';
 
 const angularModules = [
   CommonModule,
@@ -22,6 +21,7 @@ const angularModules = [
 
 const materialModules = [
   MatButtonModule,
+  MatDialogModule,
   MatFormFieldModule,
   MatIconModule,
   MatInputModule,
@@ -35,7 +35,8 @@ const materialModules = [
 
 const sharedComponents = [
   MasterDetailsComponent,
-  SetViewContextOptionsDirective
+  SetViewContextOptionsDirective,
+  ConfirmationDialogComponent
 ];
 
 @NgModule({
@@ -52,6 +53,9 @@ const sharedComponents = [
     ...materialModules,
     ...sharedComponents,
     TranslateModule
+  ],
+  entryComponents: [
+    ConfirmationDialogComponent
   ]
 })
 export class SharedModule {

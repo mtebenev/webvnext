@@ -30,7 +30,7 @@ export class CompanyDetailsComponent implements OnInit {
     this._companyHttpService = companyHttpService;
     this._appNavigationService = appNavigationService;
     this._viewMode = ViewMode.None;
-
+    this._confirmationUi = confirmationUi;
   }
 
   public get viewMode(): ViewMode {
@@ -105,6 +105,7 @@ export class CompanyDetailsComponent implements OnInit {
     let isConfirmed = await this._confirmationUi.confirm('CONTACT_MANAGER.COMPANY_DETAILS.MSG_DELETE_COMPANY');
     if(isConfirmed) {
       await this._companyHttpService.deleteCompany(this._company.companyId);
+      this._appNavigationService.goToCompanyList();
     }
   }
 
