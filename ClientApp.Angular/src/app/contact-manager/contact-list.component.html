@@ -1,5 +1,8 @@
 <div *ngIf="contacts"
-     class="mat-elevation-z1">
+     class="mat-elevation-z1"
+     fxFlexFill
+		 fxLayout="column"
+		 fxLayoutAlign="start stretch">
   <mat-toolbar>
     <span>{{ 'CONTACT_MANAGER.CONTACT_LIST.VIEW_TITLE' | translate }}</span>
   </mat-toolbar>
@@ -10,7 +13,8 @@
                  (page)="handlePageChange($event)">
   </mat-paginator>
 
-  <mat-nav-list>
+  <mat-nav-list fxFlex
+                style="overflow: auto">
     <mat-list-item *ngFor="let contact of contacts.rows"
                   [routerLink]="['/contacts', contact.contactId]">
       <a>{{contact.firstName}} {{contact.lastName}}</a>

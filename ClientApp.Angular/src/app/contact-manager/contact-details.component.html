@@ -1,6 +1,6 @@
-<ng-container *ngIf="company">
+<ng-container *ngIf="contact">
   <mat-toolbar fxLayout  fxLayoutAlign="space-between center">
-    <span> {{company.name}} </span>
+    <span> {{contact.firstName}} {{contact.lastName}} </span>
     <div fxLayout fxLayoutAlign="end">
 			<button mat-icon-button
 							*ngIf="viewMode==='view'"
@@ -22,10 +22,10 @@
 		<!-- View mode -->
 		<div *ngSwitchCase="'view'">
 			<div>
-				COMPANY: {{company.name}}
+				CONTACT: {{contact.firstName}} {{contact.lastName}}
 			</div>
 			<div>
-				DESCRIPTION: {{company.description}}
+				DESCRIPTION: {{contact.description}}
 			</div>
 		</div>
 
@@ -36,21 +36,22 @@
 
         <div>
 					<mat-form-field class="w-100">
-						<input matInput
-									name="name"
-									placeholder="Name"
-									[(ngModel)]="company.name"
-									required>
-					</mat-form-field>
+            <input matInput
+                   name="firstName"
+                   placeholder="First name"
+                   [(ngModel)]="contact.firstName"
+                   required>
+          </mat-form-field>
 		    </div>
 				<div>
-					<mat-form-field class="w-100">
-						<input matInput
-									name="description"
-									placeholder="Description"
-									[(ngModel)]="company.description">
-					</mat-form-field>
-				</div>
+          <mat-form-field class="w-100">
+            <input matInput
+                   name="lastName"
+                   placeholder="Last name"
+                   [(ngModel)]="contact.lastName"
+                   required>
+          </mat-form-field>
+        </div>
 				<div fxLayout fxLayoutAlign="end">
 					<button mat-button>{{ 'COMMON.BUTTONS.UPDATE' | translate }}</button>
 				</div>
@@ -63,20 +64,21 @@
 						#form="ngForm">
 				<div>
 					<mat-form-field class="w-100">
-						<input matInput
-									name="name"
-									placeholder="Name"
-									[(ngModel)]="company.name"
-									required>
-					</mat-form-field>
+            <input matInput
+                   name="firstName"
+                   [placeholder]="'CONTACT_MANAGER.CONTACT_NEW.FIRST_NAME_PLACEHOLDER' | translate"
+                   [(ngModel)]="contact.firstName"
+                   required>
+          </mat-form-field>
 				</div>
 				<div>
 					<mat-form-field class="w-100">
-						<input matInput
-									name="description"
-									placeholder="Description"
-									[(ngModel)]="company.description">
-					</mat-form-field>
+            <input matInput
+                   name="lastName"
+                   [placeholder]="'CONTACT_MANAGER.CONTACT_NEW.LAST_NAME_PLACEHOLDER' | translate"
+                   [(ngModel)]="contact.lastName"
+                   required>
+         </mat-form-field>
 				</div>
 				<div fxLayout fxLayoutAlign="end">
 					<button mat-button>{{ 'COMMON.BUTTONS.CREATE' | translate }}</button>

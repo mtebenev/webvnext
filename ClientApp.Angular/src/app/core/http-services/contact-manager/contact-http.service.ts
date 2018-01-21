@@ -53,8 +53,8 @@ export class ContactHttpService extends HttpServiceBase {
   /**
    * Create a new contact for the current user
    */
-  public createContact(contactDto: IContactDto): Promise<{}> {
-    return this.doPost(contactDto).toPromise();
+  public createContact(contactDto: IContactDto): Promise<IContactDto> {
+    return this.doPost<IContactDto, IContactDto>(contactDto).toPromise();
   }
 
   /**

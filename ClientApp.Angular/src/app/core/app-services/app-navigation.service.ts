@@ -38,4 +38,18 @@ export class AppNavigationService {
   public goToContactList(): void {
     this.router.navigate(['/contacts']);
   }
+
+  /**
+   * Navigates to a specific contact (edit mode)
+   */
+  public goToContactEdit(contactId: number): void {
+    this.router.navigate(['/contacts', contactId.toString(), 'edit']);
+  }
+
+  /**
+   * Navigates to a specific contact (view mode)
+   */
+  public goToContactView(contactId: number): void {
+    this.router.navigate(['/contacts', contactId.toString()]);
+  }
 }

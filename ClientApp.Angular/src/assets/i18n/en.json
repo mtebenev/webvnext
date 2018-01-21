@@ -5,7 +5,8 @@
       "EDIT": "Edit",
       "DELETE": "Delete",
       "OK": "OK",
-      "CANCEL": "Cancel"
+      "CANCEL": "Cancel",
+      "UPDATE": "Update"
     }
   },
   "CONTACT_MANAGER": {
@@ -21,6 +22,9 @@
     "CONTACT_LIST": {
       "VIEW_TITLE": "Contacts",
       "CREATE_CONTACT": "New Contact"
+    },
+    "CONTACT_DETAILS": {
+      "MSG_DELETE_CONTACT": "Are you sure you want to delete the contact?"
     },
     "CONTACT_NEW": {
       "VIEW_TITLE": "New Contact",

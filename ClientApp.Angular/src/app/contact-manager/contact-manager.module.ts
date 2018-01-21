@@ -3,20 +3,16 @@ import {NgModule} from '@angular/core';
 import {SharedModule} from '../shared/shared.module';
 import {ContactManagerRoutingModule} from './contact-manager-routing.module';
 import {
-  CompanyEditComponent, CompanyListComponent, CompanyNewComponent, ContactEditComponent, ContactListComponent, ContactNewComponent,
-  CompaniesComponent, ContactsComponent, CompanyDetailsComponent
+  CompanyListComponent, ContactListComponent, CompaniesComponent, ContactsComponent, CompanyDetailsComponent, ContactDetailsComponent
 } from './index';
 
 const moduleComponents = [
   CompanyListComponent,
-  CompanyNewComponent,
-  CompanyEditComponent,
   ContactListComponent,
-  ContactNewComponent,
-  ContactEditComponent,
   CompaniesComponent,
   CompanyDetailsComponent,
-  ContactsComponent
+  ContactsComponent,
+  ContactDetailsComponent
 ];
 
 @NgModule({

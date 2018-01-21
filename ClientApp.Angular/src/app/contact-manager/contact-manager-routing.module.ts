@@ -2,7 +2,7 @@ import {NgModule} from '@angular/core';
 import {Routes, RouterModule} from '@angular/router';
 
 import {
-  ContactEditComponent, ContactNewComponent, CompaniesComponent, CompanyDetailsComponent, ContactsComponent
+  CompaniesComponent, CompanyDetailsComponent, ContactsComponent, ContactDetailsComponent
 } from './index';
 import {RouteGuardAuthOidc} from '@app-services/route-guard-auth-oidc.service';
 
@@ -35,12 +35,16 @@ const routes: Routes = [
     children: [
       {
         path: 'new',
-        component: ContactNewComponent,
+        component: ContactDetailsComponent,
+      },
+      {
+        path: ':contactId/edit',
+        component: ContactDetailsComponent
       },
       {
         path: ':contactId',
-        component: ContactEditComponent
-      }
+        component: ContactDetailsComponent,
+      },
     ]
   }
 ];
