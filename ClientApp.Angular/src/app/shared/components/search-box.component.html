@@ -11,7 +11,7 @@
          (blur)="activate(false)"
          [(ngModel)]="value"/>
     <button mat-button
-            *ngIf="value"
+            *ngIf="value && isActivated"
             matSuffix
             mat-icon-button
             aria-label="Clear"
