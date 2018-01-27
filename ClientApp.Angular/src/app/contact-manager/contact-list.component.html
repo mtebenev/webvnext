@@ -3,8 +3,12 @@
      fxFlexFill
 		 fxLayout="column"
 		 fxLayoutAlign="start stretch">
-  <mat-toolbar>
+  <mat-toolbar  fxLayout
+                fxLayoutAlign="space-between center">
     <span>{{ 'CONTACT_MANAGER.CONTACT_LIST.VIEW_TITLE' | translate }}</span>
+    <div fxLayout fxLayoutAlign="end center">
+      <search-box (textChanged)="handleFilterTextChanged($event)"></search-box>
+    </div>
   </mat-toolbar>
 
   <mat-paginator [length]="contacts.totalRowCount"

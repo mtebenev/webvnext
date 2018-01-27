@@ -15,6 +15,7 @@ export class ContactListComponent implements OnInit {
 
   private currentPage: number;
   private _pageSize: number;
+  private _filterText?: string;
   private _contacts: IPagedResultDto<IContactDto>;
 
   constructor(private contactHttpService: ContactHttpService) {
@@ -54,11 +55,20 @@ export class ContactListComponent implements OnInit {
     this.loadContacts();
   }
 
+  /**
+   * Invoked when user changes filter
+   */
+  public handleFilterTextChanged(filterText: string): void {
+    this._filterText = filterText;
+    this.loadContacts();
+  }
+
   private async loadContacts(): Promise<void> {
 
     let queryParams: IContactQueryParamsDto = {
       pageNumber: this.currentPage,
-      pageSize: this._pageSize
+      pageSize: this._pageSize,
+      filterText: this._filterText
     };
 
     this._contacts = await this.contactHttpService.getContacts(queryParams);

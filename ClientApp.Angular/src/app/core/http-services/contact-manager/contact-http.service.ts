@@ -17,6 +17,7 @@ export interface IContactDto {
 export interface IContactQueryParamsDto {
   pageNumber: number;
   pageSize: number;
+  filterText?: string;
 }
 
 /**
@@ -34,10 +35,13 @@ export class ContactHttpService extends HttpServiceBase {
    */
   public getContacts(queryParams: IContactQueryParamsDto): Promise<IPagedResultDto<IContactDto>> {
 
-    let stringifiedParams = {
+    let stringifiedParams: {[param: string]: string} = {
       pageNumber: queryParams.pageNumber.toString(),
       pageSize: queryParams.pageSize.toString()
     };
+
+    if(queryParams.filterText)
+      stringifiedParams.filterText = queryParams.filterText;
 
     return this.doGet<IPagedResultDto<IContactDto>>(null, stringifiedParams).toPromise();
   }

@@ -21,8 +21,13 @@ namespace Mt.WebVNext.AppEngine.DataServices
 
     public async Task<PagedResult<Contact>> GetContactsByUserAsync(int userId, ContactQueryParamsDto queryParams)
     {
-      return await _dbContext.Contacts
-        .Where(c => c.UserId == userId)
+      var contactsQuery = _dbContext.Contacts
+        .Where(c => c.UserId == userId);
+
+      if(!string.IsNullOrWhiteSpace(queryParams.FilterText))
+        contactsQuery = contactsQuery.Where(c => c.FirstName.Contains(queryParams.FilterText) || c.LastName.Contains(queryParams.FilterText));
+
+      return await contactsQuery
         .AsNoTracking()
         .GetPagedAsync(queryParams.PageNumber, queryParams.PageSize);
     }

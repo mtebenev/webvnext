@@ -21,8 +21,13 @@ namespace Mt.WebVNext.AppEngine.DataServices
 
     public async Task<PagedResult<Company>> GetCompaniesByUserAsync(int userId, CompanyQueryParamsDto queryParams)
     {
-      return await _dbContext.Companies
-        .Where(c => c.UserId == userId)
+      var companiesQuery = _dbContext.Companies
+        .Where(c => c.UserId == userId);
+
+      if(!string.IsNullOrWhiteSpace(queryParams.FilterText))
+        companiesQuery = companiesQuery.Where(c => c.Name.Contains(queryParams.FilterText));
+
+      return await companiesQuery
         .AsNoTracking()
         .GetPagedAsync(queryParams.PageNumber, queryParams.PageSize);
     }
