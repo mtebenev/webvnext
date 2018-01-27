@@ -28,7 +28,8 @@
       "@app-services/*": ["app/core/app-services/*"],
       "@http-services/*": ["app/core/http-services/*"],
       "@environments/*": ["environments/*"],
-      "@shared/*": ["app/shared/*"]
+      "@shared/*": ["app/shared/*"],
+      "@testing/*": ["testing/*"]
     }
   }
 }

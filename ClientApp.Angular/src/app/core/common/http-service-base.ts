@@ -1,7 +1,8 @@
 import {HttpClient, HttpHeaders, HttpParams} from '@angular/common/http';
 
-import {Observable} from 'rxjs/Observable';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
+
+import {Observable} from '@common/rxjs-imports';
 
 export type AngularHttpParams = HttpParams | {
   [param: string]: string | string[];

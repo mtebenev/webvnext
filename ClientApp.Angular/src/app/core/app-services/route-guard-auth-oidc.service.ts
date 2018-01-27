@@ -1,9 +1,9 @@
 import {Injectable} from '@angular/core';
 import {CanActivate, ActivatedRouteSnapshot, RouterStateSnapshot} from '@angular/router';
 
-import {Observable} from 'rxjs/Observable';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
+import {Observable} from '@common/rxjs-imports';
 import {Deferred} from '@common/deferred';
 
 /**

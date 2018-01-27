@@ -2,7 +2,7 @@ import {Component, Input, OnInit, OnDestroy, Type} from '@angular/core';
 import {ObservableMedia} from '@angular/flex-layout';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {ISubscription} from 'rxjs/Subscription';
+import {ISubscription} from '@common/rxjs-imports';
 
 /**
  * Displays a master and details components side by side (in desktop mode) or stacked (on mobiles)

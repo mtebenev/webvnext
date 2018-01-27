@@ -5,8 +5,7 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {MatSidenav} from '@angular/material';
 import {TranslateService} from '@ngx-translate/core';
 
-import {ISubscription} from 'rxjs/Subscription';
-import 'rxjs/add/operator/filter';
+import {ISubscription, filter} from '@common/rxjs-imports';
 
 @Component({
   selector: 'app-root',
@@ -32,7 +31,7 @@ export class AppComponent {
 
     // Listen router and hide nav sidebar when navigation occurres
     this._subscriptionRouter = router.events
-      .filter((event) => event instanceof NavigationEnd)
+      .pipe(filter((event) => event instanceof NavigationEnd))
       .subscribe((event) => {
         this.onNavigationEnd();
       });
