@@ -40,4 +40,16 @@ describe('CompanyListComponent', () => {
     expect(mockCompanyHttp.getCompanies).toHaveBeenCalledWith(jasmine.objectContaining({pageNumber: 2, pageSize: 20}));
   });
 
+  it('Should perform request with filter when user changes filter text', () => {
+
+    // Act
+    let componentInstance = fixture.componentInstance;
+    componentInstance.handleFilterTextChanged('name_filter');
+
+    // Verify
+    let mockCompanyHttp: jasmine.SpyObj<CompanyHttpService> = TestBed.get(CompanyHttpService);
+
+    expect(mockCompanyHttp.getCompanies).toHaveBeenCalledWith(jasmine.objectContaining({filterText: 'name_filter'}));
+  });
+
 });

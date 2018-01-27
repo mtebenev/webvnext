@@ -16,6 +16,7 @@ export class CompanyListComponent implements OnInit {
 
   private currentPage: number;
   private _pageSize: number;
+  private _filterText?: string;
   private _companies: IPagedResultDto<ICompanyDto>;
 
   constructor(private companyHttpService: CompanyHttpService) {
@@ -55,11 +56,20 @@ export class CompanyListComponent implements OnInit {
     this.loadCompanies();
   }
 
+  /**
+   * Invoked when user changes filter
+   */
+  public handleFilterTextChanged(filterText: string): void {
+    this._filterText = filterText;
+    this.loadCompanies();
+  }
+
   private async loadCompanies(): Promise<void> {
 
     let queryParams: ICompanyQueryParamsDto = {
       pageNumber: this.currentPage,
-      pageSize: this._pageSize
+      pageSize: this._pageSize,
+      filterText: this._filterText
     };
 
     this._companies = await this.companyHttpService.getCompanies(queryParams);

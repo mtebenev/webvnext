@@ -16,6 +16,7 @@ export interface ICompanyDto {
 export interface ICompanyQueryParamsDto {
   pageNumber: number;
   pageSize: number;
+  filterText?: string;
 }
 
 /**
@@ -33,10 +34,13 @@ export class CompanyHttpService extends HttpServiceBase {
    */
   public getCompanies(queryParams: ICompanyQueryParamsDto): Promise<IPagedResultDto<ICompanyDto>> {
 
-    let stringifiedParams = {
+    let stringifiedParams: {[param: string]: string} = {
       pageNumber: queryParams.pageNumber.toString(),
       pageSize: queryParams.pageSize.toString()
     };
+
+    if(queryParams.filterText)
+      stringifiedParams.filterText = queryParams.filterText;
 
     return this.doGet<IPagedResultDto<ICompanyDto>>(null, stringifiedParams).toPromise();
   }

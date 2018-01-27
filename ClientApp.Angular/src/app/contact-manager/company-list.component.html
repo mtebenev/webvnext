@@ -7,14 +7,14 @@
                fxLayoutAlign="space-between center">
     <span>{{ 'CONTACT_MANAGER.COMPANY_LIST.VIEW_TITLE' | translate }}</span>
     <div fxLayout fxLayoutAlign="end center">
-      <search-box></search-box>
+      <search-box (textChanged)="handleFilterTextChanged($event)"></search-box>
     </div>
   </mat-toolbar>
 
   <mat-paginator [length]="companies.totalRowCount"
-                [pageSize]="pageSize"
-                [pageSizeOptions]="[5, 10, 25, 100]"
-                (page)="handlePageChange($event)">
+                 [pageSize]="pageSize"
+                 [pageSizeOptions]="[5, 10, 25, 100]"
+                 (page)="handlePageChange($event)">
   </mat-paginator>
 
 		<mat-nav-list fxFlex

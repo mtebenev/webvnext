@@ -4,12 +4,13 @@
   <mat-icon>search</mat-icon>
 </button>
 
-<mat-form-field *ngIf="isActivated">
+<mat-form-field *ngIf="isActivated" [@boxState]="state">
   <input matInput
          #inputElem
          type="text"
          (blur)="activate(false)"
-         [(ngModel)]="value">
+         [(ngModel)]="value"
+         (ngModelChange)="handleValueChange($event)">
     <button mat-button
             *ngIf="value && isActivated"
             matSuffix
