@@ -1,40 +1,27 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 
 import {CompanyHttpService, ICompanyDto} from '@http-services/contact-manager/company-http.service';
 import {AppNavigationService, ConfirmationUi} from '@app-services/index';
-
-enum ViewMode {
-  None = 'none',
-  View = 'view',
-  Edit = 'edit',
-  New = 'new'
-}
+import {EntityDetailsComponentbase, ViewMode} from './entity-details-component-base';
 
 @Component({
   templateUrl: './company-details.component.html'
 })
-export class CompanyDetailsComponent implements OnInit {
+export class CompanyDetailsComponent extends EntityDetailsComponentbase implements OnInit {
 
   private _company: ICompanyDto;
-  private _activatedRoute: ActivatedRoute;
   private _companyHttpService: CompanyHttpService;
   private _appNavigationService: AppNavigationService;
-  private _viewMode: ViewMode;
   private _confirmationUi: ConfirmationUi;
 
   constructor(activatedRoute: ActivatedRoute, companyHttpService: CompanyHttpService, appNavigationService: AppNavigationService, confirmationUi: ConfirmationUi) {
+    super(activatedRoute);
 
-    this._activatedRoute = activatedRoute;
     this._companyHttpService = companyHttpService;
     this._appNavigationService = appNavigationService;
-    this._viewMode = ViewMode.None;
     this._confirmationUi = confirmationUi;
-  }
-
-  public get viewMode(): ViewMode {
-    return this._viewMode;
   }
 
   public get company(): ICompanyDto {
@@ -45,29 +32,7 @@ export class CompanyDetailsComponent implements OnInit {
    * OnInit
    */
   public ngOnInit() {
-
-    this._activatedRoute.url
-      .subscribe(url => {
-
-        let routeSnapshot = this._activatedRoute.snapshot;
-
-        let companyId = routeSnapshot.params.companyId;
-        let lastUrlSegment = routeSnapshot.url.length > 0
-          ? routeSnapshot.url[routeSnapshot.url.length - 1]
-          : null;
-
-        if(lastUrlSegment && lastUrlSegment.path === 'new') {
-          this._viewMode = ViewMode.New;
-          this._company = {companyId: 0, name: null, description: null};
-        } else if(lastUrlSegment && lastUrlSegment.path === 'edit')
-          this._viewMode = ViewMode.Edit;
-        else if(companyId)
-          this._viewMode = ViewMode.View;
-
-        if(companyId)
-          this.loadCompany(companyId);
-
-      });
+    this.onInit();
   }
 
   /**
@@ -86,9 +51,9 @@ export class CompanyDetailsComponent implements OnInit {
 
       let companyId = this._company.companyId;
 
-      if(this._viewMode === ViewMode.Edit)
+      if(this.viewMode === ViewMode.Edit)
         await this._companyHttpService.updateCompany(this._company);
-      else if(this._viewMode === ViewMode.New) {
+      else if(this.viewMode === ViewMode.New) {
         let newCompany = await this._companyHttpService.createCompany(this._company);
         companyId = newCompany.companyId;
       }
@@ -109,7 +74,26 @@ export class CompanyDetailsComponent implements OnInit {
     }
   }
 
-  private async loadCompany(companyId: number): Promise<void> {
-    this._company = await this._companyHttpService.getCompany(companyId);
+  /**
+   * Override
+   */
+  protected isEntityIdInRoute(routeSnapshot: ActivatedRouteSnapshot): boolean {
+    return routeSnapshot.params.companyId ? true : false;
+  }
+
+  /**
+   * Must be overridden in derived class and create new instance of the entity whe
+   */
+  protected async onSwitchMode(viewMode: ViewMode, routeSnapshot: ActivatedRouteSnapshot): Promise<void> {
+
+    let companyId = routeSnapshot.params.companyId;
+    if(!companyId && (viewMode === ViewMode.Edit || viewMode === ViewMode.View))
+      throw new Error('Unexpected: cannot find entity ID on route');
+
+    if(viewMode === ViewMode.View || viewMode === ViewMode.Edit) {
+      this._company = await this._companyHttpService.getCompany(companyId);
+    } else {
+      this._company = {companyId: 0, name: null, description: null};
+    }
   }
 }

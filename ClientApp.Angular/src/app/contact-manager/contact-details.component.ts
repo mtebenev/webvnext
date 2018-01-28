@@ -1,5 +1,5 @@
 import {Component, OnInit} from '@angular/core';
-import {ActivatedRoute} from '@angular/router';
+import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
 import {FormGroup, FormControl, NgForm, FormGroupDirective} from '@angular/forms';
 
 import {ErrorStateMatcher} from '@angular/material';
@@ -7,13 +7,7 @@ import {ErrorStateMatcher} from '@angular/material';
 import {ContactHttpService, IContactDto} from '@http-services/contact-manager/contact-http.service';
 import {CompanyHttpService, ICompanyDto, ICompanyQueryParamsDto} from '@http-services/contact-manager/company-http.service';
 import {AppNavigationService, ConfirmationUi} from '@app-services/index';
-
-enum ViewMode {
-  None = 'none',
-  View = 'view',
-  Edit = 'edit',
-  New = 'new'
-}
+import {EntityDetailsComponentbase, ViewMode} from './entity-details-component-base';
 
 /**
  * Material-specific: check that input for related company is an object. Otherwise (if user types company names not selecting from list
@@ -35,14 +29,12 @@ class CompanySelectStateMatcher extends ErrorStateMatcher {
 @Component({
   templateUrl: './contact-details.component.html'
 })
-export class ContactDetailsComponent implements OnInit {
+export class ContactDetailsComponent extends EntityDetailsComponentbase implements OnInit {
 
   private _contact: IContactDto;
-  private readonly _activatedRoute: ActivatedRoute;
   private readonly _contactHttpService: ContactHttpService;
   private readonly _companyHttpServie: CompanyHttpService;
   private readonly _appNavigationService: AppNavigationService;
-  private _viewMode: ViewMode;
   private readonly _confirmationUi: ConfirmationUi;
 
   private _companies: ICompanyDto[]; // For selecting related companies
@@ -52,20 +44,13 @@ export class ContactDetailsComponent implements OnInit {
   constructor(activatedRoute: ActivatedRoute, contactHttpService: ContactHttpService, companyHttpService: CompanyHttpService,
     appNavigationService: AppNavigationService, confirmationUi: ConfirmationUi) {
 
-    this._activatedRoute = activatedRoute;
+    super(activatedRoute);
+
     this._contactHttpService = contactHttpService;
     this._companyHttpServie = companyHttpService;
     this._appNavigationService = appNavigationService;
-    this._viewMode = ViewMode.None;
     this._confirmationUi = confirmationUi;
     this._companySelectStateMatcher = new CompanySelectStateMatcher();
-  }
-
-  /**
-   * Bound view mode
-   */
-  public get viewMode(): ViewMode {
-    return this._viewMode;
   }
 
   /**
@@ -106,28 +91,7 @@ export class ContactDetailsComponent implements OnInit {
    * OnInit
    */
   public ngOnInit() {
-
-    this._activatedRoute.url
-      .subscribe(url => {
-
-        let routeSnapshot = this._activatedRoute.snapshot;
-
-        let contactId = routeSnapshot.params.contactId;
-        let lastUrlSegment = routeSnapshot.url.length > 0
-          ? routeSnapshot.url[routeSnapshot.url.length - 1]
-          : null;
-
-        if(lastUrlSegment && lastUrlSegment.path === 'new') {
-          this._viewMode = ViewMode.New;
-          this._contact = {contactId: 0, firstName: null, lastName: null, companyId: 0};
-        } else if(lastUrlSegment && lastUrlSegment.path === 'edit')
-          this._viewMode = ViewMode.Edit;
-        else if(contactId)
-          this._viewMode = ViewMode.View;
-
-        if(contactId)
-          this.loadContact(contactId);
-      });
+    this.onInit();
   }
 
   /**
@@ -168,9 +132,9 @@ export class ContactDetailsComponent implements OnInit {
 
       let contactId = this._contact.contactId;
 
-      if(this._viewMode === ViewMode.Edit)
+      if(this.viewMode === ViewMode.Edit)
         await this._contactHttpService.updateContact(this._contact);
-      else if(this._viewMode === ViewMode.New) {
+      else if(this.viewMode === ViewMode.New) {
         let newContact = await this._contactHttpService.createContact(this._contact);
         contactId = newContact.contactId;
       }
@@ -191,10 +155,30 @@ export class ContactDetailsComponent implements OnInit {
     }
   }
 
-  private async loadContact(contactId: number): Promise<void> {
-    this._contact = await this._contactHttpService.getContact(contactId);
+  /**
+   * Override
+   */
+  protected isEntityIdInRoute(routeSnapshot: ActivatedRouteSnapshot): boolean {
+    return routeSnapshot.params.contactId ? true : false;
+  }
 
-    if(this._contact.companyId)
+  /**
+   * Must be overridden in derived class and create new instance of the entity whe
+   */
+  protected async onSwitchMode(viewMode: ViewMode, routeSnapshot: ActivatedRouteSnapshot): Promise<void> {
+
+    let contactId = routeSnapshot.params.contactId;
+    if(!contactId && (viewMode === ViewMode.Edit || viewMode === ViewMode.View))
+      throw new Error('Unexpected: cannot find entity ID on route');
+
+    if(viewMode === ViewMode.View || viewMode === ViewMode.Edit) {
+      this._contact = await this._contactHttpService.getContact(contactId);
+
+      if(this._contact.companyId)
       this._selectedCompany = await this._companyHttpServie.getCompany(this._contact.companyId);
+
+    } else {
+      this._contact = {contactId: 0, firstName: null, lastName: null, companyId: 0};
+    }
   }
 }
