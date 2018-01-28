@@ -22,10 +22,7 @@
 		<!-- View mode -->
 		<div *ngSwitchCase="'view'">
 			<div>
-				CONTACT: {{contact.firstName}} {{contact.lastName}}
-			</div>
-			<div>
-				DESCRIPTION: {{contact.description}}
+				{{'CONTACT_MANAGER.CONTACT_DETAILS.LABEL_COMPANY' | translate}} {{selectedCompany?.name}}
 			</div>
 		</div>
 
@@ -35,10 +32,28 @@
     		    #form="ngForm">
 
         <div>
+          <mat-form-field class="w-100">
+            <input matInput
+                    name="companyId"
+                    [placeholder]="'CONTACT_MANAGER.CONTACT_DETAILS.SELECT_COMPANY_PLACEHOLDER' | translate"
+                    [(ngModel)]="selectedCompany"
+                    (ngModelChange)="handleCompanyFilterChange($event)"
+                    [matAutocomplete]="companyList"
+                    [errorStateMatcher]="companySelectStateMatcher"
+                    required>
+          </mat-form-field>
+          <mat-autocomplete #companyList
+                            [displayWith]="getCompanyName">
+            <mat-option *ngFor="let c of companies" [value]="c">
+                {{ c.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div>
 					<mat-form-field class="w-100">
             <input matInput
                    name="firstName"
-                   placeholder="First name"
+                   [placeholder]="'CONTACT_MANAGER.CONTACT_DETAILS.FIRST_NAME_PLACEHOLDER' | translate"
                    [(ngModel)]="contact.firstName"
                    required>
           </mat-form-field>
@@ -47,7 +62,7 @@
           <mat-form-field class="w-100">
             <input matInput
                    name="lastName"
-                   placeholder="Last name"
+                   [placeholder]="'CONTACT_MANAGER.CONTACT_DETAILS.LAST_NAME_PLACEHOLDER' | translate"
                    [(ngModel)]="contact.lastName"
                    required>
           </mat-form-field>
@@ -62,11 +77,29 @@
 		<div *ngSwitchCase="'new'">
 			<form (ngSubmit)="handleFormSubmit(form)"
 						#form="ngForm">
-				<div>
+        <div>
+          <mat-form-field class="w-100">
+            <input matInput
+                   name="companyId"
+                   [placeholder]="'CONTACT_MANAGER.CONTACT_DETAILS.SELECT_COMPANY_PLACEHOLDER' | translate"
+                   [(ngModel)]="selectedCompany"
+                   (ngModelChange)="handleCompanyFilterChange($event)"
+                   [matAutocomplete]="companyList"
+                   [errorStateMatcher]="companySelectStateMatcher"
+                   required>
+          </mat-form-field>
+          <mat-autocomplete #companyList
+                            [displayWith]="getCompanyName">
+            <mat-option *ngFor="let c of companies" [value]="c">
+               {{ c.name }}
+            </mat-option>
+          </mat-autocomplete>
+        </div>
+        <div>
 					<mat-form-field class="w-100">
             <input matInput
                    name="firstName"
-                   [placeholder]="'CONTACT_MANAGER.CONTACT_NEW.FIRST_NAME_PLACEHOLDER' | translate"
+                   [placeholder]="'CONTACT_MANAGER.CONTACT_DETAILS.FIRST_NAME_PLACEHOLDER' | translate"
                    [(ngModel)]="contact.firstName"
                    required>
           </mat-form-field>
@@ -75,7 +108,7 @@
 					<mat-form-field class="w-100">
             <input matInput
                    name="lastName"
-                   [placeholder]="'CONTACT_MANAGER.CONTACT_NEW.LAST_NAME_PLACEHOLDER' | translate"
+                   [placeholder]="'CONTACT_MANAGER.CONTACT_DETAILS.LAST_NAME_PLACEHOLDER' | translate"
                    [(ngModel)]="contact.lastName"
                    required>
          </mat-form-field>

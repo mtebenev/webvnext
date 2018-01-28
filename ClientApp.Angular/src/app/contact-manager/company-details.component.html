@@ -22,10 +22,13 @@
 		<!-- View mode -->
 		<div *ngSwitchCase="'view'">
 			<div>
-				COMPANY: {{company.name}}
-			</div>
-			<div>
-				DESCRIPTION: {{company.description}}
+        {{'CONTACT_MANAGER.COMPANY_DETAILS.LABEL_DESCRIPTION' | translate}}
+        <span *ngIf="company.description">
+          {{company.description}}
+        </span>
+        <span *ngIf="!company.description">
+          {{'CONTACT_MANAGER.COMPANY_DETAILS.NO_DESCRIPTION' | translate}}
+        </span>
 			</div>
 		</div>
 

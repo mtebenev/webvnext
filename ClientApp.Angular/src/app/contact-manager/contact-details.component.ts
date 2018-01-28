@@ -1,8 +1,11 @@
 import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute} from '@angular/router';
-import {FormGroup} from '@angular/forms';
+import {FormGroup, FormControl, NgForm, FormGroupDirective} from '@angular/forms';
+
+import {ErrorStateMatcher} from '@angular/material';
 
 import {ContactHttpService, IContactDto} from '@http-services/contact-manager/contact-http.service';
+import {CompanyHttpService, ICompanyDto, ICompanyQueryParamsDto} from '@http-services/contact-manager/company-http.service';
 import {AppNavigationService, ConfirmationUi} from '@app-services/index';
 
 enum ViewMode {
@@ -12,25 +15,50 @@ enum ViewMode {
   New = 'new'
 }
 
+/**
+ * Material-specific: check that input for related company is an object. Otherwise (if user types company names not selecting from list
+ * put the control in error state)
+ */
+class CompanySelectStateMatcher extends ErrorStateMatcher {
+  public isErrorState(control: FormControl | null, form: FormGroupDirective | NgForm | null): boolean {
+
+    let result = false;
+    if(control) {
+      let companySelectInput: FormControl = control;
+      result = typeof companySelectInput.value === 'string';
+    }
+
+    return result;
+  }
+}
+
 @Component({
   templateUrl: './contact-details.component.html'
 })
 export class ContactDetailsComponent implements OnInit {
 
   private _contact: IContactDto;
-  private _activatedRoute: ActivatedRoute;
-  private _contactHttpService: ContactHttpService;
-  private _appNavigationService: AppNavigationService;
+  private readonly _activatedRoute: ActivatedRoute;
+  private readonly _contactHttpService: ContactHttpService;
+  private readonly _companyHttpServie: CompanyHttpService;
+  private readonly _appNavigationService: AppNavigationService;
   private _viewMode: ViewMode;
-  private _confirmationUi: ConfirmationUi;
+  private readonly _confirmationUi: ConfirmationUi;
 
-  constructor(activatedRoute: ActivatedRoute, contactHttpService: ContactHttpService, appNavigationService: AppNavigationService, confirmationUi: ConfirmationUi) {
+  private _companies: ICompanyDto[]; // For selecting related companies
+  private _selectedCompany: ICompanyDto | string;
+  private readonly _companySelectStateMatcher: CompanySelectStateMatcher;
+
+  constructor(activatedRoute: ActivatedRoute, contactHttpService: ContactHttpService, companyHttpService: CompanyHttpService,
+    appNavigationService: AppNavigationService, confirmationUi: ConfirmationUi) {
 
     this._activatedRoute = activatedRoute;
     this._contactHttpService = contactHttpService;
+    this._companyHttpServie = companyHttpService;
     this._appNavigationService = appNavigationService;
     this._viewMode = ViewMode.None;
     this._confirmationUi = confirmationUi;
+    this._companySelectStateMatcher = new CompanySelectStateMatcher();
   }
 
   /**
@@ -45,6 +73,33 @@ export class ContactDetailsComponent implements OnInit {
    */
   public get contact(): IContactDto {
     return this._contact;
+  }
+
+  /**
+   * Bound related companies
+   */
+  public get companies(): ICompanyDto[] {
+    return this._companies;
+  }
+
+  /**
+   * Bound company selection
+   */
+  public get selectedCompany(): ICompanyDto | string {
+    return this._selectedCompany;
+  }
+  public set selectedCompany(value: ICompanyDto | string) {
+    this._selectedCompany = value;
+
+    if(typeof value !== 'string')
+      this._contact.companyId = value.companyId;
+  }
+
+  /**
+   * Bound company selection validator
+   */
+  public get companySelectStateMatcher(): CompanySelectStateMatcher {
+    return this._companySelectStateMatcher;
   }
 
   /**
@@ -72,8 +127,29 @@ export class ContactDetailsComponent implements OnInit {
 
         if(contactId)
           this.loadContact(contactId);
-
       });
+  }
+
+  /**
+   * Invoked when user changes filter in companies autocomplete
+   */
+  public async handleCompanyFilterChange(value: string): Promise<void> {
+
+    let queryParams: ICompanyQueryParamsDto = {
+      pageNumber: 0,
+      pageSize: 10,
+      filterText: value
+    };
+
+    let pagedResult = await this._companyHttpServie.getCompanies(queryParams);
+    this._companies = pagedResult.rows;
+  }
+
+  /**
+   * Used to display company name instead of ID in company autocomplete
+   */
+  public getCompanyName(company: ICompanyDto): string | null {
+    return company ? company.name : null;
   }
 
   /**
@@ -117,5 +193,8 @@ export class ContactDetailsComponent implements OnInit {
 
   private async loadContact(contactId: number): Promise<void> {
     this._contact = await this._contactHttpService.getContact(contactId);
+
+    if(this._contact.companyId)
+      this._selectedCompany = await this._companyHttpServie.getCompany(this._contact.companyId);
   }
 }

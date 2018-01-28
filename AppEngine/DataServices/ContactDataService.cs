@@ -53,6 +53,7 @@ namespace Mt.WebVNext.AppEngine.DataServices
       var contact = await _dbContext.Contacts.FindAsync(contactDto.ContactId);
       contact.FirstName = contactDto.FirstName;
       contact.LastName = contactDto.LastName;
+      contact.CompanyId = contactDto.CompanyId;
 
       await _dbContext.SaveChangesAsync();
     }

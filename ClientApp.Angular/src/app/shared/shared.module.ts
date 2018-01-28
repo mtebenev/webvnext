@@ -7,7 +7,7 @@ import {TranslateModule} from '@ngx-translate/core';
 
 import {
   MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule, MatListModule, MatPaginatorModule, MatIconModule,
-  MatSidenavModule, MatDialogModule
+  MatSidenavModule, MatDialogModule, MatAutocompleteModule
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
@@ -20,6 +20,7 @@ const angularModules = [
 ];
 
 const materialModules = [
+  MatAutocompleteModule,
   MatButtonModule,
   MatDialogModule,
   MatFormFieldModule,
