@@ -9,6 +9,9 @@
       "UPDATE": "Update"
     }
   },
+  "APP_HEADER": {
+    "MENU_LOGOUT": "Log Out"
+  },
   "CONTACT_MANAGER": {
     "MODULE_TITLE": "Contact Manager",
     "COMPANY_LIST": {

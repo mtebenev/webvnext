@@ -1,8 +1,28 @@
-<mat-toolbar color="primary">
-  <button mat-icon-button
-          (click)="handleMenuButtonClick()">
+<mat-toolbar color="primary"
+             fxLayout
+             fxLayoutAlign="start center">
+
+  <button mat-icon-button (click)="handleMenuButtonClick()">
     <mat-icon>menu</mat-icon>
   </button>
 
   <span>{{ moduleTitle }}</span>
+
+  <div fxFlex
+       fxLayout
+       fxLayoutAlign="end center">
+
+    <mat-menu #settingsMenu="matMenu">
+      <button mat-menu-item
+              (click)="handleLogOutClick()">
+        {{ 'APP_HEADER.MENU_LOGOUT' | translate }}
+      </button>
+    </mat-menu>
+    <button mat-icon-button
+            fxFlexAlign="end"
+            [matMenuTriggerFor]="settingsMenu">
+      <mat-icon>more_vert</mat-icon>
+    </button>
+  </div>
 </mat-toolbar>
+

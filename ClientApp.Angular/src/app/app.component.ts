@@ -1,24 +1,31 @@
 import {Component, ViewChild} from '@angular/core';
 import {Router, NavigationEnd} from '@angular/router';
 import {MediaChange, ObservableMedia} from '@angular/flex-layout';
-
 import {MatSidenav} from '@angular/material';
-import {TranslateService} from '@ngx-translate/core';
 
+import {TranslateService} from '@ngx-translate/core';
 import {ISubscription, filter} from '@common/rxjs-imports';
+import {OidcSecurityService} from 'angular-auth-oidc-client';
+
+import {IAppCommands} from './iapp-commands';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent {
+export class AppComponent implements IAppCommands {
 
   private _subscriptionRouter: ISubscription;
   private _subscriptionMedia: ISubscription;
   private _isMobileMode: boolean;
+  private _media: ObservableMedia;
+  private _oidcSecurityService: OidcSecurityService;
 
-  constructor(translateService: TranslateService, private media: ObservableMedia, router: Router) {
+  constructor(translateService: TranslateService, media: ObservableMedia, router: Router, oidcSecurityService: OidcSecurityService) {
+
+    this._media = media;
+    this._oidcSecurityService = oidcSecurityService;
 
     translateService.setDefaultLang('en');
     translateService.use('en');
@@ -26,7 +33,7 @@ export class AppComponent {
     // Listen to media change to redraw sidebar
     // Note MTE: in original Material sample there's ChangeDetectorRef used. Really need that?
     this._subscriptionMedia = media.subscribe((mediaChange: MediaChange) => {
-      this._isMobileMode = this.media.isActive('lt-sm');
+      this._isMobileMode = this._media.isActive('lt-sm');
     });
 
     // Listen router and hide nav sidebar when navigation occurres
@@ -36,7 +43,7 @@ export class AppComponent {
         this.onNavigationEnd();
       });
 
-    this._isMobileMode = this.media.isActive('lt-sm'); // Initial layout
+    this._isMobileMode = this._media.isActive('lt-sm'); // Initial layout
   }
 
   @ViewChild(MatSidenav)
@@ -64,10 +71,17 @@ export class AppComponent {
   }
 
   /**
-   * Invoked when user clicks Menu button in app header
+   * IAppCommands
    */
-  public handleMenuButtonClick(): void {
+  public toggleAppMenu(): void {
     this.sideNav.toggle();
+  }
+
+  /**
+   * IAppCommands
+   */
+  public logOut(): void {
+    this._oidcSecurityService.logoff();
   }
 
   private onNavigationEnd(): void {

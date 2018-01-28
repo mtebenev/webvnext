@@ -1,6 +1,7 @@
-import {Component, Output, EventEmitter} from '@angular/core';
+import {Component, Input} from '@angular/core';
 
 import {ViewContextService} from '@app-services/view-context.service';
+import {IAppCommands} from '../../iapp-commands';
 
 @Component({
   selector: 'app-header',
@@ -8,31 +9,36 @@ import {ViewContextService} from '@app-services/view-context.service';
 })
 export class AppHeaderComponent {
 
-  private _eventMenuButtonClick: EventEmitter<void>;
+  private _viewContextService: ViewContextService;
+  private _appCommands: IAppCommands;
 
-  constructor(private viewContextService: ViewContextService) {
-    this._eventMenuButtonClick = new EventEmitter<void>();
+  constructor(viewContextService: ViewContextService) {
+    this._viewContextService = viewContextService;
   }
 
-  /**
-   * Fired when user clicks menu button on the header
-   */
-  @Output()
-  public get onMenuButtonClick(): EventEmitter<void> {
-    return this._eventMenuButtonClick;
+  @Input()
+  public set appCommands(value: IAppCommands) {
+    this._appCommands = value;
   }
 
   /**
    * Bound module title
    */
   public get moduleTitle(): string {
-    return this.viewContextService.moduleTitle;
+    return this._viewContextService.moduleTitle;
   }
 
   /**
    * Invoked when user clicks menu button
    */
   public handleMenuButtonClick(): void {
-    this._eventMenuButtonClick.emit();
+    this._appCommands.toggleAppMenu();
+  }
+
+  /**
+   * Invoked when user clicks logout button on the settings menu
+   */
+  public handleLogOutClick(): void {
+    this._appCommands.logOut();
   }
 }

@@ -6,8 +6,8 @@ import {RouterModule} from '@angular/router';
 import {TranslateModule} from '@ngx-translate/core';
 
 import {
-  MatButtonModule, MatFormFieldModule, MatInputModule, MatToolbarModule, MatSelectModule, MatListModule, MatPaginatorModule, MatIconModule,
-  MatSidenavModule, MatDialogModule, MatAutocompleteModule
+  MatAutocompleteModule, MatButtonModule, MatDialogModule, MatFormFieldModule, MatIconModule, MatInputModule, MatListModule, MatMenuModule,
+  MatPaginatorModule, MatSelectModule, MatToolbarModule, MatSidenavModule
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
@@ -27,6 +27,7 @@ const materialModules = [
   MatIconModule,
   MatInputModule,
   MatListModule,
+  MatMenuModule,
   MatPaginatorModule,
   MatSelectModule,
   MatSidenavModule,
