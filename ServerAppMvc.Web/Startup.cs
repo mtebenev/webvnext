@@ -1,3 +1,4 @@
+using System;
 using System.IdentityModel.Tokens.Jwt;
 using AutoMapper;
 using Microsoft.ApplicationInsights.Extensibility;
@@ -79,8 +80,10 @@ namespace Mt.WebVNext.ServerAppMvc.Web
     /// </summary>
     private void ConfigureContainer(IServiceCollection services)
     {
-      // TODO: use shared configuration with API host
       var appConnectionString = Configuration.GetConnectionString("application");
+
+      if(string.IsNullOrEmpty(appConnectionString))
+        throw new InvalidOperationException("Cannot get connection string from settings.");
 
       services.AddDbContext<AppDataContext>(options => options.UseSqlServer(appConnectionString));
       services.AddScoped<IContactDataService, ContactDataService>();

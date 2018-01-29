@@ -1,3 +1,4 @@
+using System;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore;
@@ -63,7 +64,10 @@ namespace Mt.WebVNext.ServerAppApi.Web
     private void ConfigureContainer(IServiceCollection services)
     {
       var appConnectionString = Configuration.GetConnectionString("application");
-      // TODO: use shared configuration with common host
+
+      if(string.IsNullOrEmpty(appConnectionString))
+        throw new InvalidOperationException("Cannot get connection string from settings.");
+
       services.AddDbContext<AppDataContext>(options => options.UseSqlServer(appConnectionString));
       services.AddScoped<IContactDataService, ContactDataService>();
       services.AddScoped<ICompanyDataService, CompanyDataService>();

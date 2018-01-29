@@ -51,6 +51,9 @@ namespace Mt.WebVNext.DataModel
           .Build();
 
         result = configuration.GetConnectionString("application");
+
+        if(string.IsNullOrEmpty(result))
+          throw new InvalidOperationException("Cannot get connection string from settings.");
       }
 
       return result;
