@@ -1,2 +1,2 @@
 set ASPNETCORE_ENVIRONMENT=Azure
-dotnet ef migrations list
+dotnet ef database update

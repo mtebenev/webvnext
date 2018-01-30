@@ -8,4 +8,5 @@ export interface IEnvironment {
   production: boolean;
   identityServerConfig: IIdentityServerConfig;
   apiBaseUrl: string;
+  translationsPathPrefix: string;
 }

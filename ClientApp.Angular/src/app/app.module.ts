@@ -59,7 +59,7 @@ export class AppModule {
 
     openIDImplicitFlowConfiguration.stsServer = environment.identityServerConfig.serverUrl;
     openIDImplicitFlowConfiguration.redirect_url = environment.identityServerConfig.clientBaseUrl;
-    openIDImplicitFlowConfiguration.client_id = 'angularclient';
+    openIDImplicitFlowConfiguration.client_id = environment.identityServerConfig.clientId;
     openIDImplicitFlowConfiguration.response_type = 'id_token token';
     openIDImplicitFlowConfiguration.scope = 'openid profile api1';
     openIDImplicitFlowConfiguration.post_logout_redirect_uri = `${environment.identityServerConfig.clientBaseUrl}/Unauthorized`;
@@ -81,5 +81,5 @@ export class AppModule {
 }
 
 export function createTranslationLoader(httpClient: HttpClient): TranslateHttpLoader {
-  return new TranslateHttpLoader(httpClient);
+  return new TranslateHttpLoader(httpClient, environment.translationsPathPrefix);
 }

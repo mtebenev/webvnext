@@ -1,6 +1,8 @@
 using System;
+using System.IO;
 using AutoMapper;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -52,8 +54,16 @@ namespace Mt.WebVNext.ServerAppApi.Web
     public void Configure(IApplicationBuilder app)
     {
       app.UseCors("default");
-
       app.UseAuthentication();
+
+      using(var iisUrlRewriteStreamReader = File.OpenText("IISUrlRewrite.xml"))
+      {
+        RewriteOptions options = new RewriteOptions()
+          .AddIISUrlRewrite(iisUrlRewriteStreamReader);
+
+        app.UseRewriter(options);
+      }
+
       app.UseStaticFiles();
       app.UseMvc();
     }
