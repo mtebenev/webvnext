@@ -38,5 +38,11 @@
       <Link>appsettings.Development.json</Link>
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content> 
+  </ItemGroup> 
+
+  <ItemGroup>
+    <None Update="IISUrlRewrite.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
 </Project>
