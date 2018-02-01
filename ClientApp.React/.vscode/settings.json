@@ -1,0 +1,18 @@
+{
+  "typescript.format.insertSpaceAfterOpeningAndBeforeClosingNonemptyBraces": false,
+  "typescript.format.insertSpaceAfterKeywordsInControlFlowStatements": false,
+  "files.exclude": {
+    "**/.git": true,
+    "**/.svn": true,
+    "**/.hg": true,
+    "**/CVS": true,
+    "**/.DS_Store": true,
+    "node_modules/": true,
+    "bin/": true,
+    "dist/": true,
+    "obj/": true
+  },
+	"files.trimTrailingWhitespace": true,
+	"tslint.enable": true,
+	"tslint.alwaysShowStatus": true
+}

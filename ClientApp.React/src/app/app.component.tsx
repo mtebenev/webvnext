@@ -1,25 +1,38 @@
 import * as React from 'react';
-import { UserManager, UserManagerSettings } from 'oidc-client';
+import {UserManager, UserManagerSettings} from 'oidc-client';
 import axios from 'axios';
-import { AxiosRequestConfig } from 'axios';
+import {AxiosRequestConfig} from 'axios';
+import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
-import './App.css';
+import {CompanyListComponent} from './contact-manager/company-list.component';
+import {ContactListComponent} from './contact-manager/contact-list.component';
 
-const logo = require('./logo.svg');
+import './app.component.scss';
+import {Redirect} from 'react-router';
 
-class App extends React.Component {
+export class AppComponent extends React.Component {
   private _accessToken: string;
 
   render() {
     return (
       <div className="App">
-        <header className="App-header">
-          <img src={logo} className="App-logo" alt="logo" />
-          <h1 className="App-title">Welcome to React</h1>
-        </header>
-        <p className="App-intro">
-          To get started, edit <code>src/App.tsx</code> and save to reload.
-        </p>
+        <div>
+          <Router>
+            <div>
+              <ul>
+                <li><Link to="/companies">Companies</Link></li>
+                <li><Link to="/contacts">Contacts</Link></li>
+              </ul>
+
+              <hr />
+
+              <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
+              <Route path="/companies" component={CompanyListComponent} />
+              <Route path="/contacts" component={ContactListComponent} />
+            </div>
+          </Router>
+        </div>
+
         <button onClick={e => this.handleLoginClick()}>Login</button>
         <button onClick={e => this.handleGetCompaniesClick()}>Get Companies</button>
       </div>
@@ -42,7 +55,7 @@ class App extends React.Component {
     };
     let userManager = new UserManager(settings);
 
-    if (window.location.hash) {
+    if(window.location.hash) {
 
       let user = await userManager.signinRedirectCallback();
       alert('logged in: ' + JSON.stringify(user));
@@ -68,4 +81,3 @@ class App extends React.Component {
   }
 }
 
-export default App;
