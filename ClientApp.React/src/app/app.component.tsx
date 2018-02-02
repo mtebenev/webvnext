@@ -1,17 +1,32 @@
 import * as React from 'react';
 import {UserManager, UserManagerSettings} from 'oidc-client';
-import axios from 'axios';
-import {AxiosRequestConfig} from 'axios';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
 
 import {CompanyListComponent} from './contact-manager/company-list.component';
 import {ContactListComponent} from './contact-manager/contact-list.component';
+import {AuthorizationComponent} from './shared/authorization.component';
 
 import './app.component.scss';
 import {Redirect} from 'react-router';
 
 export class AppComponent extends React.Component {
-  private _accessToken: string;
+  private _userManager: UserManager;
+
+  constructor() {
+    super({});
+
+    let settings: UserManagerSettings = {
+      authority: 'http://localhost:3200',
+      client_id: 'reactclient',
+      redirect_uri: 'http://localhost:3000',
+      response_type: 'id_token token',
+      scope: 'openid profile api1',
+      silent_redirect_uri: 'http://localhost:3000'
+    };
+
+    this._userManager = new UserManager(settings);
+
+  }
 
   render() {
     return (
@@ -26,15 +41,16 @@ export class AppComponent extends React.Component {
 
               <hr />
 
-              <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
-              <Route path="/companies" component={CompanyListComponent} />
-              <Route path="/contacts" component={ContactListComponent} />
+              <AuthorizationComponent userManager={this._userManager}>
+                <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
+                <Route path="/companies" render={() => (<CompanyListComponent userManager={this._userManager}/>)} />
+                <Route path="/contacts" component={ContactListComponent} />
+              </AuthorizationComponent>
             </div>
           </Router>
         </div>
 
         <button onClick={e => this.handleLoginClick()}>Login</button>
-        <button onClick={e => this.handleGetCompaniesClick()}>Get Companies</button>
       </div>
     );
   }
@@ -59,25 +75,10 @@ export class AppComponent extends React.Component {
 
       let user = await userManager.signinRedirectCallback();
       alert('logged in: ' + JSON.stringify(user));
-      this._accessToken = user.access_token;
+      //this._accessToken = user.access_token;
     } else {
       userManager.signinRedirect();
     }
-  }
-
-  public async handleGetCompaniesClick(): Promise<void> {
-
-    let config: AxiosRequestConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + this._accessToken
-      }
-    };
-
-    let response = await axios.get('http://localhost:5200/api/companies?pageNumber=0&pageSize=20', config);
-
-    alert('got response: ' + JSON.stringify(response));
   }
 }
 
