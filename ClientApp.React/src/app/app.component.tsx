@@ -1,13 +1,13 @@
 import * as React from 'react';
 import {UserManager, UserManagerSettings} from 'oidc-client';
 import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {Redirect} from 'react-router';
 
 import {CompanyListComponent} from './contact-manager/company-list.component';
 import {ContactListComponent} from './contact-manager/contact-list.component';
 import {AuthorizationComponent} from './shared/authorization.component';
 
 import './app.component.scss';
-import {Redirect} from 'react-router';
 
 export class AppComponent extends React.Component {
   private _userManager: UserManager;
@@ -81,4 +81,3 @@ export class AppComponent extends React.Component {
     }
   }
 }
-

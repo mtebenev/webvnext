@@ -2,20 +2,39 @@ import * as React from 'react';
 import axios from 'axios';
 import {AxiosRequestConfig} from 'axios';
 import {UserManager} from 'oidc-client';
+import List, {ListItem, ListItemText} from 'material-ui/List';
 
 interface IProps {
   userManager: UserManager;
 }
 
-export class CompanyListComponent extends React.Component<IProps> {
+interface IState {
+  companies: any[];
+}
+
+export class CompanyListComponent extends React.Component<IProps, IState> {
+
+  private _companies: any[] = [
+    {name: 'item 1'},
+    {name: 'item 2'}
+  ];
 
   public render(): React.ReactNode {
     return (
       <div>
         <div>I am company list</div>
         <button onClick={e => this.handleGetCompaniesClick()}>Get Companies</button>
-      </div>
 
+        <List>
+          {
+            this._companies.map(c => (
+              <ListItem button={true}>
+                <ListItemText primary={c.name}/>
+              </ListItem>
+            ))
+          }
+        </List>
+      </div>
     );
 
   }
