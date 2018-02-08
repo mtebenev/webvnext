@@ -1,8 +1,8 @@
 import * as React from 'react';
-import axios from 'axios';
-import {AxiosRequestConfig} from 'axios';
 import {UserManager} from 'oidc-client';
 import List, {ListItem, ListItemText} from 'material-ui/List';
+
+import {CompanyHttpService, ICompanyQueryParamsDto} from '@http-services/contact-manager/company-http.service';
 
 interface IProps {
   userManager: UserManager;
@@ -41,18 +41,14 @@ export class CompanyListComponent extends React.Component<IProps, IState> {
 
   public async handleGetCompaniesClick(): Promise<void> {
 
-    let user = await this.props.userManager.getUser();
-    console.error('got token: ' + user.access_token);
+    let companyHttpService = new CompanyHttpService(this.props.userManager, 'http://localhost:5200/api', 'companies');
 
-    let config: AxiosRequestConfig = {
-      headers: {
-        'Content-Type': 'application/json',
-        'Accept': 'application/json',
-        'Authorization': 'Bearer ' + user.access_token
-      }
+    let queryParams: ICompanyQueryParamsDto = {
+      pageSize: 20,
+      pageNumber: 0
     };
 
-    let response = await axios.get('http://localhost:5200/api/companies?pageNumber=0&pageSize=20', config);
+    let response = await companyHttpService.getCompanies(queryParams);
 
     alert('got response: ' + JSON.stringify(response));
   }

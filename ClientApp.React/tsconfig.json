@@ -12,6 +12,7 @@
     "jsx": "react",
     "moduleResolution": "node",
     "rootDir": "src",
+    "baseUrl": "src",
     "forceConsistentCasingInFileNames": true,
     "noImplicitReturns": true,
     "noImplicitThis": true,
@@ -19,7 +20,13 @@
     "strictNullChecks": true,
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": true,
-		"noFallthroughCasesInSwitch": true
+    "noFallthroughCasesInSwitch": true,
+    "paths": {
+      "@common/*": ["app/core/common/*"],
+      "@app-services/*": ["app/core/app-services/*"],
+      "@http-services/*": ["app/core/http-services/*"],
+      "@shared/*": ["app/shared/*"]
+    }
   },
   "exclude": [
     "node_modules",
