@@ -1,10 +1,9 @@
 import * as React from 'react';
 import {UserManager, UserManagerSettings} from 'oidc-client';
-import {BrowserRouter as Router, Route, Link} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
 import {Redirect} from 'react-router';
 
-import {CompanyListComponent} from './contact-manager/company-list.component';
-import {ContactListComponent} from './contact-manager/contact-list.component';
+import {CompanyListComponent, ContactListComponent, CompanyDetailsComponent} from './contact-manager/index';
 import {AuthorizationComponent} from './shared/authorization.component';
 
 import './app.component.scss';
@@ -28,6 +27,10 @@ export class AppComponent extends React.Component {
 
   }
 
+  /**
+   * Note: see discussion on properly passing props with router: https://github.com/ReactTraining/react-router/issues/4105
+   * TODOA
+   */
   render() {
     return (
       <div className="App">
@@ -42,9 +45,12 @@ export class AppComponent extends React.Component {
               <hr />
 
               <AuthorizationComponent userManager={this._userManager}>
-                <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
-                <Route path="/companies" render={() => (<CompanyListComponent userManager={this._userManager}/>)} />
-                <Route path="/contacts" component={ContactListComponent} />
+                <Switch>
+                  <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
+                  <Route path="/companies/:companyId" render={props => (<CompanyDetailsComponent {...props} userManager={this._userManager} />)} />
+                  <Route path="/companies" render={() => (<CompanyListComponent userManager={this._userManager} />)} />
+                  <Route path="/contacts" component={ContactListComponent} />
+                </Switch>
               </AuthorizationComponent>
             </div>
           </Router>
