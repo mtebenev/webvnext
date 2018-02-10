@@ -5,8 +5,8 @@ import Reboot from 'material-ui/Reboot';
 // c/p from https://github.com/mui-org/material-ui/blob/v1-beta/examples/create-react-app-with-typescript/src/withRoot.tsx
 const theme = createMuiTheme();
 
-function withRoot(Component: React.ComponentType) {
-  function WithRoot(props: object) {
+function withRoot(Component: React.ComponentType): any {
+  function WithRoot(props: object): React.ReactNode {
     // MuiThemeProvider makes the theme available down the React tree
     // thanks to React context.
     return (

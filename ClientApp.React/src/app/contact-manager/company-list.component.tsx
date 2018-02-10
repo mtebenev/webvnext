@@ -35,7 +35,7 @@ export class CompanyListComponent extends React.Component<IProps, IState> {
           <List>
             {
               this.state.companies.rows.map(c => (
-                <ListItem button={true} component={props => <Link to={`/companies/${c.companyId}`} />} >
+                <ListItem button={true} component={props => <Link {...props} to={`/companies/${c.companyId}`} />} >
                   <ListItemText primary={c.name} />
                 </ListItem>
               ))

@@ -2,6 +2,12 @@
   "extends": ["tslint-react"],
   "rules": {
     "jsx-no-lambda": false,
-    "jsx-no-multiline-js": false
+    "jsx-no-multiline-js": false,
+    "typedef": [true, "call-signature",
+      "parameter",
+      "property-declaration",
+      "member-variable-declaration",
+      "object-destructuring",
+      "array-destructuring"]
   }
 }

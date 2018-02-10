@@ -31,7 +31,7 @@ export class AppComponent extends React.Component {
    * Note: see discussion on properly passing props with router: https://github.com/ReactTraining/react-router/issues/4105
    * TODOA
    */
-  render() {
+  render(): React.ReactNode {
     return (
       <div className="App">
         <div>

@@ -27,7 +27,7 @@ export class AuthorizationComponent extends React.Component<IAuthorizationCompon
   /**
    * ComponentLifecycle
    */
-  public componentDidMount() {
+  public componentDidMount(): void {
 
     if(window.location.hash) {
       console.error('detected hash, performing sign in callback');
@@ -54,7 +54,7 @@ export class AuthorizationComponent extends React.Component<IAuthorizationCompon
   /**
    * Component
    */
-  public render() {
+  public render(): React.ReactNode {
     console.error('AthorizationComponent.render()');
     if(this.state.isSignedIn) {
       if(!this.props.children) {
