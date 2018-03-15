@@ -3,8 +3,8 @@ import {IPagedResultDto} from '@common/ipaged-result-dto';
 
 export interface ICompanyDto {
   companyId: number;
-  name: string | null;
-  description: string | null;
+  name?: string;
+  description?: string;
 }
 
 export interface ICompanyQueryParamsDto {

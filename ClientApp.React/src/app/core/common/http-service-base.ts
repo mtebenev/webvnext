@@ -58,7 +58,7 @@ export abstract class HttpServiceBase {
     let requestConfig = await this.prepareRequestConfig(undefined, payload);
     let url = this.createMethodUrl(null);
 
-    await axios.put(url, requestConfig);
+    await axios.put(url, null, requestConfig);
   }
 
   /**

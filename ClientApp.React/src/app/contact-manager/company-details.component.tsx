@@ -1,8 +1,8 @@
 import * as React from 'react';
-import {RouteComponentProps} from 'react-router-dom';
+import {RouteComponentProps, Link, Route, Switch} from 'react-router-dom';
 import {UserManager} from 'oidc-client';
 
-import {CompanyHttpService, ICompanyDto} from '@http-services/contact-manager/company-http.service';
+import {CompanyViewComponent, CompanyEditComponent} from './index';
 
 interface IRouteParams {
   companyId: string;
@@ -12,14 +12,10 @@ interface IProps extends RouteComponentProps<IRouteParams>, React.Props<any> {
   userManager: UserManager;
 }
 
-interface IState {
-  company?: ICompanyDto;
-}
-
 /**
- * Displays details on a speciic company
+ * Logic for switching between view/edit company components
  */
-export class CompanyDetailsComponent extends React.Component<IProps, IState> {
+export class CompanyDetailsComponent extends React.Component<IProps> {
 
   constructor(props: IProps) {
     super(props);
@@ -28,32 +24,26 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
   }
 
   /**
-   * ComponentLifecycle
-   */
-  public componentDidMount?(): void {
-    this.loadCompany();
-  }
-
-  /**
    * React.Component
+   * TODOA: we are hardcoding path in Route same as in App.Component instead of reusing ${this.props.match.url}. Should we introduce companyId to props?
    */
   public render(): React.ReactNode {
 
     return (
-      <div>{this.state.company &&
-        <div>Company: {this.state.company.name}</div>
+      <div>{this.props.match.params.companyId &&
+        <div>
+          Details component
+          Company: {this.props.match.params.companyId}
+        <Link to={`${this.props.match.url}/edit`}>Edit company</Link>
+
+        <Switch>
+          <Route exact={true} path={'/companies/:companyId'} render={props => (<CompanyViewComponent {...props} userManager={this.props.userManager} />)} />
+          <Route path={'/companies/:companyId/edit'} render={props => (<CompanyEditComponent {...props} userManager={this.props.userManager} />)} />
+        </Switch>
+
+        </div>
       }
       </div>
     );
-  }
-
-  private async loadCompany(): Promise<void> {
-
-    let companyHttpService = new CompanyHttpService(this.props.userManager, 'http://localhost:5200/api', 'companies');
-
-    let companyId = Number.parseInt(this.props.match.params.companyId);
-    let company = await companyHttpService.getCompany(companyId);
-
-    this.setState({company: company});
   }
 }
