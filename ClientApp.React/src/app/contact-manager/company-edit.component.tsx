@@ -1,10 +1,12 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import {RouteComponentProps} from 'react-router-dom';
 import {UserManager} from 'oidc-client';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
-import {CompanyHttpService, ICompanyDto} from '@http-services/contact-manager/company-http.service';
+import {ICompanyDto, CompanyHttpService} from '@http-services/contact-manager/company-http.service';
+import {ICompanyDetailsContext} from './index';
 
 interface IRouteParams {
   companyId: string;
@@ -23,10 +25,17 @@ interface IState {
  */
 export class CompanyEditComponent extends React.Component<IProps, IState> {
 
-  constructor(props: IProps) {
+  private _context: ICompanyDetailsContext;
+
+  public static contextTypes: PropTypes.ValidationMap<ICompanyDetailsContext> = {
+    companyHttpService: PropTypes.instanceOf(CompanyHttpService)
+  }
+
+  constructor(props: IProps, context: ICompanyDetailsContext) {
     super(props);
 
     this.state = {};
+    this._context = context;
   }
 
 
@@ -60,11 +69,8 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
 
   private async loadCompany(): Promise<void> {
 
-    let companyHttpService = new CompanyHttpService(this.props.userManager, 'http://localhost:5200/api', 'companies');
-
     let companyId = Number.parseInt(this.props.match.params.companyId);
-    let company = await companyHttpService.getCompany(companyId);
-    alert('loaded company ' + companyId);
+    let company = await this._context.companyHttpService.getCompany(companyId);
     this.setState({company: company});
   }
 
@@ -74,8 +80,7 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
    */
   private async handleUpdateClick(): Promise<void> {
     if(this.state.company) {
-      let companyHttpService = new CompanyHttpService(this.props.userManager, 'http://localhost:5200/api', 'companies');
-      companyHttpService.updateCompany(this.state.company);
+      this._context.companyHttpService.updateCompany(this.state.company);
     }
   }
 
