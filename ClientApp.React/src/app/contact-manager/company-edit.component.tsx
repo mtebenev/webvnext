@@ -1,19 +1,16 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import {RouteComponentProps} from 'react-router-dom';
-import {UserManager} from 'oidc-client';
 import TextField from 'material-ui/TextField';
 import Button from 'material-ui/Button';
 
-import {ICompanyDto, CompanyHttpService} from '@http-services/contact-manager/company-http.service';
-import {ICompanyDetailsContext} from './index';
+import {ICompanyDto} from '@http-services/contact-manager/company-http.service';
+import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
 
 interface IRouteParams {
   companyId: string;
 }
 
 interface IProps extends RouteComponentProps<IRouteParams>, React.Props<any> {
-  userManager: UserManager;
 }
 
 interface IState {
@@ -25,17 +22,15 @@ interface IState {
  */
 export class CompanyEditComponent extends React.Component<IProps, IState> {
 
-  private _context: ICompanyDetailsContext;
+  private _companiesContext: ICompaniesContext;
 
-  public static contextTypes: PropTypes.ValidationMap<ICompanyDetailsContext> = {
-    companyHttpService: PropTypes.instanceOf(CompanyHttpService)
-  }
+  public static contextTypes: TCompaniesContextTypes = CompaniesContextTypes;
 
-  constructor(props: IProps, context: ICompanyDetailsContext) {
+  constructor(props: IProps, context: ICompaniesContext) {
     super(props);
 
     this.state = {};
-    this._context = context;
+    this._companiesContext = context;
   }
 
 
@@ -70,7 +65,7 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
   private async loadCompany(): Promise<void> {
 
     let companyId = Number.parseInt(this.props.match.params.companyId);
-    let company = await this._context.companyHttpService.getCompany(companyId);
+    let company = await this._companiesContext.companyHttpService.getCompany(companyId);
     this.setState({company: company});
   }
 
@@ -80,7 +75,7 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
    */
   private async handleUpdateClick(): Promise<void> {
     if(this.state.company) {
-      this._context.companyHttpService.updateCompany(this.state.company);
+      this._companiesContext.companyHttpService.updateCompany(this.state.company);
     }
   }
 

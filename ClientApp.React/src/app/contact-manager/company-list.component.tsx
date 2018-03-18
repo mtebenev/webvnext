@@ -1,24 +1,26 @@
 import * as React from 'react';
-import {UserManager} from 'oidc-client';
 import List, {ListItem, ListItemText} from 'material-ui/List';
 import {Link} from 'react-router-dom';
 
-import {CompanyHttpService, ICompanyQueryParamsDto, ICompanyDto} from '@http-services/contact-manager/company-http.service';
+import {ICompanyQueryParamsDto, ICompanyDto} from '@http-services/contact-manager/company-http.service';
 import {IPagedResultDto} from '@common/ipaged-result-dto';
+import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
 
-interface IProps {
-  userManager: UserManager;
-}
 
 interface IState {
   companies?: IPagedResultDto<ICompanyDto>;
 }
 
-export class CompanyListComponent extends React.Component<IProps, IState> {
+export class CompanyListComponent extends React.Component<React.Props<any>, IState> {
 
-  constructor(props: IProps) {
+  private _companiesContext: ICompaniesContext;
+
+  public static contextTypes: TCompaniesContextTypes = CompaniesContextTypes;
+
+  constructor(props: React.Props<any>, context: ICompaniesContext) {
     super(props);
 
+    this._companiesContext = context;
     this.state = {}
   }
 
@@ -49,14 +51,12 @@ export class CompanyListComponent extends React.Component<IProps, IState> {
 
   public async handleGetCompaniesClick(): Promise<void> {
 
-    let companyHttpService = new CompanyHttpService(this.props.userManager, 'http://localhost:5200/api', 'companies');
-
     let queryParams: ICompanyQueryParamsDto = {
       pageSize: 20,
       pageNumber: 0
     };
 
-    let response = await companyHttpService.getCompanies(queryParams);
+    let response = await this._companiesContext.companyHttpService.getCompanies(queryParams);
     this.setState({companies: response});
   }
 }

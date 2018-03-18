@@ -2,7 +2,7 @@ import * as React from 'react';
 import {Route, RouteComponentProps, Switch} from 'react-router-dom';
 
 import {MediaQueryLtSm} from '@core-ui/media-query-alias';
-import {CompanyListComponent} from './index';
+import {CompanyListComponent, CompanyDetailsComponent} from './index';
 import {IAppContext, AppContextTypes, TAppContextTypes} from '../app-context';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
 import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
@@ -27,7 +27,6 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
   constructor(props: IProps, context: IAppContext) {
     super(props);
 
-    alert('CompaniesComponent got context: ' + context.userManager);
     let companyHttpService = new CompanyHttpService(context.userManager, 'http://localhost:5200/api', 'companies');
     this._companiesContext = {
       companyHttpService: companyHttpService
@@ -39,7 +38,6 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
    * React.ChildContextProvider
    */
   public getChildContext(): ICompaniesContext {
-    alert('CompaniesComponent getChildContext');
     return this._companiesContext;
   }
 
@@ -69,14 +67,10 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
     return (
       <div>
         <Switch>
-          <Route exact={true} path="/companies" render={() => <CompanyListComponent/>} />
+          <Route exact={true} path="/companies" render={props => <CompanyListComponent/>} />
           <Route
             path="/companies/:companyId"
-            render={props => (
-              <div style={{border: '1px solid blue'}}>
-                Company details
-              </div>
-            )}
+            render={props => <CompanyDetailsComponent {...props} />}
           />
         </Switch>
       </div>
