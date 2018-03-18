@@ -3,13 +3,15 @@ import {UserManager, UserManagerSettings} from 'oidc-client';
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
 import {Redirect} from 'react-router';
 
-import {CompanyListComponent, ContactListComponent, CompanyDetailsComponent} from './contact-manager/index';
+import {ContactListComponent, CompaniesComponent} from './contact-manager/index';
 import {AuthorizationComponent} from './shared/authorization.component';
+import {IAppContext, AppContextTypes, TAppContextTypes} from './app-context';
 
 import './app.component.scss';
 
-export class AppComponent extends React.Component {
-  private _userManager: UserManager;
+export class AppComponent extends React.Component implements React.ChildContextProvider<IAppContext> {
+
+  private _appContext: IAppContext;
 
   constructor() {
     super({});
@@ -23,8 +25,18 @@ export class AppComponent extends React.Component {
       silent_redirect_uri: 'http://localhost:3000'
     };
 
-    this._userManager = new UserManager(settings);
+    this._appContext = {
+      userManager: new UserManager(settings)
+    };
+  }
 
+  public static childContextTypes: TAppContextTypes = AppContextTypes;
+
+  /**
+   * React.ChildContextProvider
+   */
+  public getChildContext(): IAppContext {
+    return this._appContext;
   }
 
   /**
@@ -44,11 +56,10 @@ export class AppComponent extends React.Component {
 
               <hr />
 
-              <AuthorizationComponent userManager={this._userManager}>
+              <AuthorizationComponent>
                 <Switch>
                   <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
-                  <Route path="/companies/:companyId" render={props => (<CompanyDetailsComponent {...props} userManager={this._userManager} />)} />
-                  <Route path="/companies" render={() => (<CompanyListComponent userManager={this._userManager} />)} />
+                  <Route path="/companies" render={() => (<CompaniesComponent />)} />
                   <Route path="/contacts" component={ContactListComponent} />
                 </Switch>
               </AuthorizationComponent>

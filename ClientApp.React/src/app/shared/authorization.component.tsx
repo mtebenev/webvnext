@@ -1,9 +1,6 @@
 import * as React from 'react';
-import {UserManager} from 'oidc-client';
 
-interface IAuthorizationComponentProps {
-  userManager: UserManager;
-}
+import {IAppContext, AppContextTypes, TAppContextTypes} from '../app-context';
 
 interface IAuthorizationComponentState {
   isSignedIn: boolean;
@@ -12,15 +9,17 @@ interface IAuthorizationComponentState {
 /**
  * Use as container for view requiring authorized access
  */
-export class AuthorizationComponent extends React.Component<IAuthorizationComponentProps, IAuthorizationComponentState> {
+export class AuthorizationComponent extends React.Component<React.Props<any>, IAuthorizationComponentState> {
 
-  private _userManager: UserManager;
+  private _appContext: IAppContext;
 
-  constructor(props: IAuthorizationComponentProps) {
+  public static contextTypes: TAppContextTypes = AppContextTypes;
+
+  constructor(props: React.Props<any>, context: IAppContext) {
 
     super(props);
 
-    this._userManager = props.userManager;
+    this._appContext = context;
     this.state = {isSignedIn: false};
   }
 
@@ -32,17 +31,17 @@ export class AuthorizationComponent extends React.Component<IAuthorizationCompon
     if(window.location.hash) {
       console.error('detected hash, performing sign in callback');
 
-      this._userManager.signinRedirectCallback().then(user => {
+      this._appContext.userManager.signinRedirectCallback().then(user => {
 
         console.error('auth component got callback response, changing state');
         this.setState({isSignedIn: true});
       });
     } else {
-      this._userManager.getUser().then(user => {
+      this._appContext.userManager.getUser().then(user => {
 
         if(!user) {
           console.error('No user detected, performing sign in redirect');
-          this._userManager.signinRedirect();
+          this._appContext.userManager.signinRedirect();
         } else {
           this.setState({isSignedIn: true});
         }
