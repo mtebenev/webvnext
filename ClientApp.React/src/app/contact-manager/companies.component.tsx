@@ -1,7 +1,7 @@
 import * as React from 'react';
 import {Route, RouteComponentProps, Switch} from 'react-router-dom';
 
-import {MediaQueryLtSm} from '@core-ui/media-query-alias';
+import {MediaQueryLtSm} from '@core/ui/media-query-alias';
 import {CompanyListComponent, CompanyDetailsComponent} from './index';
 import {IAppContext, AppContextTypes, TAppContextTypes} from '../app-context';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';

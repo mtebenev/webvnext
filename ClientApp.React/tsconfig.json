@@ -26,7 +26,7 @@
       "@app-services/*": ["app/core/app-services/*"],
       "@http-services/*": ["app/core/http-services/*"],
       "@shared/*": ["app/shared/*"],
-      "@core-ui/*": ["app/core/ui/*"]
+      "@core/*": ["app/core/*"]
     }
   },
   "exclude": [
