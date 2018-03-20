@@ -11,7 +11,7 @@ interface IState {
   companies?: IPagedResultDto<ICompanyDto>;
 }
 
-export class CompanyListComponent extends React.Component<React.Props<any>, IState> {
+export class CompanyListComponent extends React.Component<React.HTMLProps<any>, IState> {
 
   private _companiesContext: ICompaniesContext;
 
@@ -29,7 +29,7 @@ export class CompanyListComponent extends React.Component<React.Props<any>, ISta
    */
   public render(): React.ReactNode {
     return (
-      <div>
+      <div style={this.props.style}>
         <div>I am company list</div>
         <button onClick={e => this.handleGetCompaniesClick()}>Get Companies</button>
 

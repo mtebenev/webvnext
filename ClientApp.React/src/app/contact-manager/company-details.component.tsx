@@ -7,7 +7,7 @@ interface IRouteParams {
   companyId: string;
 }
 
-interface IProps extends RouteComponentProps<IRouteParams>, React.Props<any> {
+interface IProps extends RouteComponentProps<IRouteParams>, React.HTMLProps<any> {
 }
 
 /**
@@ -29,7 +29,7 @@ export class CompanyDetailsComponent extends React.Component<IProps> {
   public render(): React.ReactNode {
 
     return (
-      <div>{this.props.match.params.companyId &&
+      <div style={this.props.style}>{this.props.match.params.companyId &&
         <div>
           Details component
           Company: {this.props.match.params.companyId}

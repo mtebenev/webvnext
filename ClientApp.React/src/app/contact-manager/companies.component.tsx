@@ -11,7 +11,7 @@ interface IRouteParams {
   companyId: string;
 }
 
-interface IProps extends RouteComponentProps<IRouteParams>, React.Props<any> {
+interface IProps extends RouteComponentProps<IRouteParams>, React.HTMLProps<any> {
 }
 
 /**
@@ -79,17 +79,11 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
 
   private renderLargeScreen(): React.ReactNode {
     return (
-      <div>
-        <div style={{border: '1px solid blue'}}>
-          Company list
-        </div>
+      <div style={{display: 'flex', flexDirection: 'row'}}>
+        <CompanyListComponent style={{flex: '1'}}  />
         <Route
           path="/companies/:companyId"
-          render={props => (
-            <div style={{border: '1px solid blue'}}>
-              Company details
-          </div>
-          )}
+          render={props => <CompanyDetailsComponent style={{flex: '1'}} {...props} />}
         />
       </div>
     );
