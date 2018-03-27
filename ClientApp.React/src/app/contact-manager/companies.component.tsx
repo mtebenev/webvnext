@@ -1,8 +1,9 @@
 import * as React from 'react';
-import {Route, RouteComponentProps, Switch} from 'react-router-dom';
+import {Route, RouteComponentProps, Switch, Link} from 'react-router-dom';
+import {Button, Icon} from '@core/mui-exports';
 
 import {MediaQueryLtSm} from '@core/ui/media-query-alias';
-import {CompanyListComponent, CompanyDetailsComponent} from './index';
+import {CompanyListComponent, CompanyDetailsComponent, CompanyNewComponent} from './index';
 import {IAppContext, AppContextTypes, TAppContextTypes} from '../app-context';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
 import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
@@ -48,6 +49,17 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
 
     return (
       <div style={{border: '1px solid red'}}>
+        {/* Add new Company FAB */}
+        <Button
+          variant="fab"
+          color="primary"
+          style={{position: 'fixed', right: '50px', bottom: '50px'}}
+          component={props => <Link to="/companies/new" {...props} />}
+        >
+          <Icon>add_icon</Icon>
+        </Button>
+
+        {/* Layout */}
         <MediaQueryLtSm>{
           (matches: boolean) => {
             return matches
@@ -69,6 +81,11 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
         <Switch>
           <Route exact={true} path="/companies" render={props => <CompanyListComponent/>} />
           <Route
+            exact={true}
+            path="/companies/new"
+            render={props => <CompanyNewComponent />}
+          />
+          <Route
             path="/companies/:companyId"
             render={props => <CompanyDetailsComponent {...props} />}
           />
@@ -80,11 +97,18 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
   private renderLargeScreen(): React.ReactNode {
     return (
       <div style={{display: 'flex', flexDirection: 'row'}}>
-        <CompanyListComponent style={{flex: '1'}}  />
-        <Route
-          path="/companies/:companyId"
-          render={props => <CompanyDetailsComponent style={{flex: '1'}} {...props} />}
-        />
+        <CompanyListComponent style={{flex: '1'}} />
+        <Switch>
+          <Route
+              exact={true}
+              path="/companies/new"
+              render={props => <CompanyNewComponent style={{flex: '1'}} />}
+          />
+          <Route
+            path="/companies/:companyId"
+            render={props => <CompanyDetailsComponent style={{flex: '1'}} {...props} />}
+          />
+        </Switch>
       </div>
     );
   }
