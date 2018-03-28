@@ -1,7 +1,6 @@
 import * as React from 'react';
 import {RouteComponentProps} from 'react-router-dom';
-import TextField from 'material-ui/TextField';
-import Button from 'material-ui/Button';
+import {Button, TextField} from '@core/mui-exports';
 
 import {ICompanyDto} from '@http-services/contact-manager/company-http.service';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
@@ -10,7 +9,7 @@ interface IRouteParams {
   companyId: string;
 }
 
-interface IProps extends RouteComponentProps<IRouteParams>, React.Props<any> {
+interface IProps extends RouteComponentProps<IRouteParams>, React.HTMLProps<any> {
 }
 
 interface IState {
@@ -23,7 +22,6 @@ interface IState {
 export class CompanyEditComponent extends React.Component<IProps, IState> {
 
   private _companiesContext: ICompaniesContext;
-
   public static contextTypes: TCompaniesContextTypes = CompaniesContextTypes;
 
   constructor(props: IProps, context: ICompaniesContext) {
@@ -39,7 +37,7 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
    */
   public render(): React.ReactNode {
     return (
-      <div>{this.state.company &&
+      <div style={this.props.style}>{this.state.company &&
         <div>
           <div>
             <TextField value={this.state.company.name} onChange={(e) => {this.handleCompanyNameChange(e)}} />

@@ -1,13 +1,9 @@
 import * as React from 'react';
-import {RouteComponentProps} from 'react-router-dom';
 
 import {ICompanyDto} from '@http-services/contact-manager/company-http.service';
 
-interface IRouteParams {
-  companyId: string;
-}
 
-interface IProps extends RouteComponentProps<IRouteParams>, React.Props<any> {
+interface IProps extends React.HTMLProps<any> {
   company: ICompanyDto
 }
 

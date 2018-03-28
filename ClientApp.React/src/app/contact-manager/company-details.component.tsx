@@ -36,6 +36,9 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
   /**
    * React.Component
    * TODOA: we are hardcoding path in Route same as in App.Component instead of reusing ${this.props.match.url}. Should we introduce companyId to props?
+   * TODO: children components are not re-rendered, check
+   * https://github.com/reactjs/react-router-redux/issues/603
+   * https://github.com/ReactTraining/react-router/issues/5242
    */
   public render(): React.ReactNode {
 
@@ -56,7 +59,7 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
           </AppBar>
 
           <Switch>
-          <Route exact={true} path={'/companies/:companyId'} render={props => (<CompanyViewComponent company={this.state.company as ICompanyDto} {...props} />)} />
+            <Route exact={true} path={'/companies/:companyId'} render={props => (<CompanyViewComponent company={this.state.company as ICompanyDto} {...props} />)} />
             <Route path={'/companies/:companyId/edit'} render={props => (<CompanyEditComponent {...props} />)} />
           </Switch>
 
