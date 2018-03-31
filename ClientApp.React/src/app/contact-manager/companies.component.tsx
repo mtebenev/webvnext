@@ -54,7 +54,7 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
           variant="fab"
           color="primary"
           style={{position: 'fixed', right: '50px', bottom: '50px'}}
-          component={props => <Link to="/companies/new" {...props} />}
+          component={(props: any) => <Link to="/companies/new" {...props} />}
         >
           <Icon>add_icon</Icon>
         </Button>

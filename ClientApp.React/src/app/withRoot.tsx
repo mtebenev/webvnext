@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {MuiThemeProvider, createMuiTheme} from 'material-ui/styles';
-import Reboot from 'material-ui/Reboot';
+import CssBaseline from 'material-ui/CssBaseline';
 
 // c/p from https://github.com/mui-org/material-ui/blob/v1-beta/examples/create-react-app-with-typescript/src/withRoot.tsx
 const theme = createMuiTheme();
@@ -12,7 +12,7 @@ function withRoot(Component: React.ComponentType): any {
     return (
       <MuiThemeProvider theme={theme}>
         {/* Reboot kickstart an elegant, consistent, and simple baseline to build upon. */}
-        <Reboot />
+        <CssBaseline />
         <Component {...props} />
       </MuiThemeProvider>
     );

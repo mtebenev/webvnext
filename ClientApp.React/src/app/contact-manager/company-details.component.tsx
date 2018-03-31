@@ -49,7 +49,7 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
             <Toolbar>
               {this.state.company.name}
 
-              <IconButton color="secondary" component={props => <Link to={`${this.props.match.url}/edit`} {...props}/>}>
+              <IconButton color="secondary" component={(props: any) => <Link to={`${this.props.match.url}/edit`} {...props} />}>
                 <Icon>edit_icon</Icon>
               </IconButton>
               <Button variant="fab" color="secondary">
@@ -76,9 +76,20 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
     this.loadCompany();
   }
 
+  /**
+   * ComponentLifecycle
+   */
+  public componentDidUpdate?(prevProps: IProps, prevState: IState, prevContext: any): void {
+
+    let isCompanyIdChanged = (prevProps.match.params.companyId != this.props.match.params.companyId);
+    if(isCompanyIdChanged)
+      this.loadCompany();
+  }
+
   private async loadCompany(): Promise<void> {
 
     let companyId = Number.parseInt(this.props.match.params.companyId);
+
     let company = await this._companiesContext.companyHttpService.getCompany(companyId);
     this.setState({company: company});
   }
