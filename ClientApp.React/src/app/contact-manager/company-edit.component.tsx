@@ -40,13 +40,15 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
       <div style={this.props.style}>{this.state.company &&
         <div>
           <div>
-            <TextField value={this.state.company.name} onChange={(e) => {this.handleCompanyNameChange(e)}} />
+            <TextField fullWidth={true} value={this.state.company.name} onChange={(e) => {this.handleCompanyNameChange(e)}} />
           </div>
           <div>
-            <TextField value={this.state.company.description}  onChange={(e) => {this.handleCompanyDescriptionChange(e)}}/>
+            <TextField fullWidth={true} value={this.state.company.description} onChange={(e) => {this.handleCompanyDescriptionChange(e)}} />
           </div>
 
-          <Button variant="raised" color="primary" onClick={() => {this.handleUpdateClick();}}>Update</Button>
+          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+            <Button variant="raised" color="primary" onClick={() => {this.handleUpdateClick();}}>Update</Button>
+          </div>
         </div>
       }
       </div>

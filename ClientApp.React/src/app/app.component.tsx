@@ -2,6 +2,7 @@ import * as React from 'react';
 import {UserManager, UserManagerSettings} from 'oidc-client';
 import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
 import {Redirect} from 'react-router';
+import {AppBar, Drawer, List, ListItem, ListItemText, Toolbar, Button, Icon, IconButton, Typography} from '@core/mui-exports';
 
 import {ContactListComponent, CompaniesComponent} from './contact-manager/index';
 import {AuthorizationComponent} from './shared/authorization.component';
@@ -49,12 +50,19 @@ export class AppComponent extends React.Component implements React.ChildContextP
         <div>
           <Router>
             <div>
-              <ul>
-                <li><Link to="/companies">Companies</Link></li>
-                <li><Link to="/contacts">Contacts</Link></li>
-              </ul>
+              {this.renderAppSidebar()}
+              <AppBar position="static">
+                <Toolbar>
+                  <IconButton>
+                    <Icon>menu</Icon>
+                  </IconButton>
 
-              <hr />
+                  <Typography variant="title" color="inherit">
+                    Contact Manager
+                  </Typography>
+                  <Button color="inherit">Login</Button>
+                </Toolbar>
+              </AppBar>
 
               <AuthorizationComponent>
                 <Switch>
@@ -96,5 +104,25 @@ export class AppComponent extends React.Component implements React.ChildContextP
     } else {
       userManager.signinRedirect();
     }
+  }
+
+  /**
+   * Renderes app sidebar
+   */
+  private renderAppSidebar(): React.ReactNode {
+    return (
+      <Drawer
+        variant="permanent"
+      >
+        <List component="nav">
+          <ListItem button={true} component={(props: any) => <Link to={`/companies`} {...props} />} >
+            <ListItemText primary="Companies" />
+          </ListItem>
+          <ListItem button={true} component={(props: any) => <Link to={`/contacts`} {...props} />}>
+            <ListItemText primary="Contacts" />
+          </ListItem>
+        </List>
+      </Drawer>
+    );
   }
 }

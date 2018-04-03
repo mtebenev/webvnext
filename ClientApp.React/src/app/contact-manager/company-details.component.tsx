@@ -47,14 +47,18 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
         <div>
           <AppBar position="static" color="default">
             <Toolbar>
-              {this.state.company.name}
+              <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
+                {this.state.company.name}
 
-              <IconButton color="secondary" component={(props: any) => <Link to={`${this.props.match.url}/edit`} {...props} />}>
-                <Icon>edit_icon</Icon>
-              </IconButton>
-              <Button variant="fab" color="secondary">
-                <Icon>delete_icon</Icon>
-              </Button>
+                <div style={{display: 'flex', justifyContent: 'flex-end'}}>
+                  <IconButton component={(props: any) => <Link to={`${this.props.match.url}/edit`} {...props} />}>
+                    <Icon>edit_icon</Icon>
+                  </IconButton>
+                  <IconButton component={(props: any) => <Link to={`${this.props.match.url}/edit`} {...props} />}>
+                    <Icon>delete_icon</Icon>
+                  </IconButton>
+                </div>
+              </div>
             </Toolbar>
           </AppBar>
 

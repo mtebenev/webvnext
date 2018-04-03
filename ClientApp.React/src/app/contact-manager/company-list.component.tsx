@@ -1,5 +1,5 @@
 import * as React from 'react';
-import List, {ListItem, ListItemText} from 'material-ui/List';
+import {AppBar, Toolbar, Button, Icon, List, IconButton, ListItem, ListItemText} from '@core/mui-exports';
 import {Link} from 'react-router-dom';
 
 import {ICompanyQueryParamsDto, ICompanyDto} from '@http-services/contact-manager/company-http.service';
@@ -30,26 +30,40 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
   public render(): React.ReactNode {
     return (
       <div style={this.props.style}>
-        <div>I am company list</div>
-        <button onClick={e => this.handleGetCompaniesClick()}>Get Companies</button>
-
         {this.state.companies &&
-          <List>
-            {
-              this.state.companies.rows.map(c => (
-                <ListItem button={true} component={(props: any) => <Link {...props} to={`/companies/${c.companyId}`} />} >
-                  <ListItemText primary={c.name} />
-                </ListItem>
-              ))
-            }
-          </List>
+          <div>
+            <AppBar position="static" color="default">
+              <Toolbar>
+                <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
+                  Companies
+                </div>
+              </Toolbar>
+            </AppBar>
+
+            <List>
+              {
+                this.state.companies.rows.map(c => (
+                  <ListItem button={true} component={(props: any) => <Link {...props} to={`/companies/${c.companyId}`} />} >
+                    <ListItemText primary={c.name} />
+                  </ListItem>
+                ))
+              }
+            </List>
+          </div>
         }
 
       </div>
     );
   }
 
-  public async handleGetCompaniesClick(): Promise<void> {
+  /**
+   * ComponentLifecycle
+   */
+  public componentDidMount(): void {
+    this.loadCompanies();
+  }
+
+  private async loadCompanies(): Promise<void> {
 
     let queryParams: ICompanyQueryParamsDto = {
       pageSize: 20,
