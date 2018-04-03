@@ -17,7 +17,16 @@ export type AngularHttpHeaderes = HttpHeaders | {
  */
 export abstract class HttpServiceBase {
 
-  constructor(private oidcSecurityService: OidcSecurityService, private httpClient: HttpClient, private baseUrl: string, private serviceName: string) {
+  private readonly _oidcSecurityService: OidcSecurityService;
+  private readonly _httpClient: HttpClient;
+  private readonly _baseUrl: string;
+  private readonly _serviceName: string;
+
+  constructor(oidcSecurityService: OidcSecurityService, httpClient: HttpClient, baseUrl: string, serviceName: string) {
+    this._oidcSecurityService = oidcSecurityService;
+    this._httpClient = httpClient;
+    this._baseUrl = baseUrl;
+    this._serviceName = serviceName;
   }
 
   /**
@@ -27,7 +36,7 @@ export abstract class HttpServiceBase {
 
     let headers = this.prepareRequestHeaders();
     let url = this.createMethodUrl(action);
-    return this.httpClient.get<TResult>(url, {params, headers});
+    return this._httpClient.get<TResult>(url, {params, headers});
   }
 
   /**
@@ -37,29 +46,32 @@ export abstract class HttpServiceBase {
 
     let headers = this.prepareRequestHeaders();
     let url = this.createMethodUrl(null);
-    return this.httpClient.post<TResult>(url, payload, {headers});
+    return this._httpClient.post<TResult>(url, payload, {headers});
   }
 
+  /**
+   * Use to perform PUT request
+   */
   protected doPut<TPayload>(params?: {[index: string]: string}, payload?: TPayload): Observable<void> {
 
     let headers = this.prepareRequestHeaders();
     let url = this.createMethodUrl(null);
-    return this.httpClient.put<void>(url, payload, {headers});
+    return this._httpClient.put<void>(url, payload, {headers});
   }
 
   /**
-   * Use to perform POST request
+   * Use to perform DELETE request
    */
   protected doDelete(params: HttpParams): Observable<void> {
 
     let headers = this.prepareRequestHeaders();
     let url = this.createMethodUrl(null);
-    return this.httpClient.delete<void>(url, {headers, params});
+    return this._httpClient.delete<void>(url, {headers, params});
   }
 
   private createMethodUrl(action: string | null): string {
 
-    let result = `${this.baseUrl}/${this.serviceName}`;
+    let result = `${this._baseUrl}/${this._serviceName}`;
     if (action)
       result += '/' + action;
 
@@ -74,7 +86,7 @@ export abstract class HttpServiceBase {
       .set('Content-Type', 'application/json')
       .set('Accept', 'application/json');
 
-    const token = this.oidcSecurityService.getToken();
+    const token = this._oidcSecurityService.getToken();
     if (token !== '') {
       const tokenValue = 'Bearer ' + token;
       headers = headers.set('Authorization', tokenValue);
