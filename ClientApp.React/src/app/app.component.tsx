@@ -63,14 +63,7 @@ export class AppComponent extends React.Component implements React.ChildContextP
                   <Button color="inherit">Login</Button>
                 </Toolbar>
               </AppBar>
-
-              <AuthorizationComponent>
-                <Switch>
-                  <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
-                  <Route path="/companies" render={() => (<CompaniesComponent />)} />
-                  <Route path="/contacts" component={ContactListComponent} />
-                </Switch>
-              </AuthorizationComponent>
+              {this.renderAppContent()}
             </div>
           </Router>
         </div>
@@ -123,6 +116,20 @@ export class AppComponent extends React.Component implements React.ChildContextP
           </ListItem>
         </List>
       </Drawer>
+    );
+  }
+
+  private renderAppContent(): React.ReactNode {
+    return (
+      <div className="container">
+        <AuthorizationComponent>
+          <Switch>
+            <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
+            <Route path="/companies" render={() => (<CompaniesComponent />)} />
+            <Route path="/contacts" component={ContactListComponent} />
+          </Switch>
+        </AuthorizationComponent>
+      </div>
     );
   }
 }
