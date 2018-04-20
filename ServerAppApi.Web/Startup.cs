@@ -1,6 +1,9 @@
 using System;
 using System.IO;
+using System.Reflection;
 using AutoMapper;
+using ClientApp.Angular;
+using ClientApp.React;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Rewrite;
 using Microsoft.EntityFrameworkCore;
@@ -10,6 +13,7 @@ using Mt.WebVNext.AppEngine.AppServices;
 using Mt.WebVNext.AppEngine.Configuration;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel;
+using YesSpa.AspNetCore;
 
 namespace Mt.WebVNext.ServerAppApi.Web
 {
@@ -27,6 +31,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
       var appOptions = Configuration.Get<AppOptions>();
 
       services.AddMvc();
+      services.AddYesSpa();
 
       services.AddAuthentication("Bearer")
         .AddIdentityServerAuthentication(options =>
@@ -55,17 +60,13 @@ namespace Mt.WebVNext.ServerAppApi.Web
     {
       app.UseCors("default");
       app.UseAuthentication();
-
-      using(var iisUrlRewriteStreamReader = File.OpenText("IISUrlRewrite.xml"))
-      {
-        RewriteOptions options = new RewriteOptions()
-          .AddIISUrlRewrite(iisUrlRewriteStreamReader);
-
-        app.UseRewriter(options);
-      }
-
-      app.UseStaticFiles();
       app.UseMvc();
+
+      app.UseSpa(builder =>
+      {
+        builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleReact)), "/react/", "/.Modules/ClientApp.React/build");
+        builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleAngular)), "/angular/", "/.Modules/ClientApp.Angular/dist");
+      });
     }
 
     /// <summary>
@@ -84,14 +85,10 @@ namespace Mt.WebVNext.ServerAppApi.Web
       services.AddScoped<IDataImportService, DataImportService>();
 
       // Automapper
-      var autoMapperConfig = new MapperConfiguration(cfg =>
-      {
-        cfg.AddProfile<DtoProfile>();
-      });
+      var autoMapperConfig = new MapperConfiguration(cfg => { cfg.AddProfile<DtoProfile>(); });
 
       var mapper = autoMapperConfig.CreateMapper();
       services.AddSingleton(mapper);
     }
-
   }
 }

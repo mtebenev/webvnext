@@ -6,7 +6,6 @@ namespace Mt.WebVNext.ServerAppApi.Web.Pages
   {
     public void OnGet()
     {
-
     }
   }
 }

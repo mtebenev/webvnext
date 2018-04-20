@@ -11,6 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="YesSpa.Client.Targets" Version="0.1.0-preview" />
   </ItemGroup>
 
 </Project>

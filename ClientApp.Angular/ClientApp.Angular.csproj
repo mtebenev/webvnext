@@ -11,7 +11,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="NgAspNetCore.Client.Targets" Version="0.1.0-preview" />
+    <PackageReference Include="YesSpa.Client.Targets" Version="0.1.0-preview" />
   </ItemGroup>
 
 </Project>
