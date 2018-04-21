@@ -64,6 +64,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
 
       app.UseSpa(builder =>
       {
+        builder.Options.UseStubPage = false;
         builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleReact)), "/react/", "/.Modules/ClientApp.React/build");
         builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleAngular)), "/angular/", "/.Modules/ClientApp.Angular/dist");
       });
