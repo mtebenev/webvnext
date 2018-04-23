@@ -1,0 +1,20 @@
+{
+	"folders": [
+		{
+			"path": "ClientApp.Angular"
+		},
+		{
+			"path": "ServerAppApi.Web"
+		},
+		{
+			"path": "ClientApp.React"
+		},
+		{
+			"path": "ServerAppIdentity.Web"
+		},
+		{
+			"path": "config"
+		}
+	],
+	"settings": {}
+}

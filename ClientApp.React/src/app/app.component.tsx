@@ -18,12 +18,12 @@ export class AppComponent extends React.Component implements React.ChildContextP
     super({});
 
     let settings: UserManagerSettings = {
-      authority: 'http://localhost:3200',
-      client_id: 'reactclient',
-      redirect_uri: 'http://localhost:3000',
+      authority: process.env.REACT_APP_IDENTITY_SERVER_URL,
+      client_id: process.env.REACT_APP_IDENTITY_CLIENT_ID,
+      redirect_uri: process.env.REACT_APP_IDENTITY_CLIENT_BASE_URL,
       response_type: 'id_token token',
       scope: 'openid profile api1',
-      silent_redirect_uri: 'http://localhost:3000'
+      silent_redirect_uri: `${process.env.REACT_APP_IDENTITY_CLIENT_BASE_URL}`
     };
 
     this._appContext = {

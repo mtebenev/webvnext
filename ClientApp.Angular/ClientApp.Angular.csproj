@@ -6,6 +6,23 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
 
+  <!-- YesSpa build -->
+  <PropertyGroup Condition="$(EnvDevEmbedded) == 'true'">
+    <BuildSpa>true</BuildSpa>
+    <SpaBuildTools>angular</SpaBuildTools>
+    <AngularBaseHref>/angular/</AngularBaseHref>
+    <AngularDeployUrl>/.Modules/ClientApp.Angular/dist/</AngularDeployUrl>
+    <AngularEnvironment>dev-embedded</AngularEnvironment>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(EnvCi) == 'true'">
+    <BuildSpa>true</BuildSpa>
+    <SpaBuildTools>angular</SpaBuildTools>
+    <AngularBaseHref>/angular/</AngularBaseHref>
+    <AngularDeployUrl>/.Modules/ClientApp.Angular/dist/</AngularDeployUrl>
+    <AngularEnvironment>prod</AngularEnvironment>
+  </PropertyGroup>
+
   <PropertyGroup>
     <DefaultItemExcludes>node_modules/**;$(DefaultItemExcludes)</DefaultItemExcludes>
   </PropertyGroup>

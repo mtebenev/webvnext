@@ -2,6 +2,7 @@ using System.IO;
 using Microsoft.AspNetCore;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Logging;
 
 namespace Mt.WebVNext.ServerAppApi.Web
 {
@@ -14,6 +15,10 @@ namespace Mt.WebVNext.ServerAppApi.Web
 
     public static IWebHost BuildWebHost(string[] args) =>
       WebHost.CreateDefaultBuilder(args)
+        .ConfigureLogging(((hostingContext, logging) =>
+        {
+          logging.SetMinimumLevel(LogLevel.Debug);
+        }))
         .UseStartup<Startup>()
         .ConfigureAppConfiguration((hostContext, config) =>
         {

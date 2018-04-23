@@ -6,6 +6,19 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
   </PropertyGroup>
 
+  <!-- YesSpa build -->
+  <PropertyGroup Condition="$(EnvDevEmbedded) == 'true'">
+    <BuildSpa>true</BuildSpa>
+    <SpaBuildTools>react</SpaBuildTools>
+    <EnvCmdEnvironment>dev-embedded</EnvCmdEnvironment>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="$(EnvCi) == 'true'">
+    <BuildSpa>true</BuildSpa>
+    <SpaBuildTools>react</SpaBuildTools>
+    <EnvCmdEnvironment>prod</EnvCmdEnvironment>
+  </PropertyGroup>
+
   <PropertyGroup>
     <DefaultItemExcludes>node_modules/**;$(DefaultItemExcludes)</DefaultItemExcludes>
   </PropertyGroup>
