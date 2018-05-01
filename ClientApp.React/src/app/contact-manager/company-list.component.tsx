@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AppBar, Toolbar, Button, Icon, List, IconButton, ListItem, ListItemText} from '@core/mui-exports';
+import {AppBar, Toolbar, Button, Icon, List, IconButton, ListItem, ListItemText, Typography} from '@core/mui-exports';
 import {Link} from 'react-router-dom';
 
 import {ICompanyQueryParamsDto, ICompanyDto} from '@http-services/contact-manager/company-http.service';
@@ -35,7 +35,9 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
             <AppBar position="static" color="default">
               <Toolbar>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
-                  Companies
+                  <Typography variant="title">
+                    Companies
+                  </Typography>
                 </div>
               </Toolbar>
             </AppBar>

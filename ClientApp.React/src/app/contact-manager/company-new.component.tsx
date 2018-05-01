@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AppBar, Toolbar, Button, TextField} from '@core/mui-exports';
+import {AppBar, Toolbar, Button, TextField, Typography} from '@core/mui-exports';
 
 import {ICompanyDto} from '@http-services/contact-manager/company-http.service';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
@@ -38,26 +38,28 @@ export class CompanyNewComponent extends React.Component<IProps, IState> {
         <div>
           <AppBar position="static" color="default">
             <Toolbar>
-              New Company
+              <Typography variant="title">
+                New Company
+              </Typography>
             </Toolbar>
           </AppBar>
 
           <div>
-          <TextField
-            value={this.state.company.name}
-            onChange={(e) => {this.handleCompanyNameChange(e)}}
-            fullWidth={true}
-            label="Name"
-            required={true}
-          />
+            <TextField
+              value={this.state.company.name}
+              onChange={(e) => {this.handleCompanyNameChange(e)}}
+              fullWidth={true}
+              label="Name"
+              required={true}
+            />
           </div>
           <div>
-          <TextField
-            value={this.state.company.description}
-            onChange={(e) => {this.handleCompanyDescriptionChange(e)}}
-            fullWidth={true}
-            label="Description"
-          />
+            <TextField
+              value={this.state.company.description}
+              onChange={(e) => {this.handleCompanyDescriptionChange(e)}}
+              fullWidth={true}
+              label="Description"
+            />
           </div>
           <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
             <Button variant="raised" color="primary" onClick={() => {this.handleCreateClick();}}>Create</Button>

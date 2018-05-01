@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {RouteComponentProps, Link, Route, Switch} from 'react-router-dom';
-import {AppBar, Toolbar, Button, Icon, IconButton} from '@core/mui-exports';
+import {AppBar, Toolbar, Button, Icon, IconButton, Typography} from '@core/mui-exports';
 
 import {ICompanyDto} from '@http-services/contact-manager/company-http.service';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
@@ -48,13 +48,15 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
           <AppBar position="static" color="default">
             <Toolbar>
               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
-                {this.state.company.name}
+                <Typography variant="title">
+                  {this.state.company.name}
+                </Typography>
 
                 <div style={{display: 'flex', justifyContent: 'flex-end'}}>
                   <IconButton component={(props: any) => <Link to={`${this.props.match.url}/edit`} {...props} />}>
                     <Icon>edit_icon</Icon>
                   </IconButton>
-                  <IconButton component={(props: any) => <Link to={`${this.props.match.url}/edit`} {...props} />}>
+                  <IconButton onClick={props => {this.handleDeleteClick();}}>
                     <Icon>delete_icon</Icon>
                   </IconButton>
                 </div>
@@ -97,4 +99,12 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
     let company = await this._companiesContext.companyHttpService.getCompany(companyId);
     this.setState({company: company});
   }
+
+  /**
+   * Invoked when user clicks 'Delete' button
+   */
+  private handleDeleteClick(): void {
+    this._companiesContext.confirmationUiService.confirm('test');
+  }
+
 }

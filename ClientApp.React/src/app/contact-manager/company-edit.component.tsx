@@ -75,7 +75,8 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
    */
   private async handleUpdateClick(): Promise<void> {
     if(this.state.company) {
-      this._companiesContext.companyHttpService.updateCompany(this.state.company);
+      await this._companiesContext.companyHttpService.updateCompany(this.state.company);
+      this._companiesContext.appNavigationService.goToCompanyView(this.state.company.companyId);
     }
   }
 

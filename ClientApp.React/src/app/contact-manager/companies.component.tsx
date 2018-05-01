@@ -1,12 +1,15 @@
 import * as React from 'react';
 import {Route, RouteComponentProps, Switch, Link} from 'react-router-dom';
 import {Button, Icon} from '@core/mui-exports';
+import {History} from 'history';
 
 import {MediaQueryLtSm} from '@core/ui/media-query-alias';
 import {CompanyListComponent, CompanyDetailsComponent, CompanyNewComponent} from './index';
 import {IAppContext, AppContextTypes, TAppContextTypes} from '../app-context';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
 import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
+import {AppNavigationService} from '@app-services/app-navigation.service';
+import {ConfirmationUiService} from '@app-services/confirmation-ui.service';
 
 interface IRouteParams {
   companyId: string;
@@ -28,10 +31,16 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
   constructor(props: IProps, context: IAppContext) {
     super(props);
 
-    let companyHttpService = new CompanyHttpService(context.userManager, 'http://localhost:5200/api', 'companies');
+    let companyHttpService = new CompanyHttpService(context.userManager, process.env.REACT_APP_API_BASE_URL as string, 'companies');
+    let appNavigationService = new AppNavigationService(props.history);
+    let confirmationUiService = new ConfirmationUiService();
+
     this._companiesContext = {
-      companyHttpService: companyHttpService
+      companyHttpService: companyHttpService,
+      appNavigationService: appNavigationService,
+      confirmationUiService: confirmationUiService
     };
+
     this.state = {};
   }
 

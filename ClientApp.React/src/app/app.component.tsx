@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {UserManager, UserManagerSettings} from 'oidc-client';
-import {BrowserRouter as Router, Route, Link, Switch} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Link, Switch, BrowserRouter} from 'react-router-dom';
 import {Redirect} from 'react-router';
 import {AppBar, Drawer, List, ListItem, ListItemText, Toolbar, Button, Icon, IconButton, Typography} from '@core/mui-exports';
 
@@ -48,7 +48,7 @@ export class AppComponent extends React.Component implements React.ChildContextP
     return (
       <div className="App">
         <div>
-          <Router>
+          <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASENAME}>
             <div>
               {this.renderAppSidebar()}
               <AppBar position="static">
@@ -65,7 +65,7 @@ export class AppComponent extends React.Component implements React.ChildContextP
               </AppBar>
               {this.renderAppContent()}
             </div>
-          </Router>
+          </BrowserRouter>
         </div>
 
         <button onClick={e => this.handleLoginClick()}>Login</button>
@@ -125,7 +125,7 @@ export class AppComponent extends React.Component implements React.ChildContextP
         <AuthorizationComponent>
           <Switch>
             <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
-            <Route path="/companies" render={() => (<CompaniesComponent />)} />
+            <Route path="/companies" render={(props) => (<CompaniesComponent {...props} />)} />
             <Route path="/contacts" component={ContactListComponent} />
           </Switch>
         </AuthorizationComponent>
