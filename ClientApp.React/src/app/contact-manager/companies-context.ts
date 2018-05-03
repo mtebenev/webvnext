@@ -2,7 +2,7 @@ import * as PropTypes from 'prop-types';
 
 import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
 import {AppNavigationService} from '@app-services/app-navigation.service';
-import {ConfirmationUiService} from '@app-services/confirmation-ui.service';
+import {ConfirmationUi} from '@app-services/confirmation-ui';
 
 /**
  * Common React context for company-related views
@@ -10,12 +10,12 @@ import {ConfirmationUiService} from '@app-services/confirmation-ui.service';
 export interface ICompaniesContext {
   companyHttpService: CompanyHttpService;
   appNavigationService: AppNavigationService;
-  confirmationUiService: ConfirmationUiService;
+  confirmationUi: Promise<ConfirmationUi>;
 }
 
 export type TCompaniesContextTypes = PropTypes.ValidationMap<ICompaniesContext>;
 export const CompaniesContextTypes: TCompaniesContextTypes = {
   companyHttpService: PropTypes.instanceOf(CompanyHttpService),
   appNavigationService: PropTypes.instanceOf(AppNavigationService),
-  confirmationUiService: PropTypes.instanceOf(ConfirmationUiService)
+  confirmationUi: PropTypes.object
 };

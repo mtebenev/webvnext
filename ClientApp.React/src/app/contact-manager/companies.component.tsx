@@ -33,12 +33,11 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
 
     let companyHttpService = new CompanyHttpService(context.userManager, process.env.REACT_APP_API_BASE_URL as string, 'companies');
     let appNavigationService = new AppNavigationService(props.history);
-    let confirmationUiService = new ConfirmationUiService();
 
     this._companiesContext = {
       companyHttpService: companyHttpService,
       appNavigationService: appNavigationService,
-      confirmationUiService: confirmationUiService
+      confirmationUi: context.confirmationUi
     };
 
     this.state = {};

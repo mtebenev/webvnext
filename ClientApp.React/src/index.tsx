@@ -1,9 +1,10 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
-import {AppComponent} from './app/app.component';
+import 'typeface-roboto';
+import AppComponent from './app/app.component';
 import registerServiceWorker from './registerServiceWorker';
 import './index.css';
-import 'typeface-roboto';
+import './i18n';
 
 ReactDOM.render(
   <AppComponent />,

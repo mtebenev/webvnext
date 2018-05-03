@@ -1,11 +1,25 @@
 import AppBar from 'material-ui/AppBar';
-import Toolbar from 'material-ui/Toolbar';
 import Button from 'material-ui/Button';
+
+import Dialog, {
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle
+} from 'material-ui/Dialog/index';
+
 import Drawer from 'material-ui/Drawer';
 import IconButton from 'material-ui/IconButton';
 import Icon from 'material-ui/Icon';
-import List, {ListItem, ListItemText} from 'material-ui/List';
+
+import List, {
+  ListItem,
+  ListItemText
+} from 'material-ui/List';
+
 import TextField from 'material-ui/TextField';
+import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
 
-export {AppBar, Button, Drawer, Icon, IconButton, TextField, Toolbar, Typography, List, ListItem, ListItemText};
+export {AppBar, Button, Drawer, Icon, IconButton, List, ListItem, ListItemText, TextField, Toolbar, Typography};
+export {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle};
