@@ -21,6 +21,7 @@
     "suppressImplicitAnyIndexErrors": true,
     "noUnusedLocals": false,
     "noFallthroughCasesInSwitch": true,
+    "experimentalDecorators": true,
     "paths": {
       "@common/*": ["app/core/common/*"],
       "@app-services/*": ["app/core/app-services/*"],

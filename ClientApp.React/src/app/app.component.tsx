@@ -1,21 +1,51 @@
 import * as React from 'react';
+import * as PropTypes from 'prop-types';
 import {UserManager, UserManagerSettings} from 'oidc-client';
 import {BrowserRouter as Router, Route, Link, Switch, BrowserRouter} from 'react-router-dom';
 import {Redirect} from 'react-router';
+import * as i18n from 'i18next'
 import {AppBar, Drawer, List, ListItem, ListItemText, Toolbar, Button, Icon, IconButton, Typography} from '@core/mui-exports';
 
 import {ContactListComponent, CompaniesComponent} from './contact-manager/index';
 import {AuthorizationComponent} from './shared/authorization.component';
+import {ConfirmationDialogComponent} from './shared/confirmation-dialog.component';
+import {ConfirmationUiService} from '@app-services/confirmation-ui.service';
+import {ConfirmationUi} from '@app-services/confirmation-ui';
 import {IAppContext, AppContextTypes, TAppContextTypes} from './app-context';
+import {Deferred} from '@common/index';
 
 import './app.component.scss';
 
-export class AppComponent extends React.Component implements React.ChildContextProvider<IAppContext> {
+interface IIntlContext {
+  i18n: i18n.i18n;
+}
 
+interface IState {
+  isTranslationLoaded: boolean;
+}
+
+export class AppComponent extends React.Component<React.HTMLProps<any>, IState> implements React.ChildContextProvider<IAppContext> {
+
+  private _deferredConfirmationUi: Deferred<ConfirmationUi>;
   private _appContext: IAppContext;
+  private _setConfirmationDialogRef: (element: ConfirmationDialogComponent) => void;
 
-  constructor() {
-    super({});
+  public static contextTypes: PropTypes.ValidationMap<IIntlContext> = {
+    i18n: PropTypes.object
+  };
+
+  constructor(props: any, context: IIntlContext) {
+    super(props);
+
+    // Note: we can't create confirmation UI unitil rendering (we are waiting for ref).
+    this._deferredConfirmationUi = new Deferred<ConfirmationUi>();
+    this._setConfirmationDialogRef = element => {
+      this.createConfirmationUi(element);
+    }
+
+    context.i18n.on('initialized', (options: i18n.InitOptions) => {
+      this.setState({isTranslationLoaded: true});
+    });
 
     let settings: UserManagerSettings = {
       authority: process.env.REACT_APP_IDENTITY_SERVER_URL,
@@ -27,8 +57,11 @@ export class AppComponent extends React.Component implements React.ChildContextP
     };
 
     this._appContext = {
-      userManager: new UserManager(settings)
+      userManager: new UserManager(settings),
+      confirmationUi: this._deferredConfirmationUi.promise
     };
+
+    this.state = {isTranslationLoaded: false};
   }
 
   public static childContextTypes: TAppContextTypes = AppContextTypes;
@@ -44,59 +77,36 @@ export class AppComponent extends React.Component implements React.ChildContextP
    * Note: see discussion on properly passing props with router: https://github.com/ReactTraining/react-router/issues/4105
    * TODOA
    */
-  render(): React.ReactNode {
+  public render(): React.ReactNode {
+
     return (
-      <div className="App">
-        <div>
-          <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASENAME}>
-            <div>
-              {this.renderAppSidebar()}
-              <AppBar position="static">
-                <Toolbar>
-                  <IconButton>
-                    <Icon>menu</Icon>
-                  </IconButton>
+      <React.Fragment>{this.state.isTranslationLoaded &&
+        <div className="App">
+          <div>
+            <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASENAME}>
+              <div>
+                {this.renderAppSidebar()}
+                <AppBar position="static">
+                  <Toolbar>
+                    <IconButton>
+                      <Icon>menu</Icon>
+                    </IconButton>
 
-                  <Typography variant="title" color="inherit">
-                    Contact Manager
+                    <Typography variant="title" color="inherit">
+                      Contact Manager
                   </Typography>
-                  <Button color="inherit">Login</Button>
-                </Toolbar>
-              </AppBar>
-              {this.renderAppContent()}
-            </div>
-          </BrowserRouter>
+                    <Button color="inherit">Login</Button>
+                  </Toolbar>
+                </AppBar>
+                {this.renderAppContent()}
+              </div>
+            </BrowserRouter>
+          </div>
+          <ConfirmationDialogComponent ref={this._setConfirmationDialogRef} />
         </div>
-
-        <button onClick={e => this.handleLoginClick()}>Login</button>
-      </div>
+      }
+      </React.Fragment>
     );
-  }
-
-  /**
-   * Invoked when user clicks login button
-   */
-  public async handleLoginClick(): Promise<void> {
-    alert('login');
-
-    let settings: UserManagerSettings = {
-      authority: 'http://localhost:3200',
-      client_id: 'reactclient',
-      redirect_uri: 'http://localhost:3000',
-      response_type: 'id_token token',
-      scope: 'openid profile api1',
-      silent_redirect_uri: 'http://localhost:3000'
-    };
-    let userManager = new UserManager(settings);
-
-    if(window.location.hash) {
-
-      let user = await userManager.signinRedirectCallback();
-      alert('logged in: ' + JSON.stringify(user));
-      //this._accessToken = user.access_token;
-    } else {
-      userManager.signinRedirect();
-    }
   }
 
   /**
@@ -131,5 +141,12 @@ export class AppComponent extends React.Component implements React.ChildContextP
         </AuthorizationComponent>
       </div>
     );
+  }
+
+  private createConfirmationUi(confirmationDialog: ConfirmationDialogComponent): void {
+    if(confirmationDialog) {
+      let confirmationUiService = new ConfirmationUiService(confirmationDialog);
+      this._deferredConfirmationUi.resolve(confirmationUiService);
+    }
   }
 }

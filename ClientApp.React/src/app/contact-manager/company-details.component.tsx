@@ -103,8 +103,13 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
   /**
    * Invoked when user clicks 'Delete' button
    */
-  private handleDeleteClick(): void {
-    this._companiesContext.confirmationUiService.confirm('test');
-  }
+  private async handleDeleteClick(): Promise<void> {
+    let confirmationUi = await this._companiesContext.confirmationUi;
+    let confirmationResult = await confirmationUi.confirm('CONTACT_MANAGER.COMPANY_DETAILS.MSG_DELETE_COMPANY');
 
+    if(confirmationResult) {
+      let companyId = Number.parseInt(this.props.match.params.companyId);
+      this._companiesContext.companyHttpService.deleteCompany(companyId);
+    }
+  }
 }

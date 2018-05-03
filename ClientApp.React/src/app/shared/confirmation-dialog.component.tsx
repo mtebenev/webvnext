@@ -1,11 +1,8 @@
 import * as React from 'react';
-import {translate, InjectedTranslateProps} from 'react-i18next';
 
 import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button} from '@core/mui-exports';
-import {Deferred} from '@common/deferred';
+import {Deferred, IntlUtils} from '@common/index';
 
-interface IProps {
-}
 
 interface IState {
   text?: string;
@@ -15,12 +12,12 @@ interface IState {
 /**
  * Can ask user to confirm something
  */
-export class ConfirmationDialogComponent extends React.Component<IProps, IState> {
+export class ConfirmationDialogComponent extends React.Component<React.HTMLProps<any>, IState> {
 
   private _deferredResult: Deferred<boolean>;
 
-  constructor(props: IProps) {
-    super(props);
+  constructor() {
+    super({});
 
     this.state = {isOpen: false};
   }
@@ -32,7 +29,6 @@ export class ConfirmationDialogComponent extends React.Component<IProps, IState>
 
     return (
       <Dialog open={this.state.isOpen}>
-        <DialogTitle id="responsive-dialog-title">{"Use Google's location service?"}</DialogTitle>
         <DialogContent>
           <DialogContentText>
             {this.state.text}
@@ -40,10 +36,10 @@ export class ConfirmationDialogComponent extends React.Component<IProps, IState>
         </DialogContent>
         <DialogActions>
           <Button color="primary" onClick={() => this.handleButtonClick(true)}>
-            OK
-            </Button>
+            {IntlUtils.t('COMMON.BUTTONS.OK')}
+          </Button>
           <Button color="primary" onClick={() => this.handleButtonClick(false)}>
-            Cancel
+            {IntlUtils.t('COMMON.BUTTONS.CANCEL')}
           </Button>
         </DialogActions>
       </Dialog>
@@ -53,10 +49,12 @@ export class ConfirmationDialogComponent extends React.Component<IProps, IState>
   /**
    * Call to open the dialog
    */
+
   public open(bodyTranslationId: string): Promise<boolean> {
 
     this._deferredResult = new Deferred<boolean>();
-    this.setState({isOpen: true, text: bodyTranslationId});
+    let text = IntlUtils.t(bodyTranslationId)
+    this.setState({isOpen: true, text: text});
 
     return this._deferredResult.promise;
   }

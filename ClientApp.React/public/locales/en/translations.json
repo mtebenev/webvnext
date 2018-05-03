@@ -1,0 +1,46 @@
+{
+  "COMMON": {
+    "BUTTONS": {
+      "CREATE": "Create",
+      "EDIT": "Edit",
+      "DELETE": "Delete",
+      "OK": "OK",
+      "CANCEL": "Cancel",
+      "UPDATE": "Update"
+    }
+  },
+  "APP_HEADER": {
+    "MENU_LOGOUT": "Log Out"
+  },
+  "CONTACT_MANAGER": {
+    "MODULE_TITLE": "Contact Manager",
+    "COMPANY_LIST": {
+      "VIEW_TITLE": "Companies",
+      "CREATE_COMPANY": "New Company"
+    },
+    "COMPANY_DETAILS": {
+			"VIEW_TITLE": "New Company",
+      "MSG_DELETE_COMPANY": "Are you sure you want to delete the company?",
+      "LABEL_DESCRIPTION": "Description:",
+      "NO_DESCRIPTION": "<no description provided>"
+    },
+    "CONTACT_LIST": {
+      "VIEW_TITLE": "Contacts",
+      "CREATE_CONTACT": "New Contact"
+    },
+    "CONTACT_DETAILS": {
+      "VIEW_TITLE_NEW": "New Contact",
+      "MSG_DELETE_CONTACT": "Are you sure you want to delete the contact?",
+      "FIRST_NAME_PLACEHOLDER": "First name",
+      "LAST_NAME_PLACEHOLDER": "Last name",
+      "SELECT_COMPANY_PLACEHOLDER": "Select company (start typing to choose from list)",
+      "LABEL_COMPANY": "Company:"
+    }
+  },
+  "ADMIN": {
+    "MODULE_TITLE": "Administration",
+    "DATA_UPLOAD": {
+      "LABEL_UPLOAD_CONTACTS": "Upload contacts"
+    }
+  }
+}

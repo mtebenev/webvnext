@@ -56,4 +56,11 @@ export class CompanyHttpService extends HttpServiceBase {
   public updateCompany(companyDto: ICompanyDto): Promise<void> {
     return this.doPut({companyId: companyDto.companyId.toString()}, companyDto);
   }
+
+  /**
+   * Delete company of the current user
+   */
+  public deleteCompany(companyId: number): Promise<void> {
+    return this.doDelete({companyId: companyId.toString()});
+  }
 }
