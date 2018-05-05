@@ -1,9 +1,11 @@
 import * as React from 'react';
 import {RouteComponentProps} from 'react-router-dom';
 import {Button, TextField} from '@core/mui-exports';
+import {Form, Field, FormRenderProps} from 'react-final-form';
 
 import {ICompanyDto} from '@http-services/contact-manager/company-http.service';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
+import {FormTextField, validatorRequired} from '@common/form-utils';
 
 interface IRouteParams {
   companyId: string;
@@ -38,18 +40,49 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
   public render(): React.ReactNode {
     return (
       <div style={this.props.style}>{this.state.company &&
-        <div>
-          <div>
-            <TextField fullWidth={true} value={this.state.company.name} onChange={(e) => {this.handleCompanyNameChange(e)}} />
-          </div>
-          <div>
-            <TextField fullWidth={true} value={this.state.company.description} onChange={(e) => {this.handleCompanyDescriptionChange(e)}} />
-          </div>
-
-          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
-            <Button variant="raised" color="primary" onClick={() => {this.handleUpdateClick();}}>Update</Button>
-          </div>
-        </div>
+        <Form
+          onSubmit={(values) => this.handleSubmitForm(values)}
+          initialValues={{
+            companyName: this.state.company.name,
+            companyDescription: this.state.company.description
+          }}
+          render={(props: FormRenderProps) => (
+            <form onSubmit={props.handleSubmit}>
+              <div>
+                <Field
+                  name="companyName"
+                  component={FormTextField}
+                  type="text"
+                  label="Name"
+                  fullWidth={true}
+                  required={true}
+                  validate={validatorRequired}
+                />
+              </div>
+              <div>
+                <Field
+                  name="companyDescription"
+                  component={FormTextField}
+                  type="text"
+                  label="Description"
+                  fullWidth={true}
+                />
+              </div>
+              <div>
+                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+                  <Button
+                    type="submit"
+                    variant="raised"
+                    color="primary"
+                    disabled={props.submitting || props.pristine  || props.invalid}
+                  >
+                    Update
+                  </Button>
+                </div>
+              </div>
+            </form>
+          )}
+        />
       }
       </div>
     );
@@ -69,7 +102,6 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
     this.setState({company: company});
   }
 
-
   /**
    * Invoked when user clicks Update button
    */
@@ -81,25 +113,21 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
   }
 
   /**
-   * Invoked when user changes company name
+   * Invoked by final-form
+   * TODO: make it failed with strict signature (tslint should assert missing params)
    */
-  private handleCompanyNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
+  private handleSubmitForm(values: object): void {
 
-    event.persist();
-    this.setState(prevState => {
-      return {...prevState, company: {...prevState.company, name: event.target.value} as ICompanyDto};
-    });
-  }
+    if(!this.state.company)
+      throw new Error('Unexpected: company is undefined');
 
-  /**
-   * Invoked when user changes company description
-   */
-  private handleCompanyDescriptionChange(event: React.ChangeEvent<HTMLInputElement>): void {
+    let company: ICompanyDto = {
+      companyId: this.state.company.companyId,
+      name: values['companyName'],
+      description: values['companyDescription']
+    };
 
-    event.persist();
-    this.setState(prevState => {
-      return {...prevState, company: {...prevState.company, description: event.target.value} as ICompanyDto};
-    });
+    this._companiesContext.companyHttpService.updateCompany(company);
   }
 }
 

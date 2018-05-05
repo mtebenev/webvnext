@@ -1,104 +1,102 @@
 import * as React from 'react';
 import {AppBar, Toolbar, Button, TextField, Typography} from '@core/mui-exports';
+import {Form, Field, FormRenderProps} from 'react-final-form';
 
 import {ICompanyDto} from '@http-services/contact-manager/company-http.service';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
+import {FormTextField, validatorRequired} from '@common/form-utils';
 
 interface IProps extends React.HTMLProps<any> {
-}
-
-interface IState {
-  company: ICompanyDto
 }
 
 /**
  * Creates a new company
  */
-export class CompanyNewComponent extends React.Component<IProps, IState> {
+export class CompanyNewComponent extends React.Component<IProps> {
 
   private _companiesContext: ICompaniesContext;
   public static contextTypes: TCompaniesContextTypes = CompaniesContextTypes;
 
   constructor(props: IProps, context: ICompaniesContext) {
     super(props);
-
-    let company: ICompanyDto = {
-      companyId: 0
-    };
-
-    this.state = {company: company};
   }
 
   /**
    * React.Component
    */
   public render(): React.ReactNode {
+
     return (
-      <div style={this.props.style}>{this.state.company &&
-        <div>
+      <div style={this.props.style}>{
+        <React.Fragment>
           <AppBar position="static" color="default">
             <Toolbar>
               <Typography variant="title">
                 New Company
               </Typography>
             </Toolbar>
+
           </AppBar>
 
-          <div>
-            <TextField
-              value={this.state.company.name}
-              onChange={(e) => {this.handleCompanyNameChange(e)}}
-              fullWidth={true}
-              label="Name"
-              required={true}
-            />
-          </div>
-          <div>
-            <TextField
-              value={this.state.company.description}
-              onChange={(e) => {this.handleCompanyDescriptionChange(e)}}
-              fullWidth={true}
-              label="Description"
-            />
-          </div>
-          <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
-            <Button variant="raised" color="primary" onClick={() => {this.handleCreateClick();}}>Create</Button>
-          </div>
-        </div>
+          <Form
+            onSubmit={(values) => this.handleSubmitForm(values)}
+            render={(props: FormRenderProps) => (
+              <form onSubmit={props.handleSubmit}>
+                <div>
+                  <Field
+                    name="companyName"
+                    component={FormTextField}
+                    type="text"
+                    label="Name"
+                    fullWidth={true}
+                    required={true}
+                    validate={validatorRequired}
+                  />
+                </div>
+                <div>
+                  <Field
+                    name="companyDescription"
+                    component={FormTextField}
+                    type="text"
+                    label="Description"
+                    fullWidth={true}
+                  />
+                </div>
+                <div>
+                  <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+                    <Button
+                      type="submit"
+                      variant="raised"
+                      color="primary"
+                      disabled={props.submitting || props.pristine || props.invalid}
+                    >
+                      Create
+                    </Button>
+                  </div>
+                </div>
+              </form>
+
+            )}
+          />
+        </React.Fragment>
       }
       </div>
     );
   }
 
   /**
-   * Invoked when user clicks Update button
+   * Invoked by final-form
+   * TODO: make it failed with strict signature (tslint should assert missing params)
    */
-  private async handleCreateClick(): Promise<void> {
+  private handleSubmitForm(values: object): void {
 
-    this._companiesContext.companyHttpService.createCompany(this.state.company);
+    let company: ICompanyDto = {
+      companyId: 0,
+      name: values['companyName'],
+      description: values['companyDescription']
+    };
+
+    this._companiesContext.companyHttpService.createCompany(company);
   }
-
-  /**
-   * Invoked when user changes company name
-   */
-  private handleCompanyNameChange(event: React.ChangeEvent<HTMLInputElement>): void {
-
-    event.persist();
-    this.setState(prevState => {
-      return {...prevState, company: {...prevState.company, name: event.target.value} as ICompanyDto};
-    });
-  }
-
-  /**
-   * Invoked when user changes company description
-   */
-  private handleCompanyDescriptionChange(event: React.ChangeEvent<HTMLInputElement>): void {
-
-    event.persist();
-    this.setState(prevState => {
-      return {...prevState, company: {...prevState.company, description: event.target.value} as ICompanyDto};
-    });
-  }
-
 }
 
