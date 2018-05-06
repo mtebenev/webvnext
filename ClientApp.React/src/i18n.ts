@@ -20,6 +20,10 @@ i18n
 
     react: {
       wait: true
+    },
+
+    backend: {
+      loadPath: `${process.env.PUBLIC_URL}/locales/{{lng}}/{{ns}}.json`
     }
   });
 
