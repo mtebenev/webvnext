@@ -13,6 +13,8 @@ import {ConfirmationUiService} from '@app-services/confirmation-ui.service';
 import {ConfirmationUi} from '@app-services/confirmation-ui';
 import {IAppContext, AppContextTypes, TAppContextTypes} from './app-context';
 import {Deferred} from '@common/index';
+import {FxContainer} from '@layout/fx-container';
+import {FxFill} from '@layout/fx-fill';
 
 import './app.component.scss';
 
@@ -81,29 +83,36 @@ export class AppComponent extends React.Component<React.HTMLProps<any>, IState> 
 
     return (
       <React.Fragment>{this.state.isTranslationLoaded &&
-        <div className="App">
-          <div>
-            <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASENAME}>
-              <div>
-                {this.renderAppSidebar()}
-                <AppBar position="static">
-                  <Toolbar>
-                    <IconButton>
-                      <Icon>menu</Icon>
-                    </IconButton>
+        <React.Fragment>
+          <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASENAME}>
+            <FxContainer
+              flexFill={true}
+              layout="column"
+              layoutAlign="start stretch"
+            >
+              <AppBar position="static">
+                <Toolbar>
+                  <IconButton>
+                    <Icon>menu</Icon>
+                  </IconButton>
 
-                    <Typography variant="title" color="inherit">
-                      Contact Manager
-                  </Typography>
-                    <Button color="inherit">Login</Button>
-                  </Toolbar>
-                </AppBar>
+                  <Typography variant="title" color="inherit">
+                    Contact Manager
+                </Typography>
+                  <Button color="inherit">Login</Button>
+                </Toolbar>
+              </AppBar>
+              <FxContainer
+                layout="row"
+                layoutAlign="start stretch"
+                style={{flexGrow: 1, flexShrink: 1}}
+              >
                 {this.renderAppContent()}
-              </div>
-            </BrowserRouter>
-          </div>
+              </FxContainer>
+            </FxContainer>
+          </BrowserRouter>
           <ConfirmationDialogComponent ref={this._setConfirmationDialogRef} />
-        </div>
+        </React.Fragment>
       }
       </React.Fragment>
     );
@@ -132,13 +141,15 @@ export class AppComponent extends React.Component<React.HTMLProps<any>, IState> 
   private renderAppContent(): React.ReactNode {
     return (
       <div className="container">
-        <AuthorizationComponent>
-          <Switch>
-            <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
-            <Route path="/companies" render={(props) => (<CompaniesComponent {...props} />)} />
-            <Route path="/contacts" component={ContactListComponent} />
-          </Switch>
-        </AuthorizationComponent>
+        <FxFill>
+          <AuthorizationComponent>
+            <Switch>
+              <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
+              <Route path="/companies" render={(props) => (<CompaniesComponent {...props} />)} />
+              <Route path="/contacts" component={ContactListComponent} />
+            </Switch>
+          </AuthorizationComponent>
+        </FxFill>
       </div>
     );
   }

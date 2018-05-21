@@ -26,6 +26,7 @@
       "@common/*": ["app/core/common/*"],
       "@app-services/*": ["app/core/app-services/*"],
       "@http-services/*": ["app/core/http-services/*"],
+      "@layout/*": ["app/core/layout/*"],
       "@shared/*": ["app/shared/*"],
       "@core/*": ["app/core/*"]
     }

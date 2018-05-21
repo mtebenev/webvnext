@@ -10,6 +10,8 @@ import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from '
 import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
 import {AppNavigationService} from '@app-services/app-navigation.service';
 import {ConfirmationUiService} from '@app-services/confirmation-ui.service';
+import {FxContainer} from '@layout/fx-container';
+import {FxFill} from '@layout/fx-fill';
 
 interface IRouteParams {
   companyId: string;
@@ -56,7 +58,7 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
   public render(): React.ReactNode {
 
     return (
-      <div style={{border: '1px solid red'}}>
+      <FxFill>
         {/* Add new Company FAB */}
         <Button
           variant="fab"
@@ -76,7 +78,7 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
           }
         }
         </MediaQueryLtSm>
-      </div>
+      </FxFill>
     );
   }
 
@@ -87,7 +89,7 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
     return (
       <div>
         <Switch>
-          <Route exact={true} path="/companies" render={props => <CompanyListComponent/>} />
+          <Route exact={true} path="/companies" render={props => <CompanyListComponent />} />
           <Route
             exact={true}
             path="/companies/new"
@@ -104,20 +106,23 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
 
   private renderLargeScreen(): React.ReactNode {
     return (
-      <div style={{display: 'flex', flexDirection: 'row'}}>
+      <FxContainer
+        flexFill={true}
+        layout="row"
+      >
         <CompanyListComponent style={{flex: '1'}} />
         <Switch>
           <Route
-              exact={true}
-              path="/companies/new"
-              render={props => <CompanyNewComponent style={{flex: '1'}} />}
+            exact={true}
+            path="/companies/new"
+            render={props => <CompanyNewComponent style={{flex: '1'}} />}
           />
           <Route
             path="/companies/:companyId"
             render={props => <CompanyDetailsComponent style={{flex: '1'}} {...props} />}
           />
         </Switch>
-      </div>
+      </FxContainer>
     );
   }
 }

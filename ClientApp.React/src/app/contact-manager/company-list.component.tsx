@@ -5,7 +5,8 @@ import {Link} from 'react-router-dom';
 import {ICompanyQueryParamsDto, ICompanyDto} from '@http-services/contact-manager/company-http.service';
 import {IPagedResultDto} from '@common/ipaged-result-dto';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
-
+import {FxFlex} from '@layout/fx-flex';
+import {FxContainer} from '@layout/fx-container';
 
 interface IState {
   companies?: IPagedResultDto<ICompanyDto>;
@@ -31,7 +32,11 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
     return (
       <div style={this.props.style}>
         {this.state.companies &&
-          <div>
+          <FxContainer
+            flexFill={true}
+            layout="column"
+            layoutAlign="start stretch"
+          >
             <AppBar position="static" color="default">
               <Toolbar>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
@@ -41,17 +46,18 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
                 </div>
               </Toolbar>
             </AppBar>
-
-            <List>
-              {
-                this.state.companies.rows.map(c => (
-                  <ListItem button={true} component={(props: any) => <Link {...props} to={`/companies/${c.companyId}`} />} >
-                    <ListItemText primary={c.name} />
-                  </ListItem>
-                ))
-              }
-            </List>
-          </div>
+            <FxFlex style={{overflow: 'auto'}}>
+              <List >
+                {
+                  this.state.companies.rows.map(c => (
+                    <ListItem button={true} component={(props: any) => <Link {...props} to={`/companies/${c.companyId}`} />} >
+                      <ListItemText primary={c.name} />
+                    </ListItem>
+                  ))
+                }
+              </List>
+            </FxFlex>
+          </FxContainer>
         }
 
       </div>
