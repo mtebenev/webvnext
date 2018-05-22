@@ -7,6 +7,7 @@ import {IPagedResultDto} from '@common/ipaged-result-dto';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
 import {FxFlex} from '@layout/fx-flex';
 import {FxContainer} from '@layout/fx-container';
+import {Paginator, IPageChangeEvent} from '@shared/paginator';
 
 interface IState {
   companies?: IPagedResultDto<ICompanyDto>;
@@ -46,6 +47,12 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
                 </div>
               </Toolbar>
             </AppBar>
+            <Paginator
+              pageSize={10}
+              length={100}
+              onPageChange={e => this.handlePageChange(e)}
+              pageIndex={0}
+            />
             <FxFlex style={{overflow: 'auto'}}>
               <List >
                 {
@@ -68,17 +75,24 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
    * ComponentLifecycle
    */
   public componentDidMount(): void {
-    this.loadCompanies();
+    this.loadCompanies(0);
   }
 
-  private async loadCompanies(): Promise<void> {
+  private async loadCompanies(pageNumber: number): Promise<void> {
 
     let queryParams: ICompanyQueryParamsDto = {
-      pageSize: 20,
-      pageNumber: 0
+      pageSize: 10,
+      pageNumber: pageNumber
     };
 
     let response = await this._companiesContext.companyHttpService.getCompanies(queryParams);
-    this.setState({companies: response});
+    this.setState({...this.state, companies: response});
+  }
+
+  /**
+   * Reacts on paginator state change
+   */
+  private handlePageChange(event: IPageChangeEvent): void {
+    this.loadCompanies(event.pageIndex);
   }
 }
