@@ -9,7 +9,7 @@ import i18n from './i18n';
 
 ReactDOM.render(
   <I18nextProvider i18n={i18n}>
-    <AppComponent />
+    <AppComponent classes={{root: 'root'}} />
   </I18nextProvider>,
   document.getElementById('root') as HTMLElement
 );

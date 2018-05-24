@@ -4,7 +4,8 @@ import {UserManager, UserManagerSettings} from 'oidc-client';
 import {BrowserRouter as Router, Route, Link, Switch, BrowserRouter} from 'react-router-dom';
 import {Redirect} from 'react-router';
 import * as i18n from 'i18next'
-import {AppBar, Drawer, List, ListItem, ListItemText, Toolbar, Button, Icon, IconButton, Typography} from '@core/mui-exports';
+import {AppBar, Drawer, List, ListItem, ListItemText, Toolbar, Button, Icon, IconButton, Typography, WithStyles} from '@core/mui-exports';
+import {MuiWithStyles} from '@core/mui-decorators';
 
 import {ContactListComponent, CompaniesComponent} from './contact-manager/index';
 import {AuthorizationComponent} from './shared/authorization.component';
@@ -26,7 +27,15 @@ interface IState {
   isTranslationLoaded: boolean;
 }
 
-export class AppComponent extends React.Component<React.HTMLProps<any>, IState> implements React.ChildContextProvider<IAppContext> {
+const styles: any = (theme: any) => ({
+  drawerPaper: {
+    position: 'relative',
+    width: 300,
+  }
+});
+
+@MuiWithStyles(styles)
+export class AppComponent extends React.Component<React.HTMLProps<any> & WithStyles<'root'>, IState> implements React.ChildContextProvider<IAppContext> {
 
   private _deferredConfirmationUi: Deferred<ConfirmationUi>;
   private _appContext: IAppContext;
@@ -90,23 +99,13 @@ export class AppComponent extends React.Component<React.HTMLProps<any>, IState> 
               layout="column"
               layoutAlign="start stretch"
             >
-              <AppBar position="static">
-                <Toolbar>
-                  <IconButton>
-                    <Icon>menu</Icon>
-                  </IconButton>
-
-                  <Typography variant="title" color="inherit">
-                    Contact Manager
-                </Typography>
-                  <Button color="inherit">Login</Button>
-                </Toolbar>
-              </AppBar>
+              {this.renderAppBar()}
               <FxContainer
                 layout="row"
                 layoutAlign="start stretch"
                 style={{flexGrow: 1, flexShrink: 1}}
               >
+                {this.renderAppSidebar()}
                 {this.renderAppContent()}
               </FxContainer>
             </FxContainer>
@@ -122,9 +121,13 @@ export class AppComponent extends React.Component<React.HTMLProps<any>, IState> 
    * Renderes app sidebar
    */
   private renderAppSidebar(): React.ReactNode {
+
     return (
       <Drawer
         variant="permanent"
+        classes={{
+          paper: this.props.classes['drawerPaper']
+        }}
       >
         <List component="nav">
           <ListItem button={true} component={(props: any) => <Link to={`/companies`} {...props} />} >
@@ -135,6 +138,26 @@ export class AppComponent extends React.Component<React.HTMLProps<any>, IState> 
           </ListItem>
         </List>
       </Drawer>
+    );
+  }
+
+  /**
+   * Renders main application toolbar
+   */
+  private renderAppBar(): React.ReactNode {
+    return (
+      <AppBar position="static">
+        <Toolbar>
+          <IconButton>
+            <Icon>menu</Icon>
+          </IconButton>
+
+          <Typography variant="title" color="inherit">
+            Contact Manager
+          </Typography>
+          <Button color="inherit">Login</Button>
+        </Toolbar>
+      </AppBar>
     );
   }
 

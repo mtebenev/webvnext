@@ -20,6 +20,8 @@ import List, {
 import TextField from 'material-ui/TextField';
 import Toolbar from 'material-ui/Toolbar';
 import Typography from 'material-ui/Typography';
+import {withStyles, WithStyles} from 'material-ui/styles';
 
 export {AppBar, Button, Drawer, Icon, IconButton, List, ListItem, ListItemText, TextField, Toolbar, Typography};
 export {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle};
+export {withStyles, WithStyles};
