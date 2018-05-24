@@ -31,6 +31,7 @@ const styles: any = (theme: any) => ({
   drawerPaper: {
     position: 'relative',
     width: 300,
+    height: '100%'
   }
 });
 

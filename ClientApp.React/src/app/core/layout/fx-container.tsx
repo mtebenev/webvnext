@@ -1,4 +1,5 @@
 import * as React from 'react';
+import * as CSS from 'csstype';
 
 interface IProps {
   /**
@@ -13,8 +14,8 @@ export class FxContainer extends React.Component<IProps & React.HTMLProps<FxCont
 
   public render(): React.ReactNode {
 
-    let justifyContent: React.CSSWideKeyword | 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'space-evenly' | 'stretch' | undefined = undefined;
-    let alignContent: React.CSSWideKeyword | 'flex-start' | 'flex-end' | 'center' | 'space-between' | 'space-around' | 'stretch' | undefined = undefined;
+    let justifyContent: CSS.JustifyContentProperty | undefined = undefined;
+    let alignContent: CSS.AlignContentProperty | undefined = undefined;
 
     if(this.props.layoutAlign) {
       let tokens = this.props.layoutAlign.split(' ');
