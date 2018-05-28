@@ -87,20 +87,18 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
    */
   private renderSmallScreen(): React.ReactNode {
     return (
-      <div>
-        <Switch>
-          <Route exact={true} path="/companies" render={props => <CompanyListComponent />} />
-          <Route
-            exact={true}
-            path="/companies/new"
-            render={props => <CompanyNewComponent />}
-          />
-          <Route
-            path="/companies/:companyId"
-            render={props => <CompanyDetailsComponent {...props} />}
-          />
-        </Switch>
-      </div>
+      <Switch>
+        <Route exact={true} path="/companies" render={props => <CompanyListComponent style={{height: '100%'}} />} />
+        <Route
+          exact={true}
+          path="/companies/new"
+          render={props => <CompanyNewComponent />}
+        />
+        <Route
+          path="/companies/:companyId"
+          render={props => <CompanyDetailsComponent {...props} />}
+        />
+      </Switch>
     );
   }
 

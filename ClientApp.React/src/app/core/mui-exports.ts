@@ -18,8 +18,10 @@ import ListItemText from '@material-ui/core/ListItemText';
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import {withStyles, WithStyles} from '@material-ui/core/styles';
+import {withStyles, WithStyles, Theme} from '@material-ui/core/styles';
+import {Hidden} from '@material-ui/core';
 
 export {AppBar, Button, Drawer, Icon, IconButton, List, ListItem, ListItemText, TextField, Toolbar, Typography};
 export {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle};
-export {withStyles, WithStyles};
+export {withStyles, WithStyles, Theme};
+export {Hidden};

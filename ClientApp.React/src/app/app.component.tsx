@@ -4,7 +4,10 @@ import {UserManager, UserManagerSettings} from 'oidc-client';
 import {BrowserRouter as Router, Route, Link, Switch, BrowserRouter} from 'react-router-dom';
 import {Redirect} from 'react-router';
 import * as i18n from 'i18next'
-import {AppBar, Drawer, List, ListItem, ListItemText, Toolbar, Button, Icon, IconButton, Typography, WithStyles} from '@core/mui-exports';
+import {
+  AppBar, Drawer, List, ListItem, ListItemText, Toolbar, Button, Icon, IconButton, Typography, WithStyles,
+  Theme, Hidden
+} from '@core/mui-exports';
 import {MuiWithStyles} from '@core/mui-decorators';
 
 import {ContactListComponent, CompaniesComponent} from './contact-manager/index';
@@ -25,13 +28,23 @@ interface IIntlContext {
 
 interface IState {
   isTranslationLoaded: boolean;
+  isMobileDrawerOpen: boolean;
 }
 
-const styles: any = (theme: any) => ({
-  drawerPaper: {
+const styles: any = (theme: Theme) => ({
+  drawerPaperDesktop: {
     position: 'relative',
     width: 300,
     height: '100%'
+  },
+  drawerPaperMobile: {
+    width: 300,
+    height: '100%'
+  },
+  navIcon: {
+    [theme.breakpoints.up('md')]: {
+      display: 'none'
+    }
   }
 });
 
@@ -73,7 +86,10 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & WithSty
       confirmationUi: this._deferredConfirmationUi.promise
     };
 
-    this.state = {isTranslationLoaded: false};
+    this.state = {
+      isTranslationLoaded: false,
+      isMobileDrawerOpen: false
+    };
   }
 
   public static childContextTypes: TAppContextTypes = AppContextTypes;
@@ -87,7 +103,6 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & WithSty
 
   /**
    * Note: see discussion on properly passing props with router: https://github.com/ReactTraining/react-router/issues/4105
-   * TODOA
    */
   public render(): React.ReactNode {
 
@@ -106,8 +121,10 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & WithSty
                 layoutAlign="start stretch"
                 style={{flexGrow: 1, flexShrink: 1}}
               >
-                {this.renderAppSidebar()}
-                {this.renderAppContent()}
+                {this.renderDrawerContainers()}
+                <div style={{width: '100%'}}>
+                  {this.renderAppContent()}
+                </div>
               </FxContainer>
             </FxContainer>
           </BrowserRouter>
@@ -124,21 +141,14 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & WithSty
   private renderAppSidebar(): React.ReactNode {
 
     return (
-      <Drawer
-        variant="permanent"
-        classes={{
-          paper: this.props.classes['drawerPaper']
-        }}
-      >
-        <List component="nav">
-          <ListItem button={true} component={(props: any) => <Link to={`/companies`} {...props} />} >
-            <ListItemText primary="Companies" />
-          </ListItem>
-          <ListItem button={true} component={(props: any) => <Link to={`/contacts`} {...props} />}>
-            <ListItemText primary="Contacts" />
-          </ListItem>
-        </List>
-      </Drawer>
+      <List component="nav">
+        <ListItem button={true} component={(props: any) => <Link to={`/companies`} {...props} />} >
+          <ListItemText primary="Companies" />
+        </ListItem>
+        <ListItem button={true} component={(props: any) => <Link to={`/contacts`} {...props} />}>
+          <ListItemText primary="Contacts" />
+        </ListItem>
+      </List>
     );
   }
 
@@ -149,7 +159,12 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & WithSty
     return (
       <AppBar position="static">
         <Toolbar>
-          <IconButton>
+          <IconButton
+            color="inherit"
+            aria-label="open drawer"
+            onClick={() => this.handleMobileDrawerToggle()}
+            className={this.props.classes['navIcon']}
+          >
             <Icon>menu</Icon>
           </IconButton>
 
@@ -162,19 +177,55 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & WithSty
     );
   }
 
+  /**
+   * Renders responsive containers for sidebar drawer
+   * We have two: one permanent for large screens and the seond temporary for mobiles/tablets
+   */
+  private renderDrawerContainers(): React.ReactNode {
+    return (
+      <React.Fragment>
+        <Hidden mdUp={true}>
+          <Drawer
+            variant="temporary"
+            open={this.state.isMobileDrawerOpen}
+            onClose={() => this.handleMobileDrawerToggle()}
+            classes={{
+              paper: this.props.classes['drawerPaperMobile']
+            }}
+            ModalProps={{
+              keepMounted: true, // Better open performance on mobile.
+            }}
+          >
+            {this.renderAppSidebar()}
+          </Drawer>
+        </Hidden>
+        <Hidden smDown={true} implementation="css">
+          <Drawer
+            style={{height: '100%'}}
+            variant="permanent"
+            open={true}
+            classes={{
+              paper: this.props.classes['drawerPaperDesktop']
+            }}
+          >
+            {this.renderAppSidebar()}
+          </Drawer>
+        </Hidden>
+      </React.Fragment>
+    );
+  }
+
   private renderAppContent(): React.ReactNode {
     return (
-      <div className="container">
-        <FxFill>
-          <AuthorizationComponent>
-            <Switch>
-              <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
-              <Route path="/companies" render={(props) => (<CompaniesComponent {...props} />)} />
-              <Route path="/contacts" component={ContactListComponent} />
-            </Switch>
-          </AuthorizationComponent>
-        </FxFill>
-      </div>
+      <FxFill>
+        <AuthorizationComponent>
+          <Switch>
+            <Route exact={true} path="/" render={() => (<Redirect to="/companies" />)} />
+            <Route path="/companies" render={(props) => (<CompaniesComponent {...props} />)} />
+            <Route path="/contacts" component={ContactListComponent} />
+          </Switch>
+        </AuthorizationComponent>
+      </FxFill>
     );
   }
 
@@ -183,5 +234,12 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & WithSty
       let confirmationUiService = new ConfirmationUiService(confirmationDialog);
       this._deferredConfirmationUi.resolve(confirmationUiService);
     }
+  }
+
+  /**
+   * Toggle mobile drawer
+   */
+  private handleMobileDrawerToggle(): void {
+    this.setState({...this.state, isMobileDrawerOpen: !this.state.isMobileDrawerOpen});
   }
 }
