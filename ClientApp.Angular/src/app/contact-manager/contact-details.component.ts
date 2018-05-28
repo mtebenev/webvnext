@@ -31,14 +31,14 @@ class CompanySelectStateMatcher extends ErrorStateMatcher {
 })
 export class ContactDetailsComponent extends EntityDetailsComponentbase implements OnInit {
 
-  private _contact: IContactDto;
+  private _contact?: IContactDto;
   private readonly _contactHttpService: ContactHttpService;
   private readonly _companyHttpServie: CompanyHttpService;
   private readonly _appNavigationService: AppNavigationService;
   private readonly _confirmationUi: ConfirmationUi;
 
-  private _companies: ICompanyDto[]; // For selecting related companies
-  private _selectedCompany: ICompanyDto | string;
+  private _companies?: ICompanyDto[]; // For selecting related companies
+  private _selectedCompany?: ICompanyDto | string;
   private readonly _companySelectStateMatcher: CompanySelectStateMatcher;
 
   constructor(activatedRoute: ActivatedRoute, contactHttpService: ContactHttpService, companyHttpService: CompanyHttpService,
@@ -56,28 +56,31 @@ export class ContactDetailsComponent extends EntityDetailsComponentbase implemen
   /**
    * Bound contact
    */
-  public get contact(): IContactDto {
+  public get contact(): IContactDto | undefined {
     return this._contact;
   }
 
   /**
    * Bound related companies
    */
-  public get companies(): ICompanyDto[] {
+  public get companies(): ICompanyDto[] | undefined {
     return this._companies;
   }
 
   /**
    * Bound company selection
    */
-  public get selectedCompany(): ICompanyDto | string {
+  public get selectedCompany(): ICompanyDto | string | undefined {
     return this._selectedCompany;
   }
-  public set selectedCompany(value: ICompanyDto | string) {
-    this._selectedCompany = value;
+  public set selectedCompany(value: ICompanyDto | string | undefined) {
 
-    if(typeof value !== 'string')
-      this._contact.companyId = value.companyId;
+    if(this._contact) {
+      this._selectedCompany = value;
+
+      if(value && typeof value !== 'string')
+        this._contact.companyId = value.companyId;
+    }
   }
 
   /**
@@ -90,7 +93,7 @@ export class ContactDetailsComponent extends EntityDetailsComponentbase implemen
   /**
    * OnInit
    */
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.onInit();
   }
 
@@ -120,7 +123,8 @@ export class ContactDetailsComponent extends EntityDetailsComponentbase implemen
    * Invoked when user clicks EDIT button on the company
    */
   public async handleEditClick(): Promise<void> {
-    this._appNavigationService.goToContactEdit(this._contact.contactId);
+    if(this._contact)
+      this._appNavigationService.goToContactEdit(this._contact.contactId);
   }
 
   /**
@@ -128,7 +132,7 @@ export class ContactDetailsComponent extends EntityDetailsComponentbase implemen
    */
   public async handleFormSubmit(form: FormGroup): Promise<void> {
 
-    if(form.valid) {
+    if(this._contact && form.valid) {
 
       let contactId = this._contact.contactId;
 
@@ -149,7 +153,7 @@ export class ContactDetailsComponent extends EntityDetailsComponentbase implemen
   public async handleDeleteClick(): Promise<void> {
 
     let isConfirmed = await this._confirmationUi.confirm('CONTACT_MANAGER.CONTACT_DETAILS.MSG_DELETE_CONTACT');
-    if(isConfirmed) {
+    if(this._contact && isConfirmed) {
       await this._contactHttpService.deleteContact(this._contact.contactId);
       this._appNavigationService.goToCompanyList();
     }
@@ -175,7 +179,7 @@ export class ContactDetailsComponent extends EntityDetailsComponentbase implemen
       this._contact = await this._contactHttpService.getContact(contactId);
 
       if(this._contact.companyId)
-      this._selectedCompany = await this._companyHttpServie.getCompany(this._contact.companyId);
+        this._selectedCompany = await this._companyHttpServie.getCompany(this._contact.companyId);
 
     } else {
       this._contact = {contactId: 0, firstName: null, lastName: null, companyId: 0};

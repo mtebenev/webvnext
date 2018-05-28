@@ -2,7 +2,7 @@ import {Component, Input, OnInit, OnDestroy, Type} from '@angular/core';
 import {ObservableMedia} from '@angular/flex-layout';
 import {ActivatedRoute, Router} from '@angular/router';
 
-import {ISubscription} from '@common/rxjs-imports';
+import {Subscription} from '@common/rxjs-imports';
 
 /**
  * Displays a master and details components side by side (in desktop mode) or stacked (on mobiles)
@@ -25,16 +25,16 @@ export class MasterDetailsComponent implements OnInit, OnDestroy {
    * Set route view suffix (i.e. 'companies') to let the component determine if current view is master
    */
   @Input()
-  public masterRouteSuffix: string;
+  public masterRouteSuffix?: string;
 
   /**
    * Bound master component type
    */
   @Input()
-  public masterComponentType: Type<any>;
+  public masterComponentType?: Type<any>;
 
   private _showMasterView: boolean;
-  private activatedRouteSubsription: ISubscription;
+  private activatedRouteSubsription?: Subscription;
 
   constructor(private media: ObservableMedia, private activatedRoute: ActivatedRoute, private router: Router) {
     this.stackedLayoutQuery = 'lt-sm';

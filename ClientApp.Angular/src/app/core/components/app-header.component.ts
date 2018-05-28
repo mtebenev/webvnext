@@ -10,7 +10,7 @@ import {IAppCommands} from '../../iapp-commands';
 export class AppHeaderComponent {
 
   private _viewContextService: ViewContextService;
-  private _appCommands: IAppCommands;
+  private _appCommands?: IAppCommands;
 
   constructor(viewContextService: ViewContextService) {
     this._viewContextService = viewContextService;
@@ -24,7 +24,7 @@ export class AppHeaderComponent {
   /**
    * Bound module title
    */
-  public get moduleTitle(): string {
+  public get moduleTitle(): string | undefined {
     return this._viewContextService.moduleTitle;
   }
 
@@ -32,13 +32,13 @@ export class AppHeaderComponent {
    * Invoked when user clicks menu button
    */
   public handleMenuButtonClick(): void {
-    this._appCommands.toggleAppMenu();
+    this._appCommands!.toggleAppMenu();
   }
 
   /**
    * Invoked when user clicks logout button on the settings menu
    */
   public handleLogOutClick(): void {
-    this._appCommands.logOut();
+    this._appCommands!.logOut();
   }
 }

@@ -17,7 +17,7 @@ export class CompanyListComponent implements OnInit {
   private currentPage: number;
   private _pageSize: number;
   private _filterText?: string;
-  private _companies: IPagedResultDto<ICompanyDto>;
+  private _companies?: IPagedResultDto<ICompanyDto>;
 
   constructor(private companyHttpService: CompanyHttpService) {
     this.currentPage = 0;
@@ -34,7 +34,7 @@ export class CompanyListComponent implements OnInit {
   /**
    * Bound companies
    */
-  public get companies(): IPagedResultDto<ICompanyDto> {
+  public get companies(): IPagedResultDto<ICompanyDto> | undefined {
     return this._companies;
   }
 

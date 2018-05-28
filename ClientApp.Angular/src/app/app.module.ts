@@ -3,7 +3,7 @@ import {NgModule, ErrorHandler} from '@angular/core';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration} from 'angular-auth-oidc-client';
+import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration, AuthWellKnownEndpoints} from 'angular-auth-oidc-client';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
@@ -73,10 +73,11 @@ export class AppModule {
     openIDImplicitFlowConfiguration.log_console_warning_active = true;
     openIDImplicitFlowConfiguration.log_console_debug_active = false;
     openIDImplicitFlowConfiguration.max_id_token_iat_offset_allowed_in_seconds = 10;
-    openIDImplicitFlowConfiguration.override_well_known_configuration = false;
-    openIDImplicitFlowConfiguration.override_well_known_configuration_url = `${environment.identityServerConfig.serverUrl}/wellknownconfiguration.json`;
 
-    this.oidcSecurityService.setupModule(openIDImplicitFlowConfiguration);
+    const authWellKnownEndpoints = new AuthWellKnownEndpoints();
+    authWellKnownEndpoints.issuer = `${environment.identityServerConfig.serverUrl}/wellknownconfiguration.json`;
+
+    this.oidcSecurityService.setupModule(openIDImplicitFlowConfiguration, authWellKnownEndpoints);
   }
 }
 

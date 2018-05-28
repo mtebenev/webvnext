@@ -4,7 +4,7 @@ import {MediaChange, ObservableMedia} from '@angular/flex-layout';
 import {MatSidenav} from '@angular/material';
 
 import {TranslateService} from '@ngx-translate/core';
-import {ISubscription, filter} from '@common/rxjs-imports';
+import {Subscription, filter} from '@common/rxjs-imports';
 import {OidcSecurityService} from 'angular-auth-oidc-client';
 
 import {IAppCommands} from './iapp-commands';
@@ -16,8 +16,8 @@ import {IAppCommands} from './iapp-commands';
 })
 export class AppComponent implements IAppCommands {
 
-  private _subscriptionRouter: ISubscription;
-  private _subscriptionMedia: ISubscription;
+  private _subscriptionRouter: Subscription;
+  private _subscriptionMedia: Subscription;
   private _isMobileMode: boolean;
   private _media: ObservableMedia;
   private _oidcSecurityService: OidcSecurityService;
@@ -47,7 +47,7 @@ export class AppComponent implements IAppCommands {
   }
 
   @ViewChild(MatSidenav)
-  public sideNav: MatSidenav;
+  public sideNav?: MatSidenav;
 
   /**
    * OnDestroy
@@ -74,7 +74,7 @@ export class AppComponent implements IAppCommands {
    * IAppCommands
    */
   public toggleAppMenu(): void {
-    this.sideNav.toggle();
+    this.sideNav!.toggle();
   }
 
   /**
@@ -88,7 +88,7 @@ export class AppComponent implements IAppCommands {
 
     // For mobiles close sidenav after navigation
     if(this._isMobileMode) {
-      this.sideNav.close();
+      this.sideNav!.close();
     }
   }
 }
