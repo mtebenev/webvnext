@@ -1,8 +1,8 @@
 export class Deferred<T> {
 
   public readonly promise: Promise<T>;
-  public resolve: (value?: T | PromiseLike<T>) => void;
-  public reject: (reason?: any) => void;
+  public resolve!: (value?: T | PromiseLike<T>) => void;
+  public reject!: (reason?: any) => void;
 
   /**
    * Use to create a deferred result with value

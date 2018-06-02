@@ -16,7 +16,7 @@ export class ContactListComponent implements OnInit {
   private currentPage: number;
   private _pageSize: number;
   private _filterText?: string;
-  private _contacts: IPagedResultDto<IContactDto>;
+  private _contacts?: IPagedResultDto<IContactDto>;
 
   constructor(private contactHttpService: ContactHttpService) {
 
@@ -34,7 +34,7 @@ export class ContactListComponent implements OnInit {
   /**
    * Bound contacts
    */
-  public get contacts(): IPagedResultDto<IContactDto> {
+  public get contacts(): IPagedResultDto<IContactDto> | undefined {
     return this._contacts;
   }
 

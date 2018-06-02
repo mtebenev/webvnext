@@ -44,8 +44,8 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
 
     return (
       <div style={this.props.style}>{this.state.company &&
-        <div>
-          <AppBar position="static" color="default">
+        <React.Fragment>
+          <AppBar position="static" color="default" elevation={0}>
             <Toolbar>
               <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
                 <Typography variant="title">
@@ -69,7 +69,7 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
             <Route path={'/companies/:companyId/edit'} render={props => (<CompanyEditComponent {...props} />)} />
           </Switch>
 
-        </div>
+        </React.Fragment>
       }
       </div>
     );

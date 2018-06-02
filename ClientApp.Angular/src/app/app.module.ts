@@ -3,7 +3,7 @@ import {NgModule, ErrorHandler} from '@angular/core';
 import {HttpClientModule, HttpClient} from '@angular/common/http';
 import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
 
-import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration} from 'angular-auth-oidc-client';
+import {AuthModule, OidcSecurityService, OpenIDImplicitFlowConfiguration, AuthWellKnownEndpoints} from 'angular-auth-oidc-client';
 import {TranslateModule, TranslateLoader} from '@ngx-translate/core';
 import {TranslateHttpLoader} from '@ngx-translate/http-loader';
 
@@ -71,12 +71,21 @@ export class AppModule {
     openIDImplicitFlowConfiguration.unauthorized_route = '/Unauthorized';
     openIDImplicitFlowConfiguration.auto_userinfo = true;
     openIDImplicitFlowConfiguration.log_console_warning_active = true;
-    openIDImplicitFlowConfiguration.log_console_debug_active = false;
+    openIDImplicitFlowConfiguration.log_console_debug_active = true;
     openIDImplicitFlowConfiguration.max_id_token_iat_offset_allowed_in_seconds = 10;
-    openIDImplicitFlowConfiguration.override_well_known_configuration = false;
-    openIDImplicitFlowConfiguration.override_well_known_configuration_url = `${environment.identityServerConfig.serverUrl}/wellknownconfiguration.json`;
 
-    this.oidcSecurityService.setupModule(openIDImplicitFlowConfiguration);
+    const authWellKnownEndpoints = new AuthWellKnownEndpoints();
+    authWellKnownEndpoints.issuer = `${environment.identityServerConfig.serverUrl}`;
+    authWellKnownEndpoints.jwks_uri = `${environment.identityServerConfig.serverUrl}/.well-known/openid-configuration/jwks`;
+    authWellKnownEndpoints.authorization_endpoint = `${environment.identityServerConfig.serverUrl}/connect/authorize`;
+    authWellKnownEndpoints.token_endpoint = `${environment.identityServerConfig.serverUrl}/connect/token`;
+    authWellKnownEndpoints.userinfo_endpoint = `${environment.identityServerConfig.serverUrl}/connect/userinfo`;
+    authWellKnownEndpoints.end_session_endpoint = `${environment.identityServerConfig.serverUrl}/connect/endsession`;
+    authWellKnownEndpoints.check_session_iframe = `${environment.identityServerConfig.serverUrl}/connect/checksession`;
+    authWellKnownEndpoints.revocation_endpoint = `${environment.identityServerConfig.serverUrl}/connect/revocation`;
+    authWellKnownEndpoints.introspection_endpoint = `${environment.identityServerConfig.serverUrl}/connect/introspect`;
+
+    this.oidcSecurityService.setupModule(openIDImplicitFlowConfiguration, authWellKnownEndpoints);
   }
 }
 

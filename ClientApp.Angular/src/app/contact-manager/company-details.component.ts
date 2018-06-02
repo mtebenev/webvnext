@@ -11,7 +11,7 @@ import {EntityDetailsComponentbase, ViewMode} from './entity-details-component-b
 })
 export class CompanyDetailsComponent extends EntityDetailsComponentbase implements OnInit {
 
-  private _company: ICompanyDto;
+  private _company?: ICompanyDto;
   private _companyHttpService: CompanyHttpService;
   private _appNavigationService: AppNavigationService;
   private _confirmationUi: ConfirmationUi;
@@ -24,14 +24,14 @@ export class CompanyDetailsComponent extends EntityDetailsComponentbase implemen
     this._confirmationUi = confirmationUi;
   }
 
-  public get company(): ICompanyDto {
+  public get company(): ICompanyDto | undefined {
     return this._company;
   }
 
   /**
    * OnInit
    */
-  public ngOnInit() {
+  public ngOnInit(): void {
     this.onInit();
   }
 
@@ -39,7 +39,7 @@ export class CompanyDetailsComponent extends EntityDetailsComponentbase implemen
    * Invoked when user clicks EDIT button on the company
    */
   public async handleEditClick(): Promise<void> {
-    this._appNavigationService.goToCompanyEdit(this._company.companyId);
+    this._appNavigationService.goToCompanyEdit(this._company!.companyId);
   }
 
   /**
@@ -47,7 +47,7 @@ export class CompanyDetailsComponent extends EntityDetailsComponentbase implemen
    */
   public async handleFormSubmit(form: FormGroup): Promise<void> {
 
-    if(form.valid) {
+    if(form.valid && this._company) {
 
       let companyId = this._company.companyId;
 
@@ -68,7 +68,7 @@ export class CompanyDetailsComponent extends EntityDetailsComponentbase implemen
   public async handleDeleteClick(): Promise<void> {
 
     let isConfirmed = await this._confirmationUi.confirm('CONTACT_MANAGER.COMPANY_DETAILS.MSG_DELETE_COMPANY');
-    if(isConfirmed) {
+    if(isConfirmed && this._company) {
       await this._companyHttpService.deleteCompany(this._company.companyId);
       this._appNavigationService.goToCompanyList();
     }

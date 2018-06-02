@@ -30,11 +30,12 @@ export class SearchBoxComponent {
 
   private _isActivated: boolean;
   private _state: InputBoxStates;
-  private _inputElem: ElementRef;
+  private _inputElem?: ElementRef;
   private readonly _valueChangeSubject: Subject<string>; // Wrap in observable to debound user's input
 
   constructor() {
     this._isActivated = false;
+    this._state = 'inactive';
     this.textChanged = new EventEmitter<string>();
     this._valueChangeSubject = new Subject<string>();
     this.initDebouncing();
@@ -43,13 +44,13 @@ export class SearchBoxComponent {
   /**
    * Bound text value
    */
-  public value: string;
+  public value?: string;
 
   @ViewChild('inputElem')
-  public get inputElem(): ElementRef {
+  public get inputElem(): ElementRef | undefined {
     return this._inputElem;
   }
-  public set inputElem(value: ElementRef) {
+  public set inputElem(value: ElementRef | undefined) {
     this._inputElem = value;
 
     // Delay visual changes to avoid DOM change and thus expressionChangedAfterItHasBeenCheckedError
@@ -98,7 +99,7 @@ export class SearchBoxComponent {
   private initDebouncing(): void {
     this._valueChangeSubject
       .pipe(debounceTime(250),
-      distinctUntilChanged())
+            distinctUntilChanged())
       .subscribe(value => {
         this.textChanged.emit(value);
       });
