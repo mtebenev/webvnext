@@ -31,6 +31,8 @@
     "typeface-roboto": "0.0.54"
   },
   "devDependencies": {
+    "@types/enzyme": "3.1.10",
+    "@types/enzyme-adapter-react-16": "1.0.2",
     "@types/i18next": "8.4.3",
     "@types/i18next-xhr-backend": "1.4.1",
     "@types/jest": "22.2.3",
@@ -41,10 +43,20 @@
     "@types/react-i18next": "7.6.1",
     "@types/react-responsive": "3.0.1",
     "@types/react-router-dom": "4.2.6",
+    "@types/react-test-renderer": "16.0.1",
     "env-cmd": "8.0.0",
+    "enzyme": "3.3.0",
+    "enzyme-adapter-react-16": "1.1.1",
+    "jest": "23.1.0",
     "jquery": "3.3.1",
     "npm-run-all": "4.1.2",
     "node-sass-chokidar": "1.2.2",
+    "react-test-renderer": "16.4.0",
     "typescript": "2.8.3"
+  },
+  "jest": {
+    "moduleNameMapper": {
+      "@core(.*)$": "<rootDir>/src/app/core/$1"
+    }
   }
 }

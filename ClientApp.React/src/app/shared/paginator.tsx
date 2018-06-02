@@ -71,7 +71,9 @@ export class Paginator extends React.Component<IProps, IState> {
           </Select>
         </div>
         <div className="mat-paginator-range-actions">
-          <div className="mat-paginator-range-label" />
+          <div className="mat-paginator-range-label">
+            {this.getRangeLabel()}
+          </div>
           <button onClick={() => this.handleFirstPageClick()} disabled={!this.hasPreviousPage()}>
             <svg viewBox="0 0 24 24" focusable="false" style={{width: '40px'}}>
               <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z" />
@@ -185,6 +187,22 @@ export class Paginator extends React.Component<IProps, IState> {
    */
   private getNumberOfPages(): number {
     return Math.ceil(this.props.length / this.props.pageSize) - 1;
+  }
+
+  private getRangeLabel(): string {
+
+    if(this.props.length == 0 || this.state.pageSize == 0)
+      return `0 of ${this.props.length}`;
+
+    const length = Math.max(this.props.length, 0);
+    const startIndex = this.state.pageIndex * this.state.pageSize;
+
+    // If the start index exceeds the list length, do not try and fix the end index to the end.
+    const endIndex = startIndex < this.props.length
+      ? Math.min(startIndex + this.state.pageSize, this.props.length)
+      : startIndex + this.state.pageSize;
+
+    return `${startIndex + 1} - ${endIndex} of ${this.props.length}`;
   }
 
   /** Emits an event notifying that a change of the paginator's properties has been triggered. */
