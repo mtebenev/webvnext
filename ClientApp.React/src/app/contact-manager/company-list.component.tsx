@@ -50,6 +50,7 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
             <Paginator
               pageSize={10}
               length={100}
+              pageSizeOptions={[5, 10, 25, 100]}
               onPageChange={e => this.handlePageChange(e)}
               pageIndex={0}
             />
@@ -75,13 +76,13 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
    * ComponentLifecycle
    */
   public componentDidMount(): void {
-    this.loadCompanies(0);
+    this.loadCompanies(0, 10);
   }
 
-  private async loadCompanies(pageNumber: number): Promise<void> {
+  private async loadCompanies(pageNumber: number, pageSize: number): Promise<void> {
 
     let queryParams: ICompanyQueryParamsDto = {
-      pageSize: 10,
+      pageSize: pageSize,
       pageNumber: pageNumber
     };
 
@@ -93,6 +94,6 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
    * Reacts on paginator state change
    */
   private handlePageChange(event: IPageChangeEvent): void {
-    this.loadCompanies(event.pageIndex);
+    this.loadCompanies(event.pageIndex, event.pageSize);
   }
 }

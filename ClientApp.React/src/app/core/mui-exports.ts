@@ -19,7 +19,11 @@ import List, {
 
 import TextField from 'material-ui/TextField';
 import Toolbar from 'material-ui/Toolbar';
+import Select from 'material-ui/Select';
+import FormControl from 'material-ui/Form/FormControl';
+import InputLabel from 'material-ui/Input/InputLabel';
+import MenuItem from 'material-ui/Menu/MenuItem'
 import Typography from 'material-ui/Typography';
 
-export {AppBar, Button, Drawer, Icon, IconButton, List, ListItem, ListItemText, TextField, Toolbar, Typography};
+export {AppBar, Button, Drawer, Icon, IconButton, List, ListItem, ListItemText, TextField, Toolbar, Select, FormControl, InputLabel, MenuItem, Typography};
 export {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle};
