@@ -24,10 +24,10 @@ import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import Typography from '@material-ui/core/Typography';
-import {withStyles, WithStyles, Theme} from '@material-ui/core/styles';
+import {withStyles, WithStyles, Theme, StyledComponentProps, StyleRules, StyleRulesCallback} from '@material-ui/core/styles';
 import {Hidden} from '@material-ui/core';
 
 export {AppBar, Button, Drawer, Icon, IconButton, List, ListItem, ListItemText, TextField, Toolbar, Select, FormControl, InputLabel, MenuItem, Typography};
 export {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle};
-export {withStyles, WithStyles, Theme};
+export {withStyles, WithStyles, Theme, StyledComponentProps, StyleRules, StyleRulesCallback};
 export {Hidden};

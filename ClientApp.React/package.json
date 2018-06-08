@@ -5,17 +5,14 @@
   "scripts": {
     "start-ts": "react-scripts-ts start",
     "build-ts": "react-scripts-ts build",
-    "start": "npx env-cmd dev npm-run-all -p watch-css start-ts",
+    "start": "npx env-cmd dev npm run start-ts",
     "build": "npm-run-all build-css build-ts",
     "test": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject",
-    "build-css": "node-sass-chokidar --include-path ./node_modules src/ -o src/",
-    "watch-css": "npm run build-css && node-sass-chokidar --include-path ./node_modules src/ -o src/ --watch --recursive"
+    "eject": "react-scripts-ts eject"
   },
   "dependencies": {
     "@material-ui/core": "1.0.0",
     "axios": "0.17.1",
-    "bootstrap": "4.0.0",
     "final-form": "4.6.1",
     "i18next": "11.2.3",
     "i18next-xhr-backend": "1.5.1",
@@ -38,8 +35,8 @@
     "@types/jest": "22.2.3",
     "@types/node": "^9.3.0",
     "@types/prop-types": "15.5.3",
-    "@types/react": "16.3.14",
-    "@types/react-dom": "16.0.5",
+    "@types/react": "16.3.17",
+    "@types/react-dom": "16.0.6",
     "@types/react-i18next": "7.6.1",
     "@types/react-responsive": "3.0.1",
     "@types/react-router-dom": "4.2.6",
@@ -48,9 +45,6 @@
     "enzyme": "3.3.0",
     "enzyme-adapter-react-16": "1.1.1",
     "jest": "23.1.0",
-    "jquery": "3.3.1",
-    "npm-run-all": "4.1.2",
-    "node-sass-chokidar": "1.2.2",
     "react-test-renderer": "16.4.0",
     "typescript": "2.8.3"
   },

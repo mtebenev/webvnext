@@ -6,9 +6,9 @@ import {Redirect} from 'react-router';
 import * as i18n from 'i18next'
 import {
   AppBar, Drawer, List, ListItem, ListItemText, Toolbar, Button, Icon, IconButton, Typography, WithStyles,
-  Theme, Hidden
+  Theme, Hidden, StyleRules, StyleRulesCallback, StyledComponentProps
 } from '@core/mui-exports';
-import {MuiWithStyles} from '@core/mui-decorators';
+import {ApplyStyles} from '@core/mui-decorators';
 
 import {ContactListComponent, CompaniesComponent} from './contact-manager/index';
 import {AuthorizationComponent} from './shared/authorization.component';
@@ -20,8 +20,6 @@ import {Deferred} from '@common/index';
 import {FxContainer} from '@layout/fx-container';
 import {FxFill} from '@layout/fx-fill';
 
-import './app.component.scss';
-
 interface IIntlContext {
   i18n: i18n.i18n;
 }
@@ -31,7 +29,7 @@ interface IState {
   isMobileDrawerOpen: boolean;
 }
 
-const styles: any = (theme: Theme) => ({
+const styles: StyleRulesCallback = (theme: Theme) => ({
   drawerPaperDesktop: {
     position: 'relative',
     width: 300,
@@ -48,8 +46,11 @@ const styles: any = (theme: Theme) => ({
   }
 });
 
-@MuiWithStyles(styles)
-export class AppComponent extends React.Component<React.HTMLProps<any> & WithStyles<'root'>, IState> implements React.ChildContextProvider<IAppContext> {
+@ApplyStyles(styles)
+export class AppComponent extends React.Component<
+  React.HTMLProps<any> & StyledComponentProps<keyof typeof styles>,
+  IState>
+  implements React.ChildContextProvider<IAppContext> {
 
   private _deferredConfirmationUi: Deferred<ConfirmationUi>;
   private _appContext: IAppContext;
@@ -163,7 +164,7 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & WithSty
             color="inherit"
             aria-label="open drawer"
             onClick={() => this.handleMobileDrawerToggle()}
-            className={this.props.classes['navIcon']}
+            className={this.props.classes!['navIcon']}
           >
             <Icon>menu</Icon>
           </IconButton>
@@ -190,7 +191,7 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & WithSty
             open={this.state.isMobileDrawerOpen}
             onClose={() => this.handleMobileDrawerToggle()}
             classes={{
-              paper: this.props.classes['drawerPaperMobile']
+              paper: this.props.classes!['drawerPaperMobile']
             }}
             ModalProps={{
               keepMounted: true, // Better open performance on mobile.
@@ -205,7 +206,7 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & WithSty
             variant="permanent"
             open={true}
             classes={{
-              paper: this.props.classes['drawerPaperDesktop']
+              paper: this.props.classes!['drawerPaperDesktop']
             }}
           >
             {this.renderAppSidebar()}

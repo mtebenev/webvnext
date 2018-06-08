@@ -1,5 +1,8 @@
 import * as React from 'react';
-import {Select, FormControl, InputLabel, MenuItem} from '@core/mui-exports';
+import {Select, FormControl, InputLabel, MenuItem, Button, StyledComponentProps, StyleRules} from '@core/mui-exports';
+import {ApplyStyles} from '@core/mui-decorators';
+
+const ButtonSize = '15px';
 
 interface IProps {
 
@@ -41,13 +44,27 @@ export interface IPageChangeEvent {
 
   /** The current total number of items being paged */
   length: number;
-
 }
+
+// Create your Styles. Remember, since React-JSS uses the default preset,
+// most plugins are available without further configuration needed.
+const styles: StyleRules = {
+
+  paginatorContainer: {
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'flex-end',
+    minHeight: '56px',
+    padding: '0 8px',
+    flexWrap: 'wrap-reverse'
+  }
+};
 
 /**
  * Port of Paginator component from @angular/material
  */
-export class Paginator extends React.Component<IProps, IState> {
+@ApplyStyles(styles)
+export class Paginator extends React.Component<IProps & StyledComponentProps<keyof typeof styles>, IState> {
 
   constructor(props: IProps) {
     super(props);
@@ -58,7 +75,7 @@ export class Paginator extends React.Component<IProps, IState> {
 
   public render(): React.ReactNode {
     return (
-      <React.Fragment>
+      <div className={this.props.classes!.paginatorContainer}>
         <div>
           <div>Items per page:</div>
           <Select
@@ -74,28 +91,28 @@ export class Paginator extends React.Component<IProps, IState> {
           <div className="mat-paginator-range-label">
             {this.getRangeLabel()}
           </div>
-          <button onClick={() => this.handleFirstPageClick()} disabled={!this.hasPreviousPage()}>
-            <svg viewBox="0 0 24 24" focusable="false" style={{width: '40px'}}>
+          <Button onClick={() => this.handleFirstPageClick()} disabled={!this.hasPreviousPage()}>
+            <svg viewBox="0 0 24 24" focusable="false" style={{width: ButtonSize}}>
               <path d="M18.41 16.59L13.82 12l4.59-4.59L17 6l-6 6 6 6zM6 6h2v12H6z" />
             </svg>
-          </button>
-          <button onClick={() => this.handlePrevClick()} disabled={!this.hasPreviousPage()}>
-            <svg viewBox="0 0 24 24" focusable="false" style={{width: '40px'}}>
+          </Button>
+          <Button onClick={() => this.handlePrevClick()} disabled={!this.hasPreviousPage()}>
+            <svg viewBox="0 0 24 24" focusable="false" style={{width: ButtonSize}}>
               <path d="M15.41 7.41L14 6l-6 6 6 6 1.41-1.41L10.83 12z" />
             </svg>
-          </button>
-          <button onClick={() => this.handleNextClick()} disabled={!this.hasNextPage()}>
-            <svg viewBox="0 0 24 24" focusable="false" style={{width: '40px'}}>
+          </Button>
+          <Button onClick={() => this.handleNextClick()} disabled={!this.hasNextPage()}>
+            <svg viewBox="0 0 24 24" focusable="false" style={{width: ButtonSize}}>
               <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
             </svg>
-          </button>
-          <button onClick={() => this.handleLastPageClick()} disabled={!this.hasNextPage()}>
-            <svg viewBox="0 0 24 24" focusable="false" style={{width: '40px'}}>
+          </Button>
+          <Button onClick={() => this.handleLastPageClick()} disabled={!this.hasNextPage()}>
+            <svg viewBox="0 0 24 24" focusable="false" style={{width: ButtonSize}}>
               <path d="M5.59 7.41L10.18 12l-4.59 4.59L7 18l6-6-6-6zM16 6h2v12h-2z" />
             </svg>
-          </button>
+          </Button>
         </div>
-      </React.Fragment>
+      </div>
     );
   }
 
@@ -180,7 +197,6 @@ export class Paginator extends React.Component<IProps, IState> {
       this.emitPageEvent(previousPageIndex);
     });
   }
-
 
   /**
    * Calculate the number of pages

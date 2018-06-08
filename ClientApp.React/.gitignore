@@ -9,9 +9,6 @@
 # production
 /build
 
-# css files are generated from scss
-src/**/*.css
-
 # misc
 .DS_Store
 .env.local

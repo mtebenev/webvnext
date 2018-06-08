@@ -4,7 +4,6 @@ import 'typeface-roboto';
 import {I18nextProvider} from 'react-i18next';
 import {AppComponent} from './app/app.component';
 import registerServiceWorker from './registerServiceWorker';
-import './index.css';
 import i18n from './i18n';
 
 ReactDOM.render(

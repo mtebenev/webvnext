@@ -1,9 +1,9 @@
-import {withStyles} from './mui-exports';
+import {withStyles, StyleRules, StyleRulesCallback} from './mui-exports';
 
 /**
  * Wraps MUI withStyles
  */
-export function MuiWithStyles<T extends {new(...args: any[]): {}}>(styles: any): any {
+export function ApplyStyles<T extends {new(...args: any[]): {}}>(styles: StyleRules  | StyleRulesCallback): any {
 
   return (constructor: T) => {
     let anyc: any = constructor;
