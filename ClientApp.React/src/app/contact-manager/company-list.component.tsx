@@ -8,9 +8,13 @@ import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from '
 import {FxFlex} from '@layout/fx-flex';
 import {FxContainer} from '@layout/fx-container';
 import {Paginator, IPageChangeEvent} from '@shared/paginator';
+import {SearchBox} from '@shared/search-box';
 
 interface IState {
   companies?: IPagedResultDto<ICompanyDto>;
+  filterText?: string;
+  pageNumber: number;
+  pageSize: number;
 }
 
 export class CompanyListComponent extends React.Component<React.HTMLProps<any>, IState> {
@@ -23,7 +27,7 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
     super(props);
 
     this._companiesContext = context;
-    this.state = {}
+    this.state = {pageNumber: 0, pageSize: 10};
   }
 
   /**
@@ -44,6 +48,7 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
                   <Typography variant="title">
                     Companies
                   </Typography>
+                  <SearchBox onTextChanged={value => this.handleFilterTextChanged(value)} />
                 </div>
               </Toolbar>
             </AppBar>
@@ -76,14 +81,15 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
    * ComponentLifecycle
    */
   public componentDidMount(): void {
-    this.loadCompanies(0, 10);
+    this.loadCompanies();
   }
 
-  private async loadCompanies(pageNumber: number, pageSize: number): Promise<void> {
+  private async loadCompanies(): Promise<void> {
 
     let queryParams: ICompanyQueryParamsDto = {
-      pageSize: pageSize,
-      pageNumber: pageNumber
+      pageSize: this.state.pageSize,
+      pageNumber: this.state.pageNumber,
+      filterText: this.state.filterText
     };
 
     let response = await this._companiesContext.companyHttpService.getCompanies(queryParams);
@@ -94,6 +100,15 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
    * Reacts on paginator state change
    */
   private handlePageChange(event: IPageChangeEvent): void {
-    this.loadCompanies(event.pageIndex, event.pageSize);
+
+    this.setState({...this.state, pageNumber: event.pageIndex, pageSize: event.pageSize}, () => {
+      this.loadCompanies();
+    });
+  }
+
+  private handleFilterTextChanged(value: string): void {
+    this.setState({...this.state, filterText: value}, () => {
+      this.loadCompanies();
+    });
   }
 }

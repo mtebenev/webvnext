@@ -1,12 +1,10 @@
 import * as React from 'react';
-import * as PropTypes from 'prop-types';
 import {UserManager, UserManagerSettings} from 'oidc-client';
 import {BrowserRouter as Router, Route, Link, Switch, BrowserRouter} from 'react-router-dom';
 import {Redirect} from 'react-router';
-import * as i18n from 'i18next'
 import {
-  AppBar, Drawer, List, ListItem, ListItemText, Toolbar, Button, Icon, IconButton, Typography, WithStyles,
-  Theme, Hidden, StyleRules, StyleRulesCallback, StyledComponentProps
+  AppBar, Drawer, List, ListItem, ListItemText, Toolbar, Button, Icon, IconButton, Typography,
+  Theme, Hidden, StyleRulesCallback, StyledComponentProps
 } from '@core/mui-exports';
 import {ApplyStyles} from '@core/mui-decorators';
 
@@ -20,12 +18,7 @@ import {Deferred} from '@common/index';
 import {FxContainer} from '@layout/fx-container';
 import {FxFill} from '@layout/fx-fill';
 
-interface IIntlContext {
-  i18n: i18n.i18n;
-}
-
 interface IState {
-  isTranslationLoaded: boolean;
   isMobileDrawerOpen: boolean;
 }
 
@@ -48,19 +41,15 @@ const styles: StyleRulesCallback = (theme: Theme) => ({
 
 @ApplyStyles(styles)
 export class AppComponent extends React.Component<
-  React.HTMLProps<any> & StyledComponentProps<keyof typeof styles>,
-  IState>
+React.HTMLProps<any> & StyledComponentProps<keyof typeof styles>,
+IState>
   implements React.ChildContextProvider<IAppContext> {
 
   private _deferredConfirmationUi: Deferred<ConfirmationUi>;
   private _appContext: IAppContext;
   private _setConfirmationDialogRef: (element: ConfirmationDialogComponent) => void;
 
-  public static contextTypes: PropTypes.ValidationMap<IIntlContext> = {
-    i18n: PropTypes.object
-  };
-
-  constructor(props: any, context: IIntlContext) {
+  constructor(props: any) {
     super(props);
 
     // Note: we can't create confirmation UI unitil rendering (we are waiting for ref).
@@ -68,10 +57,6 @@ export class AppComponent extends React.Component<
     this._setConfirmationDialogRef = element => {
       this.createConfirmationUi(element);
     }
-
-    context.i18n.on('initialized', (options: i18n.InitOptions) => {
-      this.setState({isTranslationLoaded: true});
-    });
 
     let settings: UserManagerSettings = {
       authority: process.env.REACT_APP_IDENTITY_SERVER_URL,
@@ -88,7 +73,6 @@ export class AppComponent extends React.Component<
     };
 
     this.state = {
-      isTranslationLoaded: false,
       isMobileDrawerOpen: false
     };
   }
@@ -108,30 +92,27 @@ export class AppComponent extends React.Component<
   public render(): React.ReactNode {
 
     return (
-      <React.Fragment>{this.state.isTranslationLoaded &&
-        <React.Fragment>
-          <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASENAME}>
+      <React.Fragment>
+        <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASENAME}>
+          <FxContainer
+            flexFill={true}
+            layout="column"
+            layoutAlign="start stretch"
+          >
+            {this.renderAppBar()}
             <FxContainer
-              flexFill={true}
-              layout="column"
+              layout="row"
               layoutAlign="start stretch"
+              style={{flexGrow: 1, flexShrink: 1}}
             >
-              {this.renderAppBar()}
-              <FxContainer
-                layout="row"
-                layoutAlign="start stretch"
-                style={{flexGrow: 1, flexShrink: 1}}
-              >
-                {this.renderDrawerContainers()}
-                <div style={{width: '100%'}}>
-                  {this.renderAppContent()}
-                </div>
-              </FxContainer>
+              {this.renderDrawerContainers()}
+              <div style={{width: '100%'}}>
+                {this.renderAppContent()}
+              </div>
             </FxContainer>
-          </BrowserRouter>
-          <ConfirmationDialogComponent ref={this._setConfirmationDialogRef} />
-        </React.Fragment>
-      }
+          </FxContainer>
+        </BrowserRouter>
+        <ConfirmationDialogComponent ref={this._setConfirmationDialogRef} />
       </React.Fragment>
     );
   }

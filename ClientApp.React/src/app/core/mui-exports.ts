@@ -21,13 +21,19 @@ import Toolbar from '@material-ui/core/Toolbar';
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
 import InputLabel from '@material-ui/core/InputLabel';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import Typography from '@material-ui/core/Typography';
 import {withStyles, WithStyles, Theme, StyledComponentProps, StyleRules, StyleRulesCallback} from '@material-ui/core/styles';
 import {Hidden} from '@material-ui/core';
 
+import Grid from '@material-ui/core/Grid';
+
 export {AppBar, Button, Drawer, Icon, IconButton, List, ListItem, ListItemText, TextField, Toolbar, Select, FormControl, InputLabel, MenuItem, Typography};
+export {Input, InputAdornment};
 export {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle};
 export {withStyles, WithStyles, Theme, StyledComponentProps, StyleRules, StyleRulesCallback};
 export {Hidden};
+export {Grid};

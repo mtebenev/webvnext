@@ -22,6 +22,9 @@ interface IProps {
    */
   pageSizeOptions: number[];
 
+  /**
+   * Fired when some of paging parameters are changed (current page, size, etc)
+   */
   onPageChange: (e: IPageChangeEvent) => void;
 }
 
