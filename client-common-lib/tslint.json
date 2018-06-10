@@ -1,0 +1,20 @@
+{
+  "extends": [
+    "tslint-react"
+  ],
+  "rules": {
+    "jsx-no-lambda": false,
+    "jsx-no-multiline-js": false,
+    "typedef": [
+      true,
+      "call-signature",
+      "parameter",
+      "property-declaration",
+      "member-variable-declaration",
+      "array-destructuring"
+    ],
+    // TODO: allow devDependencies only in **/*.spec.ts files:
+    // waiting on https://github.com/palantir/tslint/pull/3708
+    "no-implicit-dependencies": [true, "dev"]
+  }
+}
