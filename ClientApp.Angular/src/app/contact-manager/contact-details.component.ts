@@ -3,9 +3,9 @@ import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
 import {FormGroup, FormControl, NgForm, FormGroupDirective} from '@angular/forms';
 
 import {ErrorStateMatcher} from '@angular/material';
-
+import {ICompanyDto, ICompanyQueryParamsDto} from 'client-common-lib';
 import {ContactHttpService, IContactDto} from '@http-services/contact-manager/contact-http.service';
-import {CompanyHttpService, ICompanyDto, ICompanyQueryParamsDto} from '@http-services/contact-manager/company-http.service';
+import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
 import {AppNavigationService, ConfirmationUi} from '@app-services/index';
 import {EntityDetailsComponentbase, ViewMode} from './entity-details-component-base';
 

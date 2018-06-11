@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
 import {FormGroup} from '@angular/forms';
 
-import {CompanyHttpService, ICompanyDto} from '@http-services/contact-manager/company-http.service';
+import {ICompanyDto} from 'client-common-lib';
+import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
 import {AppNavigationService, ConfirmationUi} from '@app-services/index';
 import {EntityDetailsComponentbase, ViewMode} from './entity-details-component-base';
 

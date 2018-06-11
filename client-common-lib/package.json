@@ -1,5 +1,6 @@
 {
   "name": "client-common-lib",
+  "private": true,
   "version": "1.0.0",
   "description": "Common library for JS clients",
   "main": "build/main/index.js",
@@ -51,8 +52,12 @@
     "node": ">=8.9"
   },
   "dependencies": {},
+  "peerDependencies": {
+    "axios": "^0.18.0"
+  },
   "devDependencies": {
     "ava": "^1.0.0-beta.5.1",
+    "axios": "^0.18.0",
     "codecov": "^3.0.2",
     "cz-conventional-changelog": "^2.1.0",
     "gh-pages": "^1.2.0",

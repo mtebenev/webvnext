@@ -2,7 +2,8 @@ import {Component, OnInit} from '@angular/core';
 
 import {PageEvent} from '@angular/material';
 
-import {CompanyHttpService, ICompanyDto, ICompanyQueryParamsDto} from '@http-services/contact-manager/company-http.service';
+import {ICompanyDto, ICompanyQueryParamsDto} from 'client-common-lib';
+import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
 import {IPagedResultDto} from '@common/ipaged-result-dto';
 
 /**
