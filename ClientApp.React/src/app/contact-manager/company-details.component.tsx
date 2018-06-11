@@ -2,7 +2,7 @@ import * as React from 'react';
 import {RouteComponentProps, Link, Route, Switch} from 'react-router-dom';
 import {AppBar, Toolbar, Button, Icon, IconButton, Typography} from '@core/mui-exports';
 
-import {ICompanyDto} from '@http-services/contact-manager/company-http.service';
+import {ICompanyDto} from 'client-common-lib';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
 import {CompanyViewComponent, CompanyEditComponent} from './index';
 

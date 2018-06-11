@@ -4,7 +4,7 @@ import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {ContactHttpService as ContactHttpServiceCore, IContactDto, IPagedResultDto, IContactQueryParamsDto} from 'client-common-lib';
 
 import {environment} from '@environments/environment';
-import {AuthTokenProviderOidc} from '@common/auth-token-provider-oidc';
+import {AuthTokenProvider} from '@common/auth-token-provider';
 
 /**
  * Contact-related HTTP methods
@@ -16,7 +16,7 @@ export class ContactHttpService {
 
   constructor(oidcSecurityService: OidcSecurityService) {
 
-    const authTokenProvider = new AuthTokenProviderOidc(oidcSecurityService);
+    const authTokenProvider = new AuthTokenProvider(oidcSecurityService);
     this._httpService = new ContactHttpServiceCore(authTokenProvider, environment.apiBaseUrl);
   }
 

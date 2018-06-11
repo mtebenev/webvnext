@@ -4,7 +4,7 @@ import {IAuthTokenProvider} from 'client-common-lib';
 /**
  * Wraps oidc service and provides access token for http services
  */
-export class AuthTokenProviderOidc implements IAuthTokenProvider {
+export class AuthTokenProvider implements IAuthTokenProvider {
 
   private _oidcSecurityService: OidcSecurityService;
 

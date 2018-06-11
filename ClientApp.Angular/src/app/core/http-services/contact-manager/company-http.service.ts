@@ -4,7 +4,7 @@ import {OidcSecurityService} from 'angular-auth-oidc-client';
 import {CompanyHttpService as CompanyHttpServiceCore, ICompanyQueryParamsDto, IPagedResultDto, ICompanyDto} from 'client-common-lib';
 
 import {environment} from '@environments/environment';
-import {AuthTokenProviderOidc} from '@common/auth-token-provider-oidc';
+import {AuthTokenProvider} from '@common/auth-token-provider';
 
 /**
  * Company-related HTTP methods (wraps CompanyHttpService from client-common-lib)
@@ -16,7 +16,7 @@ export class CompanyHttpService {
 
   constructor(oidcSecurityService: OidcSecurityService) {
 
-    const authTokenProvider = new AuthTokenProviderOidc(oidcSecurityService);
+    const authTokenProvider = new AuthTokenProvider(oidcSecurityService);
     this._httpService = new CompanyHttpServiceCore(authTokenProvider, environment.apiBaseUrl);
   }
 

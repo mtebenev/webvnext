@@ -12,7 +12,8 @@
   },
   "dependencies": {
     "@material-ui/core": "1.0.0",
-    "axios": "0.17.1",
+    "axios": "0.18.0",
+    "client-common-lib": "file:../client-common-lib",
     "final-form": "4.6.1",
     "i18next": "11.2.3",
     "i18next-xhr-backend": "1.5.1",

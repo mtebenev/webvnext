@@ -3,7 +3,7 @@ import {RouteComponentProps} from 'react-router-dom';
 import {Button, TextField} from '@core/mui-exports';
 import {Form, Field, FormRenderProps} from 'react-final-form';
 
-import {ICompanyDto} from '@http-services/contact-manager/company-http.service';
+import {ICompanyDto} from 'client-common-lib';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
 import {FormTextField, validatorRequired} from '@common/form-utils';
 

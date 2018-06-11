@@ -1,6 +1,6 @@
 import * as React from 'react';
 
-import {ICompanyDto} from '@http-services/contact-manager/company-http.service';
+import {ICompanyDto} from 'client-common-lib';
 
 
 interface IProps extends React.HTMLProps<any> {

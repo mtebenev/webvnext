@@ -2,8 +2,7 @@ import * as React from 'react';
 import {AppBar, Toolbar, Button, Icon, List, IconButton, ListItem, ListItemText, Typography} from '@core/mui-exports';
 import {Link} from 'react-router-dom';
 
-import {ICompanyQueryParamsDto, ICompanyDto} from '@http-services/contact-manager/company-http.service';
-import {IPagedResultDto} from '@common/ipaged-result-dto';
+import {ICompanyQueryParamsDto, ICompanyDto, IPagedResultDto} from 'client-common-lib';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
 import {FxFlex} from '@layout/fx-flex';
 import {FxContainer} from '@layout/fx-container';

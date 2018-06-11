@@ -2,7 +2,7 @@ import * as React from 'react';
 import {AppBar, Toolbar, Button, TextField, Typography} from '@core/mui-exports';
 import {Form, Field, FormRenderProps} from 'react-final-form';
 
-import {ICompanyDto} from '@http-services/contact-manager/company-http.service';
+import {ICompanyDto} from 'client-common-lib';
 import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
 import {FormTextField, validatorRequired} from '@common/form-utils';
 

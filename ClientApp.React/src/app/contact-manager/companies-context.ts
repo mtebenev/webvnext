@@ -1,6 +1,6 @@
 import * as PropTypes from 'prop-types';
 
-import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
+import {CompanyHttpService} from 'client-common-lib';
 import {AppNavigationService} from '@app-services/app-navigation.service';
 import {ConfirmationUi} from '@app-services/confirmation-ui';
 
