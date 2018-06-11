@@ -2,12 +2,17 @@ import {HttpServiceBase} from '../core/http-service-base';
 import {IPagedResultDto} from '../dto/ipaged-result-dto';
 import {ICompanyQueryParamsDto} from '../dto/icompany-query-params-dto';
 import {ICompanyDto} from '../dto/icompany-dto';
+import {IAuthTokenProvider} from '../core/iauth-token-provider';
 
 /**
  * Company-related HTTP methods
  */
 
 export class CompanyHttpService extends HttpServiceBase {
+
+  constructor(authTokenProvider: IAuthTokenProvider, baseUrl: string) {
+    super(authTokenProvider, baseUrl, 'companies')
+  }
 
   /**
    * Load companies of the current user

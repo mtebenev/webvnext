@@ -17,7 +17,7 @@ export class CompanyHttpService {
   constructor(oidcSecurityService: OidcSecurityService) {
 
     const authTokenProvider = new AuthTokenProviderOidc(oidcSecurityService);
-    this._httpService = new CompanyHttpServiceCore(authTokenProvider, environment.apiBaseUrl, 'companies')
+    this._httpService = new CompanyHttpServiceCore(authTokenProvider, environment.apiBaseUrl);
   }
 
   /**

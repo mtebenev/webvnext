@@ -3,6 +3,6 @@
  */
 export interface ICompanyDto {
   companyId: number;
-  name: string | null;
-  description: string | null;
+  name?: string;
+  description?: string;
 }

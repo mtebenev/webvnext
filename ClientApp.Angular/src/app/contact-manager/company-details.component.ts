@@ -94,7 +94,7 @@ export class CompanyDetailsComponent extends EntityDetailsComponentbase implemen
     if(viewMode === ViewMode.View || viewMode === ViewMode.Edit) {
       this._company = await this._companyHttpService.getCompany(companyId);
     } else {
-      this._company = {companyId: 0, name: null, description: null};
+      this._company = {companyId: 0};
     }
   }
 }

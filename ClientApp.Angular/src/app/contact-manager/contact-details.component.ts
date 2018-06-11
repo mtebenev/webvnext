@@ -3,8 +3,8 @@ import {ActivatedRoute, ActivatedRouteSnapshot} from '@angular/router';
 import {FormGroup, FormControl, NgForm, FormGroupDirective} from '@angular/forms';
 
 import {ErrorStateMatcher} from '@angular/material';
-import {ICompanyDto, ICompanyQueryParamsDto} from 'client-common-lib';
-import {ContactHttpService, IContactDto} from '@http-services/contact-manager/contact-http.service';
+import {ICompanyDto, ICompanyQueryParamsDto, IContactDto} from 'client-common-lib';
+import {ContactHttpService} from '@http-services/contact-manager/contact-http.service';
 import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
 import {AppNavigationService, ConfirmationUi} from '@app-services/index';
 import {EntityDetailsComponentbase, ViewMode} from './entity-details-component-base';
@@ -115,8 +115,8 @@ export class ContactDetailsComponent extends EntityDetailsComponentbase implemen
   /**
    * Used to display company name instead of ID in company autocomplete
    */
-  public getCompanyName(company: ICompanyDto): string | null {
-    return company ? company.name : null;
+  public getCompanyName(company: ICompanyDto): string | undefined {
+    return company ? company.name : undefined;
   }
 
   /**
@@ -182,7 +182,7 @@ export class ContactDetailsComponent extends EntityDetailsComponentbase implemen
         this._selectedCompany = await this._companyHttpServie.getCompany(this._contact.companyId);
 
     } else {
-      this._contact = {contactId: 0, firstName: null, lastName: null, companyId: 0};
+      this._contact = {contactId: 0, companyId: 0};
     }
   }
 }

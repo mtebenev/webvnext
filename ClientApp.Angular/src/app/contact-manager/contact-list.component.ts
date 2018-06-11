@@ -1,9 +1,9 @@
 import {Component, OnInit} from '@angular/core';
 
 import {PageEvent} from '@angular/material';
+import {IPagedResultDto, IContactDto, IContactQueryParamsDto} from 'client-common-lib';
 
-import {ContactHttpService, IContactDto, IContactQueryParamsDto} from '@http-services/contact-manager/contact-http.service';
-import {IPagedResultDto} from '@common/ipaged-result-dto';
+import {ContactHttpService} from '@http-services/contact-manager/contact-http.service';
 
 /**
  * Displays contacts of current user
