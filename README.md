@@ -26,3 +26,20 @@ There are two client applications in the sample: angular and react. This is outl
 | Forms management/validation         | @angular/forms             | react-final-form          |
 | Translations/localization           | ngx-translate              | react-i18next             |
 
+## Installation
+
+1. Maker sure to install NuGet/NPM packages (`client-common-lib`, `ClientApp.Angular`, `ClientApp.React`)
+2. Create a new MSSQL database
+3. Manage user secrest in `ServerAppApi.Web` (use context menu in VS solution explorer), add the following content:
+```json
+{
+  "connectionStrings": {
+    "application": "<CONNSTR>"
+  }
+}
+```
+4. Build `client-common-lib`:
+```bash
+cd client-common-lib
+npm run build
+``` 
