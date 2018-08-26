@@ -28,9 +28,15 @@ There are two client applications in the sample: angular and react. This is outl
 
 ## Installation
 
-1. Maker sure to install NuGet/NPM packages (`client-common-lib`, `ClientApp.Angular`, `ClientApp.React`)
-2. Create a new MSSQL database
-3. Manage user secrest in `ServerAppApi.Web` (use context menu in VS solution explorer), add the following content:
+### Prerequisites
+
+Make sure you have installed .Net Core Runtime 2.1.3
+(Get from https://aka.ms/dotnet-download)
+
+### Set up server app
+
+1. Create a new MSSQL database
+2. Manage user secrest in `ServerAppApi.Web` (use context menu in VS solution explorer), add the following content:
 ```json
 {
   "connectionStrings": {
@@ -38,8 +44,41 @@ There are two client applications in the sample: angular and react. This is outl
   }
 }
 ```
-4. Build `client-common-lib`:
+3. Run Entity Framework migrations
+```bash
+cd DataModel
+dotnet ef database update
+```
+
+### Prepare angular app
+
+1. Build `client-common-lib`:
 ```bash
 cd client-common-lib
+npm install
 npm run build
+``` 
+
+2. Set up packages for angular app
+```bash
+cd ClientApp.Angular
+npm install
+``` 
+## Running application locally
+### Run Angular client non-embedded
+Use separated console windows to launch API service, Identity service, Angular client.
+
+```bash
+cd ServerAppApi.Web
+dotnet run start
+``` 
+
+```bash
+cd ServerAppIdentity.Web
+dotnet run start
+``` 
+
+```bash
+cd ClientApp.Angular
+npx ng serve
 ``` 

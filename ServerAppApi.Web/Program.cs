@@ -10,10 +10,11 @@ namespace Mt.WebVNext.ServerAppApi.Web
   {
     public static void Main(string[] args)
     {
-      BuildWebHost(args).Run();
+      CreateWebHostBuilder(args).Build().Run();
     }
 
-    public static IWebHost BuildWebHost(string[] args) =>
+    public static IWebHostBuilder CreateWebHostBuilder(string[] args) =>
+
       WebHost.CreateDefaultBuilder(args)
         .ConfigureLogging(((hostingContext, logging) =>
         {
@@ -30,8 +31,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
             config.SetBasePath(sharedConfigPath)
               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
               .AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
-         }
-        })
-        .Build();
+          }
+        });
   }
 }

@@ -1,11 +1,10 @@
 using System;
-using System.IO;
 using System.Reflection;
 using AutoMapper;
 using ClientApp.Angular;
 using ClientApp.React;
 using Microsoft.AspNetCore.Builder;
-using Microsoft.AspNetCore.Rewrite;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -30,7 +29,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
     {
       var appOptions = Configuration.Get<AppOptions>();
 
-      services.AddMvc();
+      services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
       services.AddYesSpa();
 
       services.AddAuthentication("Bearer")
