@@ -14,12 +14,16 @@ export class AppHeaderComponent {
 
   constructor(viewContextService: ViewContextService) {
     this._viewContextService = viewContextService;
+    this.showMenuButton = false;
   }
 
   @Input()
   public set appCommands(value: IAppCommands) {
     this._appCommands = value;
   }
+
+  @Input()
+  public showMenuButton: boolean;
 
   /**
    * Bound module title

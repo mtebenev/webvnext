@@ -1,28 +1,38 @@
-<div fxFlexFill
-     fxLayout="column"
-     fxLayoutAlign="start stretch">
+<div
+  fxFlexFill
+  fxLayout="column"
+  fxLayoutAlign="start stretch"
+>
 
-	<!-- Header -->
-  <app-header [appCommands]="this"></app-header>
+  <!-- Header -->
+  <app-header
+    [appCommands]="this"
+    [showMenuButton]="!isDesktopMode"
+  ></app-header>
 
-	<!-- Main content -->
-  <div fxFlex
-       fxLayout="row"
-       fxLayoutAlign="start stretch">
+  <!-- Main content -->
+  <div
+    fxFlex
+    fxLayout="row"
+    fxLayoutAlign="start stretch"
+  >
 
-    <div class="container">
+    <mat-sidenav-container
+      fxFlexFill
+      class="sidenav-container"
+    >
+      <mat-sidenav
+        [mode]="isMobileMode ? 'over' : 'side'"
+        [fixedInViewport]="isMobileMode"
+        [opened]="isSidebarOpen"
+        class="sidenav mat-elevation-z1"
+      >
+        <app-sidebar></app-sidebar>
+      </mat-sidenav>
 
-      <mat-sidenav-container fxFlexFill
-                             class="sidenav-container">
-        <mat-sidenav [mode]="isMobileMode ? 'over' : 'side'"
-                     [fixedInViewport]="isMobileMode">
-          <app-sidebar></app-sidebar>
-        </mat-sidenav>
-
-        <mat-sidenav-content>
-          <router-outlet></router-outlet>
-        </mat-sidenav-content>
-      </mat-sidenav-container>
-    </div>
+      <mat-sidenav-content>
+        <router-outlet></router-outlet>
+      </mat-sidenav-content>
+    </mat-sidenav-container>
   </div>
 </div>

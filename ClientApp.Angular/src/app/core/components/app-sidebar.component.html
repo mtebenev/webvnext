@@ -1,8 +1,16 @@
+<div class="m-2">
+  <mat-icon
+    [color]="'primary'"
+    class="profile-icon"
+  > account_circle</mat-icon>
+</div>
+<div class="mat-title m-2">Alice</div>
+<mat-divider></mat-divider>
 <mat-nav-list>
-	<mat-list-item>
-			<a routerLink="/companies"> {{ 'CONTACT_MANAGER.COMPANY_LIST.VIEW_TITLE' | translate }}</a>
-	</mat-list-item>
-	<mat-list-item>
-			<a routerLink="/contacts"> {{ 'CONTACT_MANAGER.CONTACT_LIST.VIEW_TITLE' | translate }}</a>
-	</mat-list-item>
+  <mat-list-item>
+    <a routerLink="/companies"> {{ 'CONTACT_MANAGER.COMPANY_LIST.VIEW_TITLE' | translate }}</a>
+  </mat-list-item>
+  <mat-list-item>
+    <a routerLink="/contacts"> {{ 'CONTACT_MANAGER.CONTACT_LIST.VIEW_TITLE' | translate }}</a>
+  </mat-list-item>
 </mat-nav-list>

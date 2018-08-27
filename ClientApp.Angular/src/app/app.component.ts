@@ -19,6 +19,8 @@ export class AppComponent implements IAppCommands {
   private _subscriptionRouter: Subscription;
   private _subscriptionMedia: Subscription;
   private _isMobileMode: boolean;
+  private _isDesktopMode: boolean;
+  private _isSidebarOpen: boolean;
   private _media: ObservableMedia;
   private _oidcSecurityService: OidcSecurityService;
 
@@ -33,7 +35,8 @@ export class AppComponent implements IAppCommands {
     // Listen to media change to redraw sidebar
     // Note MTE: in original Material sample there's ChangeDetectorRef used. Really need that?
     this._subscriptionMedia = media.subscribe((mediaChange: MediaChange) => {
-      this._isMobileMode = this._media.isActive('lt-sm');
+      this._isMobileMode = this._media.isActive('lt-md');
+      this._isDesktopMode = this._media.isActive('gt-md');
     });
 
     // Listen router and hide nav sidebar when navigation occurres
@@ -44,6 +47,8 @@ export class AppComponent implements IAppCommands {
       });
 
     this._isMobileMode = this._media.isActive('lt-sm'); // Initial layout
+    this._isDesktopMode = this._media.isActive('xl');
+    this._isSidebarOpen = false;
   }
 
   @ViewChild(MatSidenav)
@@ -68,6 +73,22 @@ export class AppComponent implements IAppCommands {
    */
   public get isMobileMode(): boolean {
     return this._isMobileMode;
+  }
+
+  /**
+   * Bound flag for rendering layout for desktop
+   */
+  public get isDesktopMode(): boolean {
+    return this._isDesktopMode;
+  }
+
+  public get isSidebarOpen(): boolean {
+
+    const result = this.isDesktopMode
+      ? true
+      : this._isSidebarOpen;
+
+    return result;
   }
 
   /**

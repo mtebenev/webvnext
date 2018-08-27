@@ -42,10 +42,10 @@ export abstract class HttpServiceBase {
    */
   protected async doPost<TPayload, TResult>(payload: TPayload): Promise<TResult> {
 
-    let requestConfig = await this.prepareRequestConfig(undefined, payload);
+    let requestConfig = await this.prepareRequestConfig();
     let url = this.createMethodUrl(null);
 
-    let response = await axios.post<TResult>(url, requestConfig);
+    let response = await axios.post<TResult>(url, payload, requestConfig);
     return response.data;
   }
 
@@ -62,7 +62,7 @@ export abstract class HttpServiceBase {
   }
 
   /**
-   * Use to perform POST request
+   * Use to perform DELETE request
    */
   protected async doDelete(params: HttpRequestParams): Promise<void> {
 

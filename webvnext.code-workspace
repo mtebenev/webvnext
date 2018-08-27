@@ -19,5 +19,9 @@
 			"path": "client-common-lib"
 		}
 	],
-	"settings": {}
+	"settings": {
+    "html.format.wrapAttributes": "force-expand-multiline",
+    "html.format.endWithNewline": true
+
+  }
 }
