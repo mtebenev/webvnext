@@ -7,7 +7,7 @@ import {AppHeaderComponent} from './components/app-header.component';
 import {AppSidebarComponent} from './components/app-sidebar.component';
 
 // App services
-import {AppNavigationService, ViewContextService, ConfirmationUi, ConfirmationUiService, RouteGuardAuthOidc} from '@app-services/index';
+import {AppNavigationService, ViewContextService, ConfirmationUi, ConfirmationUiService, RouteGuardAuthOidc, PortalManagerService} from '@app-services/index';
 
 // Http services
 import {CompanyHttpService} from '@http-services/contact-manager/company-http.service';
@@ -20,7 +20,8 @@ const appServiceProviders: Provider[] = [
   {
     provide: ConfirmationUi,
     useClass: ConfirmationUiService
-  }
+  },
+  PortalManagerService
 ];
 
 const httpServices = [
