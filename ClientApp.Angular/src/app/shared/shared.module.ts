@@ -11,7 +11,10 @@ import {
 } from '@angular/material';
 import {FlexLayoutModule} from '@angular/flex-layout';
 
-import {MasterDetailsComponent, SetViewContextOptionsDirective, ConfirmationDialogComponent, SearchBoxComponent} from './components/index';
+import {
+  MasterDetailsComponent, SetViewContextOptionsDirective, ConfirmationDialogComponent, SearchBoxComponent, AppFabButtonComponent,
+  SetPortalDirective, AppPortalOutletDirective
+} from './components/index';
 
 const angularModules = [
   CommonModule,
@@ -36,10 +39,13 @@ const materialModules = [
 ];
 
 const sharedComponents = [
+  AppFabButtonComponent,
+  ConfirmationDialogComponent,
   MasterDetailsComponent,
   SetViewContextOptionsDirective,
-  ConfirmationDialogComponent,
-  SearchBoxComponent
+  SearchBoxComponent,
+  SetPortalDirective,
+  AppPortalOutletDirective
 ];
 
 @NgModule({

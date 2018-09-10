@@ -1,0 +1,17 @@
+.fab-button {
+
+  // Should be greater than angular material sidenav, check \src\lib\sidenav\drawer.scss
+  z-index: 5;
+}
+
+.fab-button-mobile {
+  position: fixed;
+  right: 50px;
+  bottom: 50px;
+}
+
+.fab-button-desktop {
+  position: fixed;
+  left: 250px;
+  top: 250px;
+}

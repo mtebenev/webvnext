@@ -1,34 +1,44 @@
-<div *ngIf="companies"
-		 class="mat-elevation-z1"
-		 fxFlexFill
-		 fxLayout="column"
-		 fxLayoutAlign="start stretch">
-  <mat-toolbar fxLayout
-               fxLayoutAlign="space-between center">
+<div
+  *ngIf="companies"
+  class="mat-elevation-z1"
+  fxFlexFill
+  fxLayout="column"
+  fxLayoutAlign="start stretch"
+>
+  <mat-toolbar
+    fxLayout
+    fxLayoutAlign="space-between center"
+  >
     <span>{{ 'CONTACT_MANAGER.COMPANY_LIST.VIEW_TITLE' | translate }}</span>
-    <div fxLayout fxLayoutAlign="end center">
+    <div
+      fxLayout
+      fxLayoutAlign="end center"
+    >
       <search-box (textChanged)="handleFilterTextChanged($event)"></search-box>
     </div>
   </mat-toolbar>
 
-  <mat-paginator [length]="companies.totalRowCount"
-                 [pageSize]="pageSize"
-                 [pageSizeOptions]="[5, 10, 25, 100]"
-                 (page)="handlePageChange($event)">
+  <mat-paginator
+    [length]="companies.totalRowCount"
+    [pageSize]="pageSize"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="handlePageChange($event)"
+  >
   </mat-paginator>
 
-		<mat-nav-list fxFlex
-		              style="overflow: auto">
-    	<mat-list-item *ngFor="let company of companies.rows"
-      	             [routerLink]="['/companies', company.companyId]">
-        <a>{{company.name}}</a>
-      </mat-list-item>
-	  </mat-nav-list>
-	</div>
+  <mat-nav-list
+    fxFlex
+    style="overflow: auto"
+  >
+    <mat-list-item
+      *ngFor="let company of companies.rows"
+      [routerLink]="['/companies', company.companyId]"
+    >
+      <a>{{company.name}}</a>
+    </mat-list-item>
+  </mat-nav-list>
+</div>
 
-<a mat-fab
-   color="primary"
-   routerLink="/companies/new"
-   style="position:fixed;right:50px;bottom:50px">
-  <mat-icon>add</mat-icon>
-</a>
+<ng-template set-portal="portal-fab">
+  <app-fab-button routerLink="/companies/new"></app-fab-button>
+</ng-template>
