@@ -1,0 +1,8 @@
+// z-indexes
+$zidx-fab-button: 5;  // Should be greater than angular material sidenav, check \src\lib\sidenav\drawer.scss
+
+// navigation-sidebar
+$navigation-sidebar-width: 256px;
+
+// Common layout
+$header-height: 64px;

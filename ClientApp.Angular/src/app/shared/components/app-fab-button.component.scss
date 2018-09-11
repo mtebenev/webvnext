@@ -1,17 +1,28 @@
-.fab-button {
+@import 'variables';
 
-  // Should be greater than angular material sidenav, check \src\lib\sidenav\drawer.scss
-  z-index: 5;
+.fab-button {
+  z-index: $zidx-fab-button;
 }
 
-.fab-button-mobile {
+// Note: check https://material.io/design/layout/responsive-layout-grid.html#ui-regions for details on the FAB behavior
+
+$fab-button-margin: 8px; // Standard offset of the fab button
+
+.fab-button-sm {
   position: fixed;
   right: 50px;
   bottom: 50px;
 }
 
-.fab-button-desktop {
+.fab-button-md {
   position: fixed;
-  left: 250px;
-  top: 250px;
+  left: $fab-button-margin;
+  top: $header-height + $header-height + $fab-button-margin; // Two headers (main and view) + some margin
+
+}
+
+.fab-button-xl {
+  position: fixed;
+  left: $navigation-sidebar-width - 56px/2; // 56px is the width of FAB button in angular material
+  top: $header-height + $header-height + $fab-button-margin; // Two headers (main and view) + some margin
 }

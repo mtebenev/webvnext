@@ -12,9 +12,9 @@ import {Subscription} from '@common/rxjs-imports';
 })
 export class AppFabButtonComponent {
 
-  private _isMobileMode: boolean;
   private _media: ObservableMedia;
   private _subscriptionMedia: Subscription;
+  private _fabButtonClass: string = '';
 
   constructor(media: ObservableMedia) {
 
@@ -23,21 +23,17 @@ export class AppFabButtonComponent {
     // Listen to media change to redraw sidebar
     // Note MTE: in original Material sample there's ChangeDetectorRef used. Really need that?
     this._subscriptionMedia = media.subscribe((mediaChange: MediaChange) => {
-      this._isMobileMode = this._media.isActive('lt-md');
+      this.updateFabButtonClass();
     });
 
-    this._isMobileMode = this._media.isActive('lt-sm'); // Initial layout
-    alert(this._isMobileMode);
+    this.updateFabButtonClass();
   }
 
   @Input()
   public routerLink?: string;
 
-  /**
-   * Bound flag for rendering layout for mobiles
-   */
-  public get isMobileMode(): boolean {
-    return this._isMobileMode;
+  public get fabButtonClass(): string {
+    return this._fabButtonClass;
   }
 
   /**
@@ -48,5 +44,15 @@ export class AppFabButtonComponent {
     if(this._subscriptionMedia) {
       this._subscriptionMedia.unsubscribe();
     }
+  }
+
+  private updateFabButtonClass(): void {
+
+    if(this._media.isActive('lt-sm'))
+      this._fabButtonClass = 'fab-button-sm';
+    else if(this._media.isActive('lt-lg'))
+      this._fabButtonClass = 'fab-button-md';
+    else
+      this._fabButtonClass = 'fab-button-xl';
   }
 }
