@@ -7,10 +7,10 @@
 <div class="mat-title m-2">Alice</div>
 <mat-divider></mat-divider>
 <mat-nav-list>
-  <mat-list-item>
-    <a routerLink="/companies"> {{ 'CONTACT_MANAGER.COMPANY_LIST.VIEW_TITLE' | translate }}</a>
+  <mat-list-item routerLinkActive="active-link">
+    <a matLine routerLink="/companies"> {{ 'CONTACT_MANAGER.COMPANY_LIST.VIEW_TITLE' | translate }}</a>
   </mat-list-item>
-  <mat-list-item>
-    <a routerLink="/contacts"> {{ 'CONTACT_MANAGER.CONTACT_LIST.VIEW_TITLE' | translate }}</a>
+  <mat-list-item routerLinkActive="active-link">
+    <a matLine routerLink="/contacts"> {{ 'CONTACT_MANAGER.CONTACT_LIST.VIEW_TITLE' | translate }}</a>
   </mat-list-item>
 </mat-nav-list>
