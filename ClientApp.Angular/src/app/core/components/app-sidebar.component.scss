@@ -1,3 +1,9 @@
+@import 'app-theme';
+
 .profile-icon {
   font-size: 60px;
+}
+
+.active-link {
+  background: mat-color($app-primary, 200);
 }
