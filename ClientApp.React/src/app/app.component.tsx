@@ -11,12 +11,13 @@ import {ApplyStyles} from '@core/mui-decorators';
 import {ContactListComponent, CompaniesComponent} from './contact-manager/index';
 import {AuthorizationComponent} from './shared/authorization.component';
 import {ConfirmationDialogComponent} from './shared/confirmation-dialog.component';
-import {ConfirmationUiService} from '@app-services/confirmation-ui.service';
-import {ConfirmationUi} from '@app-services/confirmation-ui';
-import {IAppContext, AppContextTypes, TAppContextTypes} from './app-context';
+import {IAppContext, AppContext} from './app-context';
 import {Deferred} from '@common/index';
 import {FxContainer} from '@layout/fx-container';
 import {FxFill} from '@layout/fx-fill';
+import {PortalManagerService, ConfirmationUi, ConfirmationUiService} from '@app-services/index';
+import {AppPortalContainer} from '@core/ui/app-portal-container';
+import {UiConstants} from '@core/ui/ui-constants';
 
 interface IState {
   isMobileDrawerOpen: boolean;
@@ -25,11 +26,11 @@ interface IState {
 const styles: StyleRulesCallback = (theme: Theme) => ({
   drawerPaperDesktop: {
     position: 'relative',
-    width: 300,
+    width: UiConstants.APP_SIDEBAR_WIDTH,
     height: '100%'
   },
   drawerPaperMobile: {
-    width: 300,
+    width: UiConstants.APP_SIDEBAR_WIDTH,
     height: '100%'
   },
   navIcon: {
@@ -40,10 +41,7 @@ const styles: StyleRulesCallback = (theme: Theme) => ({
 });
 
 @ApplyStyles(styles)
-export class AppComponent extends React.Component<
-React.HTMLProps<any> & StyledComponentProps<keyof typeof styles>,
-IState>
-  implements React.ChildContextProvider<IAppContext> {
+export class AppComponent extends React.Component<React.HTMLProps<any> & StyledComponentProps<keyof typeof styles>, IState> {
 
   private _deferredConfirmationUi: Deferred<ConfirmationUi>;
   private _appContext: IAppContext;
@@ -67,23 +65,16 @@ IState>
       silent_redirect_uri: `${process.env.REACT_APP_IDENTITY_CLIENT_BASE_URL}`
     };
 
+    // Initialize app context
     this._appContext = {
       userManager: new UserManager(settings),
-      confirmationUi: this._deferredConfirmationUi.promise
+      confirmationUi: this._deferredConfirmationUi.promise,
+      portalManager: new PortalManagerService()
     };
 
     this.state = {
       isMobileDrawerOpen: false
     };
-  }
-
-  public static childContextTypes: TAppContextTypes = AppContextTypes;
-
-  /**
-   * React.ChildContextProvider
-   */
-  public getChildContext(): IAppContext {
-    return this._appContext;
   }
 
   /**
@@ -93,26 +84,29 @@ IState>
 
     return (
       <React.Fragment>
-        <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASENAME}>
-          <FxContainer
-            flexFill={true}
-            layout="column"
-            layoutAlign="start stretch"
-          >
-            {this.renderAppBar()}
+        <AppContext.Provider value={this._appContext}>
+          <BrowserRouter basename={process.env.REACT_APP_ROUTER_BASENAME}>
             <FxContainer
-              layout="row"
+              flexFill={true}
+              layout="column"
               layoutAlign="start stretch"
-              style={{flexGrow: 1, flexShrink: 1}}
             >
+              <AppPortalContainer name={UiConstants.PORTAL_FAB} portalManager={this._appContext.portalManager} />
+              {this.renderAppBar()}
+              <FxContainer
+                layout="row"
+                layoutAlign="start stretch"
+                style={{flexGrow: 1, flexShrink: 1}}
+              >
               {this.renderDrawerContainers()}
-              <div style={{width: '100%'}}>
-                {this.renderAppContent()}
-              </div>
+                <div style={{width: '100%'}}>
+                  {this.renderAppContent()}
+                </div>
+              </FxContainer>
             </FxContainer>
-          </FxContainer>
-        </BrowserRouter>
-        <ConfirmationDialogComponent ref={this._setConfirmationDialogRef} />
+          </BrowserRouter>
+          <ConfirmationDialogComponent ref={this._setConfirmationDialogRef} />
+        </AppContext.Provider>
       </React.Fragment>
     );
   }
@@ -166,6 +160,7 @@ IState>
   private renderDrawerContainers(): React.ReactNode {
     return (
       <React.Fragment>
+        {/* Mobile drawer: temporary */}
         <Hidden mdUp={true}>
           <Drawer
             variant="temporary"
@@ -181,6 +176,8 @@ IState>
             {this.renderAppSidebar()}
           </Drawer>
         </Hidden>
+
+        {/* Desktop drawer: permanent */}
         <Hidden smDown={true} implementation="css">
           <Drawer
             style={{height: '100%'}}

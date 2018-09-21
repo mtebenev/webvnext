@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {Select, FormControl, InputLabel, MenuItem, Button, StyledComponentProps, StyleRules, Typography} from '@core/mui-exports';
+import {Select, MenuItem, Button, StyledComponentProps, StyleRules, Typography} from '@core/mui-exports';
 import {ApplyStyles} from '@core/mui-decorators';
 
 const PaginatorHeight = 56;

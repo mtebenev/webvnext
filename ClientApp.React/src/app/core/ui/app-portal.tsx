@@ -1,6 +1,6 @@
 import * as React from 'react';
 import Portal from '@material-ui/core/Portal';
-import {IAppContext} from '../../app-context';
+import {IAppContextProps, withAppContext} from '../../app-context';
 
 interface IProps {
 
@@ -8,17 +8,17 @@ interface IProps {
    * Name of the portal container
    */
   name: string;
-
-  appContext: IAppContext;
 }
 
 interface IState {
   container: React.ReactInstance;
 }
 
-export class AppPortal extends React.Component<IProps, IState> {
+type TProps = IProps & IAppContextProps;
 
-  constructor(props: IProps) {
+class AppPortalImpl extends React.Component<TProps, IState> {
+
+  constructor(props: TProps) {
     super(props);
 
     this.state = {
@@ -39,3 +39,5 @@ export class AppPortal extends React.Component<IProps, IState> {
     );
   }
 }
+
+export const AppPortal = withAppContext(AppPortalImpl);

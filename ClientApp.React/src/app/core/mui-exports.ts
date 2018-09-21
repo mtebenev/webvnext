@@ -27,6 +27,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 
 import Typography from '@material-ui/core/Typography';
 import {withStyles, WithStyles, Theme, StyledComponentProps, StyleRules, StyleRulesCallback} from '@material-ui/core/styles';
+import zIndex from '@material-ui/core/styles/zIndex';
 import {Hidden} from '@material-ui/core';
 
 import Grid from '@material-ui/core/Grid';
@@ -35,5 +36,6 @@ export {AppBar, Button, Drawer, Icon, IconButton, List, ListItem, ListItemText, 
 export {Input, InputAdornment};
 export {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle};
 export {withStyles, WithStyles, Theme, StyledComponentProps, StyleRules, StyleRulesCallback};
+export {zIndex};
 export {Hidden};
 export {Grid};

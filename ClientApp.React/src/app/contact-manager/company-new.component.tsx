@@ -1,23 +1,19 @@
 import * as React from 'react';
-import {AppBar, Toolbar, Button, TextField, Typography} from '@core/mui-exports';
+import {AppBar, Toolbar, Button, Typography} from '@core/mui-exports';
 import {Form, Field, FormRenderProps} from 'react-final-form';
 
 import {ICompanyDto} from 'client-common-lib';
-import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
+import {withCompaniesContext, ICompaniesContextProps} from './companies-context';
 import {FormTextField, validatorRequired} from '@common/form-utils';
 
-interface IProps extends React.HTMLProps<any> {
-}
+type IProps = ICompaniesContextProps & React.HTMLProps<CompanyNewComponentImpl>;
 
 /**
  * Creates a new company
  */
-export class CompanyNewComponent extends React.Component<IProps> {
+export class CompanyNewComponentImpl extends React.Component<IProps> {
 
-  private _companiesContext: ICompaniesContext;
-  public static contextTypes: TCompaniesContextTypes = CompaniesContextTypes;
-
-  constructor(props: IProps, context: ICompaniesContext) {
+  constructor(props: IProps) {
     super(props);
   }
 
@@ -96,7 +92,9 @@ export class CompanyNewComponent extends React.Component<IProps> {
       description: values['companyDescription']
     };
 
-    this._companiesContext.companyHttpService.createCompany(company);
+    this.props.companiesContext.companyHttpService.createCompany(company);
   }
 }
+
+export const CompanyNewComponent = withCompaniesContext(CompanyNewComponentImpl);
 

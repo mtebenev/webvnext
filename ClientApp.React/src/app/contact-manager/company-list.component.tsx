@@ -1,9 +1,9 @@
 import * as React from 'react';
-import {AppBar, Toolbar, Button, Icon, List, IconButton, ListItem, ListItemText, Typography} from '@core/mui-exports';
+import {AppBar, Toolbar, List, ListItem, ListItemText, Typography} from '@core/mui-exports';
 import {Link} from 'react-router-dom';
 
 import {ICompanyQueryParamsDto, ICompanyDto, IPagedResultDto} from 'client-common-lib';
-import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
+import {withCompaniesContext, ICompaniesContextProps} from './companies-context';
 import {FxFlex} from '@layout/fx-flex';
 import {FxContainer} from '@layout/fx-container';
 import {Paginator, IPageChangeEvent} from '@shared/paginator';
@@ -16,16 +16,13 @@ interface IState {
   pageSize: number;
 }
 
-export class CompanyListComponent extends React.Component<React.HTMLProps<any>, IState> {
+type TProps = ICompaniesContextProps & React.HTMLProps<CompanyListComponentImpl>;
 
-  private _companiesContext: ICompaniesContext;
+class CompanyListComponentImpl extends React.Component<TProps, IState> {
 
-  public static contextTypes: TCompaniesContextTypes = CompaniesContextTypes;
-
-  constructor(props: React.Props<any>, context: ICompaniesContext) {
+  constructor(props: TProps) {
     super(props);
 
-    this._companiesContext = context;
     this.state = {pageNumber: 0, pageSize: 10};
   }
 
@@ -91,7 +88,7 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
       filterText: this.state.filterText
     };
 
-    let response = await this._companiesContext.companyHttpService.getCompanies(queryParams);
+    let response = await this.props.companiesContext.companyHttpService.getCompanies(queryParams);
     this.setState({...this.state, companies: response});
   }
 
@@ -111,3 +108,5 @@ export class CompanyListComponent extends React.Component<React.HTMLProps<any>, 
     });
   }
 }
+
+export const CompanyListComponent = withCompaniesContext(CompanyListComponentImpl);

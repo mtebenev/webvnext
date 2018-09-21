@@ -1,6 +1,3 @@
-import * as React from 'react';
-import {Dialog, DialogTitle, DialogContent, DialogContentText, DialogActions, Button} from '@core/mui-exports';
-
 import {ConfirmationUi} from './confirmation-ui';
 import {ConfirmationDialogComponent} from '@shared/confirmation-dialog.component';
 

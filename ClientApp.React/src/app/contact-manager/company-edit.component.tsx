@@ -1,18 +1,17 @@
 import * as React from 'react';
 import {RouteComponentProps} from 'react-router-dom';
-import {Button, TextField} from '@core/mui-exports';
+import {Button} from '@core/mui-exports';
 import {Form, Field, FormRenderProps} from 'react-final-form';
 
 import {ICompanyDto} from 'client-common-lib';
-import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
+import {withCompaniesContext, ICompaniesContextProps} from './companies-context';
 import {FormTextField, validatorRequired} from '@common/form-utils';
 
 interface IRouteParams {
   companyId: string;
 }
 
-interface IProps extends RouteComponentProps<IRouteParams>, React.HTMLProps<any> {
-}
+type TProps = ICompaniesContextProps & RouteComponentProps<IRouteParams> & React.HTMLProps<CompanyEditComponentImpl>;
 
 interface IState {
   company?: ICompanyDto;
@@ -21,16 +20,13 @@ interface IState {
 /**
  * Edit mode for companiies
  */
-export class CompanyEditComponent extends React.Component<IProps, IState> {
+class CompanyEditComponentImpl extends React.Component<TProps, IState> {
 
-  private _companiesContext: ICompaniesContext;
-  public static contextTypes: TCompaniesContextTypes = CompaniesContextTypes;
-
-  constructor(props: IProps, context: ICompaniesContext) {
+  constructor(props: TProps) {
     super(props);
 
+
     this.state = {};
-    this._companiesContext = context;
   }
 
 
@@ -98,7 +94,7 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
   private async loadCompany(): Promise<void> {
 
     let companyId = Number.parseInt(this.props.match.params.companyId);
-    let company = await this._companiesContext.companyHttpService.getCompany(companyId);
+    let company = await this.props.companiesContext.companyHttpService.getCompany(companyId);
     this.setState({company: company});
   }
 
@@ -107,8 +103,8 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
    */
   private async handleUpdateClick(): Promise<void> {
     if(this.state.company) {
-      await this._companiesContext.companyHttpService.updateCompany(this.state.company);
-      this._companiesContext.appNavigationService.goToCompanyView(this.state.company.companyId);
+      await this.props.companiesContext.companyHttpService.updateCompany(this.state.company);
+      this.props.companiesContext.appNavigationService.goToCompanyView(this.state.company.companyId);
     }
   }
 
@@ -127,7 +123,9 @@ export class CompanyEditComponent extends React.Component<IProps, IState> {
       description: values['companyDescription']
     };
 
-    this._companiesContext.companyHttpService.updateCompany(company);
+    this.props.companiesContext.companyHttpService.updateCompany(company);
   }
 }
+
+export const CompanyEditComponent = withCompaniesContext(CompanyEditComponentImpl);
 

@@ -1,55 +1,46 @@
 import * as React from 'react';
-import {Route, RouteComponentProps, Switch, Link} from 'react-router-dom';
-import {Button, Icon} from '@core/mui-exports';
+import {Route, RouteComponentProps, Switch} from 'react-router-dom';
 
 import {MediaQueryLtSm} from '@core/ui/media-query-alias';
 import {CompanyListComponent, CompanyDetailsComponent, CompanyNewComponent} from './index';
-import {IAppContext, AppContextTypes, TAppContextTypes} from '../app-context';
-import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
+import {withAppContext, IAppContextProps} from '../app-context';
+import {CompaniesContext, ICompaniesContext} from './companies-context';
 import {CompanyHttpService} from 'client-common-lib';
 import {AppNavigationService} from '@app-services/app-navigation.service';
 import {FxContainer} from '@layout/fx-container';
 import {FxFill} from '@layout/fx-fill';
 import {AuthTokenProvider} from '@common/auth-token-provider';
+import {AppPortal} from '@core/ui/app-portal';
+import {AppFabButton} from '@shared/app-fab-button';
+import {UiConstants} from '@core/ui/ui-constants';
 
 interface IRouteParams {
   companyId: string;
 }
 
-interface IProps extends RouteComponentProps<IRouteParams>, React.HTMLProps<any> {
-}
+type IProps = IAppContextProps & RouteComponentProps<IRouteParams>;
 
 /**
  * Root component for companies view. Changes layout depending on screen resolution.
  */
-export class CompaniesComponent extends React.Component implements React.ChildContextProvider<ICompaniesContext> {
+class CompaniesComponentImpl extends React.Component<IProps> {
 
   private _companiesContext: ICompaniesContext;
 
-  public static childContextTypes: TCompaniesContextTypes = CompaniesContextTypes;
-  public static contextTypes: TAppContextTypes = AppContextTypes;
-
-  constructor(props: IProps, context: IAppContext) {
+  constructor(props: IProps) {
     super(props);
 
-    const authTokenProvider = new AuthTokenProvider(context.userManager);
+    const authTokenProvider = new AuthTokenProvider(props.appContext.userManager);
     const companyHttpService = new CompanyHttpService(authTokenProvider, process.env.REACT_APP_API_BASE_URL as string);
     const appNavigationService = new AppNavigationService(props.history);
 
     this._companiesContext = {
       companyHttpService: companyHttpService,
       appNavigationService: appNavigationService,
-      confirmationUi: context.confirmationUi
+      confirmationUi: props.appContext.confirmationUi
     };
 
     this.state = {};
-  }
-
-  /**
-   * React.ChildContextProvider
-   */
-  public getChildContext(): ICompaniesContext {
-    return this._companiesContext;
   }
 
   /**
@@ -58,27 +49,24 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
   public render(): React.ReactNode {
 
     return (
-      <FxFill>
-        {/* Add new Company FAB */}
-        <Button
-          variant="fab"
-          color="primary"
-          style={{position: 'fixed', right: '50px', bottom: '50px'}}
-          component={(props: any) => <Link to="/companies/new" {...props} />}
-        >
-          <Icon>add_icon</Icon>
-        </Button>
+      <CompaniesContext.Provider value={this._companiesContext}>
+        <FxFill>
+          {/* Add new Company FAB */}
+          <AppPortal name={UiConstants.PORTAL_FAB}>
+            <AppFabButton toUrl="/companies/new" />
+          </AppPortal>
 
-        {/* Layout */}
-        <MediaQueryLtSm>{
-          (matches: boolean) => {
-            return matches
-              ? this.renderSmallScreen()
-              : this.renderLargeScreen();
+          {/* Layout */}
+          <MediaQueryLtSm>{
+            (matches: boolean) => {
+              return matches
+                ? this.renderSmallScreen()
+                : this.renderLargeScreen();
+            }
           }
-        }
-        </MediaQueryLtSm>
-      </FxFill>
+          </MediaQueryLtSm>
+        </FxFill>
+      </CompaniesContext.Provider>
     );
   }
 
@@ -124,3 +112,5 @@ export class CompaniesComponent extends React.Component implements React.ChildCo
     );
   }
 }
+
+export const CompaniesComponent = withAppContext(CompaniesComponentImpl);

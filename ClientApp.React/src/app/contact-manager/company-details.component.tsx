@@ -1,17 +1,16 @@
 import * as React from 'react';
 import {RouteComponentProps, Link, Route, Switch} from 'react-router-dom';
-import {AppBar, Toolbar, Button, Icon, IconButton, Typography} from '@core/mui-exports';
+import {AppBar, Toolbar, Icon, IconButton, Typography} from '@core/mui-exports';
 
 import {ICompanyDto} from 'client-common-lib';
-import {ICompaniesContext, CompaniesContextTypes, TCompaniesContextTypes} from './companies-context';
+import {withCompaniesContext, ICompaniesContextProps} from './companies-context';
 import {CompanyViewComponent, CompanyEditComponent} from './index';
 
 interface IRouteParams {
   companyId: string;
 }
 
-interface IProps extends RouteComponentProps<IRouteParams>, React.HTMLProps<any> {
-}
+type TProps = ICompaniesContextProps & RouteComponentProps<IRouteParams> & React.HTMLProps<CompanyDetailsComponentImpl>;
 
 interface IState {
   company?: ICompanyDto;
@@ -20,17 +19,12 @@ interface IState {
 /**
  * Logic for switching between view/edit company components
  */
-export class CompanyDetailsComponent extends React.Component<IProps, IState> {
+class CompanyDetailsComponentImpl extends React.Component<TProps, IState> {
 
-  private _companiesContext: ICompaniesContext;
-
-  public static contextTypes: TCompaniesContextTypes = CompaniesContextTypes;
-
-  constructor(props: IProps, context: ICompaniesContext) {
+  constructor(props: TProps) {
     super(props);
 
     this.state = {};
-    this._companiesContext = context;
   }
 
   /**
@@ -85,7 +79,7 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
   /**
    * ComponentLifecycle
    */
-  public componentDidUpdate?(prevProps: IProps, prevState: IState, prevContext: any): void {
+  public componentDidUpdate?(prevProps: TProps, prevState: IState, prevContext: any): void {
 
     let isCompanyIdChanged = (prevProps.match.params.companyId != this.props.match.params.companyId);
     if(isCompanyIdChanged)
@@ -96,7 +90,7 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
 
     let companyId = Number.parseInt(this.props.match.params.companyId);
 
-    let company = await this._companiesContext.companyHttpService.getCompany(companyId);
+    let company = await this.props.companiesContext.companyHttpService.getCompany(companyId);
     this.setState({company: company});
   }
 
@@ -104,12 +98,14 @@ export class CompanyDetailsComponent extends React.Component<IProps, IState> {
    * Invoked when user clicks 'Delete' button
    */
   private async handleDeleteClick(): Promise<void> {
-    let confirmationUi = await this._companiesContext.confirmationUi;
+    let confirmationUi = await this.props.companiesContext.confirmationUi;
     let confirmationResult = await confirmationUi.confirm('CONTACT_MANAGER.COMPANY_DETAILS.MSG_DELETE_COMPANY');
 
     if(confirmationResult) {
       let companyId = Number.parseInt(this.props.match.params.companyId);
-      this._companiesContext.companyHttpService.deleteCompany(companyId);
+      this.props.companiesContext.companyHttpService.deleteCompany(companyId);
     }
   }
 }
+
+export const CompanyDetailsComponent = withCompaniesContext(CompanyDetailsComponentImpl);
