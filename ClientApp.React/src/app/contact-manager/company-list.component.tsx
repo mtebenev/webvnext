@@ -38,7 +38,7 @@ class CompanyListComponentImpl extends React.Component<TProps, IState> {
             layout="column"
             layoutAlign="start stretch"
           >
-            <AppBar position="static" color="default" elevation={0}>
+            <AppBar position="relative" color="default" elevation={0}>
               <Toolbar>
                 <div style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
                   <Typography variant="title">
