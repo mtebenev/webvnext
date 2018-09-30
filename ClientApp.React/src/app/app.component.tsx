@@ -3,7 +3,7 @@ import {UserManager, UserManagerSettings} from 'oidc-client';
 import {BrowserRouter as Router, Route, Link, Switch, BrowserRouter} from 'react-router-dom';
 import {Redirect} from 'react-router';
 import {
-  AppBar, Drawer, List, ListItem, ListItemText, Toolbar, Button, Icon, IconButton, Typography,
+  AppBar, Drawer, Toolbar, Button, Icon, IconButton, Typography,
   Theme, Hidden, StyleRulesCallback, StyledComponentProps
 } from '@core/mui-exports';
 import {ApplyStyles} from '@core/mui-decorators';
@@ -18,6 +18,7 @@ import {FxFill} from '@layout/fx-fill';
 import {PortalManagerService, ConfirmationUi, ConfirmationUiService} from '@app-services/index';
 import {AppPortalContainer} from '@core/ui/app-portal-container';
 import {UiConstants} from '@core/ui/ui-constants';
+import {AppSidebar} from '@core/components/app-sidebar';
 
 interface IState {
   isMobileDrawerOpen: boolean;
@@ -98,7 +99,7 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & StyledC
                 layoutAlign="start stretch"
                 style={{flexGrow: 1, flexShrink: 1}}
               >
-              {this.renderDrawerContainers()}
+                {this.renderDrawerContainers()}
                 <div style={{width: '100%'}}>
                   {this.renderAppContent()}
                 </div>
@@ -108,23 +109,6 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & StyledC
           <ConfirmationDialogComponent ref={this._setConfirmationDialogRef} />
         </AppContext.Provider>
       </React.Fragment>
-    );
-  }
-
-  /**
-   * Renderes app sidebar
-   */
-  private renderAppSidebar(): React.ReactNode {
-
-    return (
-      <List component="nav">
-        <ListItem button={true} component={(props: any) => <Link to={`/companies`} {...props} />} >
-          <ListItemText primary="Companies" />
-        </ListItem>
-        <ListItem button={true} component={(props: any) => <Link to={`/contacts`} {...props} />}>
-          <ListItemText primary="Contacts" />
-        </ListItem>
-      </List>
     );
   }
 
@@ -173,7 +157,7 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & StyledC
               keepMounted: true, // Better open performance on mobile.
             }}
           >
-            {this.renderAppSidebar()}
+            <AppSidebar/>
           </Drawer>
         </Hidden>
 
@@ -187,7 +171,7 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & StyledC
               paper: this.props.classes!['drawerPaperDesktop']
             }}
           >
-            {this.renderAppSidebar()}
+            <AppSidebar />
           </Drawer>
         </Hidden>
       </React.Fragment>

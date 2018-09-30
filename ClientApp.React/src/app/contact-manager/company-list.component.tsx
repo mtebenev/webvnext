@@ -1,5 +1,5 @@
 import * as React from 'react';
-import {AppBar, Toolbar, List, ListItem, ListItemText, Typography} from '@core/mui-exports';
+import {AppBar, Toolbar, List, ListItem, ListItemText, Typography, Paper} from '@core/mui-exports';
 import {Link} from 'react-router-dom';
 
 import {ICompanyQueryParamsDto, ICompanyDto, IPagedResultDto} from 'client-common-lib';
@@ -31,7 +31,7 @@ class CompanyListComponentImpl extends React.Component<TProps, IState> {
    */
   public render(): React.ReactNode {
     return (
-      <div style={this.props.style}>
+      <Paper style={this.props.style}>
         {this.state.companies &&
           <FxContainer
             flexFill={true}
@@ -69,7 +69,7 @@ class CompanyListComponentImpl extends React.Component<TProps, IState> {
           </FxContainer>
         }
 
-      </div>
+      </Paper>
     );
   }
 

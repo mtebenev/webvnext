@@ -17,6 +17,7 @@ export const FormTextField = (props: FieldRenderProps) => {
     <TextField
       {...rest}
       name={name}
+      margin="normal"
       helperText={meta.touched ? meta.error : undefined}
       error={meta.error && meta.touched}
       inputProps={restInput}

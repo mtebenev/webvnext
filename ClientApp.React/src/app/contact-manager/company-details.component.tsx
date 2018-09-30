@@ -1,6 +1,6 @@
 import * as React from 'react';
 import {RouteComponentProps, Link, Route, Switch} from 'react-router-dom';
-import {AppBar, Toolbar, Icon, IconButton, Typography} from '@core/mui-exports';
+import {AppBar, Toolbar, Icon, IconButton, Typography, Paper} from '@core/mui-exports';
 
 import {ICompanyDto} from 'client-common-lib';
 import {withCompaniesContext, ICompaniesContextProps} from './companies-context';
@@ -37,7 +37,7 @@ class CompanyDetailsComponentImpl extends React.Component<TProps, IState> {
   public render(): React.ReactNode {
 
     return (
-      <div style={this.props.style}>{this.state.company &&
+      <Paper style={this.props.style}>{this.state.company &&
         <React.Fragment>
           <AppBar position="relative" color="default" elevation={0}>
             <Toolbar>
@@ -65,7 +65,7 @@ class CompanyDetailsComponentImpl extends React.Component<TProps, IState> {
 
         </React.Fragment>
       }
-      </div>
+      </Paper>
     );
   }
 

@@ -7,6 +7,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 
+import Divider from '@material-ui/core/Divider';
 import Drawer from '@material-ui/core/Drawer';
 import IconButton from '@material-ui/core/IconButton';
 import Icon from '@material-ui/core/Icon';
@@ -17,6 +18,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 
 import TextField from '@material-ui/core/TextField';
 import Toolbar from '@material-ui/core/Toolbar';
+import Paper from '@material-ui/core/Paper';
 
 import Select from '@material-ui/core/Select';
 import FormControl from '@material-ui/core/FormControl';
@@ -26,7 +28,7 @@ import InputAdornment from '@material-ui/core/InputAdornment';
 import MenuItem from '@material-ui/core/MenuItem';
 
 import Typography from '@material-ui/core/Typography';
-import {withStyles, WithStyles, Theme, StyledComponentProps, StyleRules, StyleRulesCallback} from '@material-ui/core/styles';
+import {withStyles, WithStyles, withTheme, Theme, StyledComponentProps, StyleRules, StyleRulesCallback, createStyles} from '@material-ui/core/styles';
 import zIndex from '@material-ui/core/styles/zIndex';
 import {Hidden} from '@material-ui/core';
 
@@ -34,8 +36,10 @@ import Grid from '@material-ui/core/Grid';
 
 export {AppBar, Button, Drawer, Icon, IconButton, List, ListItem, ListItemText, TextField, Toolbar, Select, FormControl, InputLabel, MenuItem, Typography};
 export {Input, InputAdornment};
+export {Divider};
 export {Dialog, DialogActions, DialogContent, DialogContentText, DialogTitle};
-export {withStyles, WithStyles, Theme, StyledComponentProps, StyleRules, StyleRulesCallback};
+export {withStyles, WithStyles, withTheme, Theme, StyledComponentProps, StyleRules, StyleRulesCallback, createStyles};
 export {zIndex};
 export {Hidden};
 export {Grid};
+export {Paper};

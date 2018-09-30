@@ -6,6 +6,7 @@ import {Form, Field, FormRenderProps} from 'react-final-form';
 import {ICompanyDto} from 'client-common-lib';
 import {withCompaniesContext, ICompaniesContextProps} from './companies-context';
 import {FormTextField, validatorRequired} from '@common/form-utils';
+import {MaterialBox} from '@layout/material-box';
 
 interface IRouteParams {
   companyId: string;
@@ -36,15 +37,15 @@ class CompanyEditComponentImpl extends React.Component<TProps, IState> {
   public render(): React.ReactNode {
     return (
       <div style={this.props.style}>{this.state.company &&
-        <Form
-          onSubmit={(values) => this.handleSubmitForm(values)}
-          initialValues={{
-            companyName: this.state.company.name,
-            companyDescription: this.state.company.description
-          }}
-          render={(props: FormRenderProps) => (
-            <form onSubmit={props.handleSubmit}>
-              <div>
+        <MaterialBox>
+          <Form
+            onSubmit={(values) => this.handleSubmitForm(values)}
+            initialValues={{
+              companyName: this.state.company.name,
+              companyDescription: this.state.company.description
+            }}
+            render={(props: FormRenderProps) => (
+              <form onSubmit={props.handleSubmit}>
                 <Field
                   name="companyName"
                   component={FormTextField}
@@ -54,8 +55,6 @@ class CompanyEditComponentImpl extends React.Component<TProps, IState> {
                   required={true}
                   validate={validatorRequired}
                 />
-              </div>
-              <div>
                 <Field
                   name="companyDescription"
                   component={FormTextField}
@@ -63,22 +62,22 @@ class CompanyEditComponentImpl extends React.Component<TProps, IState> {
                   label="Description"
                   fullWidth={true}
                 />
-              </div>
-              <div>
-                <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
-                  <Button
-                    type="submit"
-                    variant="raised"
-                    color="primary"
-                    disabled={props.submitting || props.pristine  || props.invalid}
-                  >
-                    Update
-                  </Button>
+                <div>
+                  <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+                    <Button
+                      type="submit"
+                      variant="raised"
+                      color="primary"
+                      disabled={props.submitting || props.pristine || props.invalid}
+                    >
+                      Update
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </form>
-          )}
-        />
+              </form>
+            )}
+          />
+        </MaterialBox>
       }
       </div>
     );

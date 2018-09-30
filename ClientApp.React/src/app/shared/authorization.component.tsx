@@ -23,22 +23,18 @@ class AuthorizationComponentImpl extends React.Component<IAppContextProps, IStat
   public componentDidMount(): void {
 
     if(window.location.hash) {
-      console.error('detected hash, performing sign in callback');
 
       this.props.appContext.userManager.signinRedirectCallback().then(user => {
-
-        console.error('auth component got callback response, changing state');
         this.setState({isSignedIn: true});
       });
     } else {
+
       this.props.appContext.userManager.getUser().then(user => {
 
-        if(!user) {
-          console.error('No user detected, performing sign in redirect');
+        if(!user || user.expired)
           this.props.appContext.userManager.signinRedirect();
-        } else {
+        else
           this.setState({isSignedIn: true});
-        }
 
       });
     }
@@ -48,10 +44,9 @@ class AuthorizationComponentImpl extends React.Component<IAppContextProps, IStat
    * Component
    */
   public render(): React.ReactNode {
-    console.error('AthorizationComponent.render()');
+
     if(this.state.isSignedIn) {
       if(!this.props.children) {
-        console.error('render: authenticated but no children');
         return (null);
       } else {
         return this.props.children

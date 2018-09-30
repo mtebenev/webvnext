@@ -5,6 +5,7 @@ import {Form, Field, FormRenderProps} from 'react-final-form';
 import {ICompanyDto} from 'client-common-lib';
 import {withCompaniesContext, ICompaniesContextProps} from './companies-context';
 import {FormTextField, validatorRequired} from '@common/form-utils';
+import {MaterialBox} from '@layout/material-box';
 
 type IProps = ICompaniesContextProps & React.HTMLProps<CompanyNewComponentImpl>;
 
@@ -25,7 +26,7 @@ export class CompanyNewComponentImpl extends React.Component<IProps> {
     return (
       <div style={this.props.style}>{
         <React.Fragment>
-          <AppBar position="static" color="default">
+          <AppBar position="relative" color="default" elevation={0}>
             <Toolbar>
               <Typography variant="title">
                 New Company
@@ -34,46 +35,48 @@ export class CompanyNewComponentImpl extends React.Component<IProps> {
 
           </AppBar>
 
-          <Form
-            onSubmit={(values) => this.handleSubmitForm(values)}
-            render={(props: FormRenderProps) => (
-              <form onSubmit={props.handleSubmit}>
-                <div>
-                  <Field
-                    name="companyName"
-                    component={FormTextField}
-                    type="text"
-                    label="Name"
-                    fullWidth={true}
-                    required={true}
-                    validate={validatorRequired}
-                  />
-                </div>
-                <div>
-                  <Field
-                    name="companyDescription"
-                    component={FormTextField}
-                    type="text"
-                    label="Description"
-                    fullWidth={true}
-                  />
-                </div>
-                <div>
-                  <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
-                    <Button
-                      type="submit"
-                      variant="raised"
-                      color="primary"
-                      disabled={props.submitting || props.pristine || props.invalid}
-                    >
-                      Create
-                    </Button>
+          <MaterialBox>
+            <Form
+              onSubmit={(values) => this.handleSubmitForm(values)}
+              render={(props: FormRenderProps) => (
+                <form onSubmit={props.handleSubmit}>
+                  <div>
+                    <Field
+                      name="companyName"
+                      component={FormTextField}
+                      type="text"
+                      label="Name"
+                      fullWidth={true}
+                      required={true}
+                      validate={validatorRequired}
+                    />
                   </div>
-                </div>
-              </form>
+                  <div>
+                    <Field
+                      name="companyDescription"
+                      component={FormTextField}
+                      type="text"
+                      label="Description"
+                      fullWidth={true}
+                    />
+                  </div>
+                  <div>
+                    <div style={{display: 'flex', flexDirection: 'row', justifyContent: 'flex-end'}}>
+                      <Button
+                        type="submit"
+                        variant="raised"
+                        color="primary"
+                        disabled={props.submitting || props.pristine || props.invalid}
+                      >
+                        Create
+                      </Button>
+                    </div>
+                  </div>
+                </form>
 
-            )}
-          />
+              )}
+            />
+          </MaterialBox>
         </React.Fragment>
       }
       </div>

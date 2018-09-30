@@ -1,23 +1,20 @@
 import * as React from 'react';
 
 import {ICompanyDto} from 'client-common-lib';
+import {Typography} from '@core/mui-exports';
+import {MaterialBox} from '@layout/material-box';
 
-
-interface IProps extends React.HTMLProps<any> {
+interface IProps {
   company: ICompanyDto
-}
-
-interface IState {
 }
 
 /**
  * View mode for company details
  */
-export class CompanyViewComponent extends React.Component<IProps, IState> {
+export class CompanyViewComponent extends React.Component<IProps> {
 
   constructor(props: IProps) {
     super(props);
-    this.state = {};
   }
 
   /**
@@ -25,9 +22,11 @@ export class CompanyViewComponent extends React.Component<IProps, IState> {
    */
   public render(): React.ReactNode {
     return (
-      <div>
-        Description: {this.props.company.description || '<no description provided>'}
-      </div>
+      <MaterialBox>
+        <Typography variant="body1">
+          Description: {this.props.company.description || '<no description provided>'}
+        </Typography>
+      </MaterialBox>
     );
   }
 }
