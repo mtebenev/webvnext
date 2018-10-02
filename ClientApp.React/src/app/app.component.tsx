@@ -1,12 +1,10 @@
 import * as React from 'react';
 import {UserManager, UserManagerSettings} from 'oidc-client';
-import {BrowserRouter as Router, Route, Link, Switch, BrowserRouter} from 'react-router-dom';
+import {BrowserRouter as Router, Route, Switch, BrowserRouter} from 'react-router-dom';
 import {Redirect} from 'react-router';
 import {
-  AppBar, Drawer, Toolbar, Button, Icon, IconButton, Typography,
-  Theme, Hidden, StyleRulesCallback, StyledComponentProps
+  Drawer, Theme, Hidden, createStyles, WithStyles, withStyles
 } from '@core/mui-exports';
-import {ApplyStyles} from '@core/mui-decorators';
 
 import {ContactListComponent, CompaniesComponent} from './contact-manager/index';
 import {AuthorizationComponent} from './shared/authorization.component';
@@ -19,12 +17,14 @@ import {PortalManagerService, ConfirmationUi, ConfirmationUiService} from '@app-
 import {AppPortalContainer} from '@core/ui/app-portal-container';
 import {UiConstants} from '@core/ui/ui-constants';
 import {AppSidebar} from '@core/components/app-sidebar';
+import {AppHeader} from '@core/components/app-header';
+import {IAppCommands} from '@core/iapp-commands';
 
 interface IState {
   isMobileDrawerOpen: boolean;
 }
 
-const styles: StyleRulesCallback = (theme: Theme) => ({
+const styles = (theme: Theme) => createStyles({
   drawerPaperDesktop: {
     position: 'relative',
     width: UiConstants.APP_SIDEBAR_WIDTH,
@@ -33,22 +33,18 @@ const styles: StyleRulesCallback = (theme: Theme) => ({
   drawerPaperMobile: {
     width: UiConstants.APP_SIDEBAR_WIDTH,
     height: '100%'
-  },
-  navIcon: {
-    [theme.breakpoints.up('md')]: {
-      display: 'none'
-    }
   }
 });
 
-@ApplyStyles(styles)
-export class AppComponent extends React.Component<React.HTMLProps<any> & StyledComponentProps<keyof typeof styles>, IState> {
+type TProps = WithStyles<typeof styles>;
+
+class AppComponentImpl extends React.Component<TProps, IState> implements IAppCommands {
 
   private _deferredConfirmationUi: Deferred<ConfirmationUi>;
   private _appContext: IAppContext;
   private _setConfirmationDialogRef: (element: ConfirmationDialogComponent) => void;
 
-  constructor(props: any) {
+  constructor(props: TProps) {
     super(props);
 
     // Note: we can't create confirmation UI unitil rendering (we are waiting for ref).
@@ -70,12 +66,26 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & StyledC
     this._appContext = {
       userManager: new UserManager(settings),
       confirmationUi: this._deferredConfirmationUi.promise,
-      portalManager: new PortalManagerService()
+      portalManager: new PortalManagerService(),
+      appCommands: this
     };
 
     this.state = {
       isMobileDrawerOpen: false
     };
+  }
+
+  /**
+   * IAppCommands
+   */
+  public toggleAppMenu(): void {
+    this.setState({...this.state, isMobileDrawerOpen: !this.state.isMobileDrawerOpen});
+  }
+
+  /**
+   * IAppCommands
+   */
+  public logOut(): void {
   }
 
   /**
@@ -93,7 +103,7 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & StyledC
               layoutAlign="start stretch"
             >
               <AppPortalContainer name={UiConstants.PORTAL_FAB} portalManager={this._appContext.portalManager} />
-              {this.renderAppBar()}
+              <AppHeader/>
               <FxContainer
                 layout="row"
                 layoutAlign="start stretch"
@@ -113,31 +123,6 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & StyledC
   }
 
   /**
-   * Renders main application toolbar
-   */
-  private renderAppBar(): React.ReactNode {
-    return (
-      <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() => this.handleMobileDrawerToggle()}
-            className={this.props.classes!['navIcon']}
-          >
-            <Icon>menu</Icon>
-          </IconButton>
-
-          <Typography variant="title" color="inherit">
-            Contact Manager
-          </Typography>
-          <Button color="inherit">Login</Button>
-        </Toolbar>
-      </AppBar>
-    );
-  }
-
-  /**
    * Renders responsive containers for sidebar drawer
    * We have two: one permanent for large screens and the seond temporary for mobiles/tablets
    */
@@ -151,7 +136,7 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & StyledC
             open={this.state.isMobileDrawerOpen}
             onClose={() => this.handleMobileDrawerToggle()}
             classes={{
-              paper: this.props.classes!['drawerPaperMobile']
+              paper: this.props.classes.drawerPaperMobile
             }}
             ModalProps={{
               keepMounted: true, // Better open performance on mobile.
@@ -168,7 +153,7 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & StyledC
             variant="permanent"
             open={true}
             classes={{
-              paper: this.props.classes!['drawerPaperDesktop']
+              paper: this.props.classes.drawerPaperDesktop
             }}
           >
             <AppSidebar />
@@ -203,6 +188,8 @@ export class AppComponent extends React.Component<React.HTMLProps<any> & StyledC
    * Toggle mobile drawer
    */
   private handleMobileDrawerToggle(): void {
-    this.setState({...this.state, isMobileDrawerOpen: !this.state.isMobileDrawerOpen});
+    this.toggleAppMenu();
   }
 }
+
+export const AppComponent = withStyles(styles)(AppComponentImpl);

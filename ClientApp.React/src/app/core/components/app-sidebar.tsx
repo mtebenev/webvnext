@@ -6,7 +6,12 @@ import {NavLink, LinkProps} from 'react-router-dom';
 import {MaterialBox} from '@layout/material-box';
 
 const styles = (theme: Theme) => createStyles({
-  active: {background: theme.palette.action.selected}
+  active: {
+    background: theme.palette.action.selected
+  },
+  profileIcon: {
+    fontSize: 60
+  }
 });
 
 /**
@@ -20,7 +25,7 @@ class AppSidebarImpl extends React.Component<WithStyles<typeof styles>> {
       <React.Fragment>
         <MaterialBox>
           <div>
-            <Icon color="primary" style={{fontSize: 60}}>account_circle</Icon>
+            <Icon color="primary" className={this.props.classes.profileIcon}>account_circle</Icon>
           </div>
           <Typography variant="title">
             Alice

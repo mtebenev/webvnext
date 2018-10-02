@@ -2,6 +2,7 @@ import * as React from 'react';
 import {UserManager} from 'oidc-client';
 import {ConfirmationUi} from '@app-services/confirmation-ui';
 import {PortalManagerService} from '@app-services/portal-manager.service';
+import {IAppCommands} from '@core/iapp-commands';
 
 /**
  * Common React context used through the application
@@ -10,6 +11,7 @@ export interface IAppContext {
   userManager: UserManager;
   confirmationUi: Promise<ConfirmationUi>;
   portalManager: PortalManagerService;
+  appCommands: IAppCommands
 }
 
 export interface IAppContextProps {

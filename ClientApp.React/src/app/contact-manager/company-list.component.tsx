@@ -14,6 +14,7 @@ interface IState {
   filterText?: string;
   pageNumber: number;
   pageSize: number;
+  selectedCompanyId?: number;
 }
 
 type TProps = ICompaniesContextProps & React.HTMLProps<CompanyListComponentImpl>;
@@ -56,10 +57,16 @@ class CompanyListComponentImpl extends React.Component<TProps, IState> {
               pageIndex={0}
             />
             <FxFlex style={{overflow: 'auto'}}>
-              <List >
+              <List>
                 {
                   this.state.companies.rows.map(c => (
-                    <ListItem button={true} component={(props: any) => <Link {...props} to={`/companies/${c.companyId}`} />} >
+                    <ListItem
+                      key={c.companyId}
+                      selected={this.state.selectedCompanyId && c.companyId === this.state.selectedCompanyId ? true : false}
+                      onClick={() => this.handleItemClick(c)}
+                      button={true}
+                      component={(props: any) => <Link {...props} to={`/companies/${c.companyId}`} />}
+                    >
                       <ListItemText primary={c.name} />
                     </ListItem>
                   ))
@@ -100,6 +107,13 @@ class CompanyListComponentImpl extends React.Component<TProps, IState> {
     this.setState({...this.state, pageNumber: event.pageIndex, pageSize: event.pageSize}, () => {
       this.loadCompanies();
     });
+  }
+
+  /**
+   * Invoked when user selects a company in the list
+   */
+  private handleItemClick(company: ICompanyDto): void {
+    this.setState({...this.state, selectedCompanyId: company.companyId});
   }
 
   private handleFilterTextChanged(value: string): void {
