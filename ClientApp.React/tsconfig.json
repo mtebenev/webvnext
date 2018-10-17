@@ -22,6 +22,7 @@
     "noUnusedLocals": false,
     "noFallthroughCasesInSwitch": true,
     "experimentalDecorators": true,
+    "skipLibCheck": true, // TODO: this is temporary workaround for ussue: https://stackoverflow.com/questions/52399839/typescript-duplicate-identifier-librarymanagedattributes
     "paths": {
       "@common/*": ["app/core/common/*"],
       "@app-services/*": ["app/core/app-services/*"],

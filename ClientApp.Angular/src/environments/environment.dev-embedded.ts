@@ -8,5 +8,5 @@ export const environment: IEnvironment = {
     serverUrl: 'http://localhost:3200'
   },
   apiBaseUrl: 'http://localhost:5200/api',
-  translationsPathPrefix: '/.Modules/ClientApp.Angular/dist/assets/i18n/'
+  translationsPathPrefix: '/.Modules/ClientApp.Angular/dist/client-app-angular/assets/i18n/'
 };

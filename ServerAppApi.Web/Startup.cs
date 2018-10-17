@@ -60,12 +60,13 @@ namespace Mt.WebVNext.ServerAppApi.Web
       app.UseCors("default");
       app.UseAuthentication();
       app.UseMvc();
+      app.UseStaticFiles();
 
       app.UseSpa(builder =>
       {
         builder.Options.UseStubPage = false;
         builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleReact)), "/react/", "/.Modules/ClientApp.React/build");
-        builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleAngular)), "/angular/", "/.Modules/ClientApp.Angular/dist");
+        builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleAngular)), "/angular/", "/.Modules/ClientApp.Angular/dist/client-app-angular");
       });
     }
 
