@@ -26,47 +26,22 @@ There are two client applications in the sample: angular and react. This is outl
 | Forms management/validation         | @angular/forms             | react-final-form          |
 | Translations/localization           | ngx-translate              | react-i18next             |
 
-## Installation
+## Build and run
 
 ### Prerequisites
 
 Make sure you have installed .Net Core Runtime 2.1.3
 (Get from https://aka.ms/dotnet-download)
 
-### Set up server app
+### Run in development environment
 
-1. Create a new MSSQL database
-2. Manage user secrest in `ServerAppApi.Web` (use context menu in VS solution explorer), add the following content:
-```json
-{
-  "connectionStrings": {
-    "application": "<CONNSTR>"
-  }
-}
-```
-3. Run Entity Framework migrations
+Use PowerShell to run configuration script:
+
 ```bash
-cd DataModel
-dotnet ef database update
+.\setup-dev.ps1
 ```
 
-### Prepare angular app
-
-1. Build `client-common-lib`:
-```bash
-cd client-common-lib
-npm install
-npm run build
-``` 
-
-2. Set up packages for angular app
-```bash
-cd ClientApp.Angular
-npm install
-``` 
-## Running application locally
-### Run Angular client non-embedded
-Use separated console windows to launch API service, Identity service, Angular client.
+Use separated console windows to launch API service, Identity service.
 
 ```bash
 cd ServerAppApi.Web
@@ -78,7 +53,14 @@ cd ServerAppIdentity.Web
 dotnet run start
 ``` 
 
+Run SPAs:
+
 ```bash
 cd ClientApp.Angular
 npx ng serve
+``` 
+
+```bash
+cd ClientApp.React
+npm run start
 ``` 

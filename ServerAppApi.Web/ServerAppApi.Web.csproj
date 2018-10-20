@@ -4,6 +4,7 @@
     <TargetFramework>netcoreapp2.1</TargetFramework>
     <RootNamespace>Mt.WebVNext.ServerAppApi.Web</RootNamespace>
     <UserSecretsId>b1a00633-6b7a-4b00-adee-2d015a19bd9a</UserSecretsId>
+    <LangVersion>latest</LangVersion>
   </PropertyGroup>
 
   <ItemGroup>
