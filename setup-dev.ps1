@@ -41,6 +41,7 @@ pop-location
 # Install npm packages
 push-location -Path ".\client-common-lib"
 npm install
+npm run build
 pop-location
 
 push-location -Path ".\ClientApp.Angular"
