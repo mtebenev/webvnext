@@ -3,30 +3,31 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
 using Microsoft.EntityFrameworkCore.Migrations;
-using Microsoft.EntityFrameworkCore.Storage;
-using Microsoft.EntityFrameworkCore.Storage.Internal;
+using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Mt.WebVNext.DataModel;
-using System;
 
 namespace Mt.WebVNext.DataModel.Migrations
 {
     [DbContext(typeof(AppDataContext))]
-    [Migration("20171218132335_add_company_relation")]
-    partial class add_company_relation
+    [Migration("20181022182836_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("ProductVersion", "2.0.0-rtm-26452")
+                .HasAnnotation("ProductVersion", "2.1.2-rtm-30932")
+                .HasAnnotation("Relational:MaxIdentifierLength", 128)
                 .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
             modelBuilder.Entity("Mt.WebVNext.DataModel.Entities.ContactManager.Company", b =>
                 {
                     b.Property<int>("CompanyId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
-                    b.Property<string>("Description");
+                    b.Property<string>("Description")
+                        .HasMaxLength(2048);
 
                     b.Property<string>("Name")
                         .IsRequired()
@@ -42,7 +43,8 @@ namespace Mt.WebVNext.DataModel.Migrations
             modelBuilder.Entity("Mt.WebVNext.DataModel.Entities.ContactManager.Contact", b =>
                 {
                     b.Property<int>("ContactId")
-                        .ValueGeneratedOnAdd();
+                        .ValueGeneratedOnAdd()
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int>("CompanyId");
 

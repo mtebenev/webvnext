@@ -15,11 +15,11 @@ namespace Mt.WebVNext.ServerAppApi.Web
   /// </summary>
   public class DataImportTask
   {
-    public async Task Execute(string csvPath, int userId, string connectionString)
+    public async Task Execute(string csvPath, int userId, string dbProviderName, string connectionString)
     {
       // DB Context
       var optionsBuilder = new DbContextOptionsBuilder<AppDataContext>();
-      optionsBuilder.UseSqlServer(connectionString);
+      optionsBuilder.ConfigureDbContext(dbProviderName, connectionString);
 
       // Automapper
       var autoMapperConfig = new MapperConfiguration(cfg => { cfg.AddProfile<DtoProfile>(); });

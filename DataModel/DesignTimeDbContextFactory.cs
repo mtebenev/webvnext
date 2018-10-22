@@ -10,15 +10,16 @@ namespace Mt.WebVNext.DataModel
   {
     public AppDataContext CreateDbContext(string[] args)
     {
-      var connectionString = GetConnectionString();
+      var dbConnectionInfo = GetDbConnectionInfo();
 
-      if(String.IsNullOrWhiteSpace(connectionString))
+      if(String.IsNullOrWhiteSpace(dbConnectionInfo.connStr))
         throw new InvalidOperationException("Cannot read connection string from coniguration");
 
-      Console.WriteLine(connectionString);
+      Console.WriteLine($"Using db provider: {dbConnectionInfo.dbProvidername}");
+      Console.WriteLine($"Using connection string: {dbConnectionInfo.connStr}");
 
       var builder = new DbContextOptionsBuilder<AppDataContext>();
-      builder.UseSqlServer(connectionString);
+      builder.ConfigureDbContext(dbConnectionInfo.dbProvidername, dbConnectionInfo.connStr);
 
       return new AppDataContext(builder.Options);
     }
@@ -27,9 +28,10 @@ namespace Mt.WebVNext.DataModel
     /// Note: track https://github.com/aspnet/EntityFrameworkCore/issues/8332
     /// When passing args in the context factory implemented we can switch to args check
     /// </summary>
-    private string GetConnectionString()
+    private (string dbProvidername, string connStr) GetDbConnectionInfo()
     {
-      string result;
+      string dbProvidername;
+      string connectionString;
 
       var environment = Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT");
       if(environment == "Azure")
@@ -41,7 +43,8 @@ namespace Mt.WebVNext.DataModel
           .AddJsonFile(configPath)
           .Build();
 
-        result = configuration.GetConnectionString("application");
+        dbProvidername = "MSSQL";
+        connectionString = configuration.GetConnectionString("application");
       }
       else
       {
@@ -50,13 +53,17 @@ namespace Mt.WebVNext.DataModel
           .AddUserSecrets<DesignTimeDbContextFactory>()
           .Build();
 
-        result = configuration.GetConnectionString("application");
+        connectionString = configuration.GetConnectionString("application");
+        dbProvidername = configuration.GetValue<string>("dbProviderName");
+        dbProvidername = String.IsNullOrEmpty(dbProvidername) || !dbProvidername.Equals("sqlite", StringComparison.InvariantCultureIgnoreCase)
+          ? "MSSQL"
+          : "sqlite";
 
-        if(string.IsNullOrEmpty(result))
+        if(string.IsNullOrEmpty(connectionString))
           throw new InvalidOperationException("Cannot get connection string from settings.");
       }
 
-      return result;
+      return (dbProvidername, connectionString);
     }
   }
 }

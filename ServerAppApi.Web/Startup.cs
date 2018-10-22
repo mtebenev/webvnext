@@ -5,7 +5,6 @@ using ClientApp.Angular;
 using ClientApp.React;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Mt.WebVNext.AppEngine.AppServices;
@@ -64,7 +63,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
 
       app.UseSpa(builder =>
       {
-        builder.Options.UseStubPage = false;
+        builder.Options.UseStubPage = true;
         builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleReact)), "/react/", "/.Modules/ClientApp.React/build");
         builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleAngular)), "/angular/", "/.Modules/ClientApp.Angular/dist/client-app-angular");
       });
@@ -75,12 +74,13 @@ namespace Mt.WebVNext.ServerAppApi.Web
     /// </summary>
     private void ConfigureContainer(IServiceCollection services)
     {
+      var appOptions = Configuration.Get<AppOptions>();
       var appConnectionString = Configuration.GetConnectionString("application");
 
       if(string.IsNullOrEmpty(appConnectionString))
         throw new InvalidOperationException("Cannot get connection string from settings.");
 
-      services.AddDbContext<AppDataContext>(options => options.UseSqlServer(appConnectionString));
+      services.AddDbContext<AppDataContext>(options => options.ConfigureDbContext(appOptions.DbProviderName, appConnectionString));
       services.AddScoped<IContactDataService, ContactDataService>();
       services.AddScoped<ICompanyDataService, CompanyDataService>();
       services.AddScoped<IDataImportService, DataImportService>();

@@ -13,6 +13,8 @@ namespace Mt.WebVNext.DataModel.Entities.ContactManager
 
 		[Required, MaxLength(64)]
 		public string Name { get; set; }
+
+	  [MaxLength(2048)]
 		public string Description { get; set; }
 	}
 }
