@@ -3,7 +3,7 @@ import {IEnvironment} from './ienvironment';
 export const environment: IEnvironment = {
   production: false,
   identityServerConfig: {
-    clientId: 'angularclient-dev-embedded',
+    clientId: 'angularclient',
     clientBaseUrl: 'http://localhost:5200/angular',
     serverUrl: 'http://localhost:3200'
   },

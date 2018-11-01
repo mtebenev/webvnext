@@ -1,0 +1,20 @@
+# common directories
+**/bin/
+**/obj/
+**/out/
+**/node_modules/
+**/.vscode/
+
+# client build directories
+client-common-lib/build/
+ClientApp.Angular/dist/
+ClientApp.React/build/
+packages/
+.vs/
+.git/
+
+# files
+Dockerfile*
+**/*.trx
+**/*.md
+**/package-lock.json

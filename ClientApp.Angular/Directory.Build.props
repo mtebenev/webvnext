@@ -1,0 +1,19 @@
+﻿<Project xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <YesSpaBuildTools>angular</YesSpaBuildTools>
+    <YesSpaAngularBaseHref>/angular/</YesSpaAngularBaseHref>
+    <YesSpaAngularDeployUrl>/.Modules/ClientApp.Angular/dist/client-app-angular/</YesSpaAngularDeployUrl>
+  </PropertyGroup>
+
+  <!-- Enable YesSpa for Visual Studio build -->
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-embedded|AnyCPU'">
+    <YesSpaEnabled>true</YesSpaEnabled>
+    <YesSpaAngularConfiguration>dev-embedded</YesSpaAngularConfiguration>
+  </PropertyGroup>
+
+  <!-- Demo build (docker all-in-one) -->
+  <PropertyGroup Condition="'$(BuildEnvironment)'=='Demo'">
+    <YesSpaEnabled>true</YesSpaEnabled>
+    <YesSpaAngularConfiguration>dev-embedded</YesSpaAngularConfiguration>
+  </PropertyGroup>
+</Project>

@@ -6,17 +6,6 @@
     <TypeScriptToolsVersion>Latest</TypeScriptToolsVersion>
     <Configurations>Debug;Release;Debug-embedded</Configurations>
   </PropertyGroup>
-
-  <!-- YesSpa build -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-embedded|AnyCPU'">
-    <YesSpaEnabled>true</YesSpaEnabled>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <YesSpaBuildTools>react</YesSpaBuildTools>
-    <YesSpaEnvCmdEnvironment>dev-embedded</YesSpaEnvCmdEnvironment>
-  </PropertyGroup>
-
   <PropertyGroup>
     <DefaultItemExcludes>node_modules/**;$(DefaultItemExcludes)</DefaultItemExcludes>
   </PropertyGroup>

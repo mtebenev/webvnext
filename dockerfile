@@ -1,0 +1,77 @@
+FROM microsoft/dotnet:2.1-sdk AS build
+WORKDIR /app
+
+# set up node.js
+# Setup NodeJs
+RUN apt-get update && \
+    apt-get install -y wget && \
+    apt-get install -y gnupg2 && \
+    wget -qO- https://deb.nodesource.com/setup_10.x | bash - && \
+    apt-get install -y build-essential nodejs
+
+# copy csproj and restore as distinct layers
+COPY *.sln .
+COPY NuGet.config .
+COPY AppEngine/*.csproj ./AppEngine/
+COPY AppEngine.Test/*.csproj ./AppEngine.Test/
+COPY ClientApp.Angular/*.csproj ./ClientApp.Angular/
+COPY ClientApp.React/*.csproj ./ClientApp.React/
+COPY DataModel/*.csproj ./DataModel/
+COPY Mt.Utils.AspNet/*.csproj ./Mt.Utils.AspNet/
+COPY ServerApi/*.csproj ./ServerApi/
+COPY ServerAppApi.Web/*.csproj ./ServerAppApi.Web/
+COPY ServerAppIdentity.Web/*.csproj ./ServerAppIdentity.Web/
+
+RUN dotnet restore
+
+# copy everything else and build app
+COPY client-common-lib/. ./client-common-lib/
+COPY ClientApp.Angular/. ./ClientApp.Angular/
+COPY ClientApp.React/. ./ClientApp.React/
+COPY config/. ./config/
+COPY Data/. ./Data/
+COPY ServerAppIdentity.Web/. ./ServerAppIdentity.Web/
+COPY ServerAppApi.Web/. ./ServerAppApi.Web/
+COPY AppEngine/. ./AppEngine/
+COPY client-common-lib/. ./client-common-lib/
+COPY ClientApp.Angular/. ./ClientApp.Angular/
+COPY ClientApp.React/. ./ClientApp.React/
+COPY DataModel/. ./DataModel/
+COPY Mt.Utils.AspNet/. ./Mt.Utils.AspNet/
+COPY ServerApi/. ./ServerApi/
+
+# build common client lib
+RUN cd client-common-lib && npm install && npm run build && cd ..
+
+# build server apps + client apps (YesSpa)
+WORKDIR /app/ServerAppIdentity.Web
+RUN dotnet publish -c Debug -o out
+
+WORKDIR /app/ServerAppApi.Web
+RUN dotnet build -c Debug /p:BuildEnvironment=Demo && dotnet publish --no-build -c Debug -o out
+
+# runtime layer
+FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
+WORKDIR /app
+
+# set up supervisor
+RUN mkdir -p /var/log/supervisord
+
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends \
+        supervisor \
+    && apt-get clean \
+    && rm -rf /var/lib/apt/lists/*
+
+# runtime files
+COPY --from=build /app/ServerAppIdentity.Web/out ./ServerAppIdentity.Web/
+COPY --from=build /app/ServerAppApi.Web/out ./ServerAppApi.Web/
+COPY --from=build /app/config ./config/
+COPY supervisord.conf /etc/value-service/supervisord.conf
+
+ENV connectionStrings:application=CONNECTION_STRING
+ENV ASPNETCORE_ENVIRONMENT=Development
+EXPOSE 3200
+EXPOSE 5200
+
+ENTRYPOINT ["/usr/bin/supervisord", "-c", "/etc/value-service/supervisord.conf"]

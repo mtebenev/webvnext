@@ -7,18 +7,6 @@
     <Configurations>Debug;Release;Debug-embedded</Configurations>
   </PropertyGroup>
 
-  <!-- YesSpa build -->
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug-embedded|AnyCPU'">
-    <YesSpaEnabled>true</YesSpaEnabled>
-  </PropertyGroup>
-
-  <PropertyGroup>
-    <YesSpaBuildTools>angular</YesSpaBuildTools>
-    <YesSpaAngularBaseHref>/angular/</YesSpaAngularBaseHref>
-    <YesSpaAngularDeployUrl>/.Modules/ClientApp.Angular/dist/client-app-angular/</YesSpaAngularDeployUrl>
-    <YesSpaAngularConfiguration>dev-embedded</YesSpaAngularConfiguration>
-  </PropertyGroup>
-
   <PropertyGroup>
     <DefaultItemExcludes>node_modules/**;$(DefaultItemExcludes)</DefaultItemExcludes>
   </PropertyGroup>
