@@ -17,6 +17,9 @@
 		},
 		{
 			"path": "client-common-lib"
+		},
+		{
+			"path": "docker"
 		}
 	],
 	"settings": {
