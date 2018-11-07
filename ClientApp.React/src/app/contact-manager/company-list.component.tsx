@@ -53,7 +53,7 @@ class CompanyListComponentImpl extends React.Component<TProps, IState> {
               pageSize={10}
               length={100}
               pageSizeOptions={[5, 10, 25, 100]}
-              onPageChange={e => this.handlePageChange(e)}
+              onPageChange={e => {this.handlePageChange(e)}}
               pageIndex={0}
             />
             <FxFlex style={{overflow: 'auto'}}>

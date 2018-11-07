@@ -86,6 +86,7 @@ class AppComponentImpl extends React.Component<TProps, IState> implements IAppCo
    * IAppCommands
    */
   public logOut(): void {
+    this._appContext.userManager.signoutRedirect();
   }
 
   /**

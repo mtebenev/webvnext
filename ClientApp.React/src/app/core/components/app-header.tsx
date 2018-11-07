@@ -39,19 +39,21 @@ class AppHeaderImpl extends React.Component<TProps, IState> {
 
     return (
       <AppBar position="static">
-        <Toolbar>
-          <IconButton
-            color="inherit"
-            aria-label="open drawer"
-            onClick={() => {this.handleMobileDrawerToggle()}}
-            className={this.props.classes.navIcon}
-          >
-            <Icon>menu</Icon>
-          </IconButton>
+        <Toolbar style={{display: 'flex', alignItems: 'center', justifyContent: 'space-between', width: '100%'}}>
+          <div>
+            <IconButton
+              color="inherit"
+              aria-label="open drawer"
+              onClick={() => {this.handleMobileDrawerToggle()}}
+              className={this.props.classes.navIcon}
+            >
+              <Icon>menu</Icon>
+            </IconButton>
 
-          <Typography variant="title" color="inherit">
-            Contact Manager
-          </Typography>
+            <Typography variant="title" color="inherit">
+              Contact Manager
+            </Typography>
+          </div>
           <IconButton
             color="inherit"
             aria-label="More"
@@ -62,7 +64,7 @@ class AppHeaderImpl extends React.Component<TProps, IState> {
           <Menu
             anchorEl={this.state.settingsMenuAnchorEl}
             open={Boolean(this.state.settingsMenuAnchorEl)}
-            onClose={() => {this.handleSettingsMenuClose}}
+            onClose={() => {this.handleSettingsMenuClose()}}
           >
             <MenuItem onClick={() => this.handleLogOutClick()}>Log Out</MenuItem>
           </Menu>

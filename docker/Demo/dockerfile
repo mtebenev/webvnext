@@ -39,6 +39,8 @@ COPY ClientApp.React/. ./ClientApp.React/
 COPY DataModel/. ./DataModel/
 COPY Mt.Utils.AspNet/. ./Mt.Utils.AspNet/
 COPY ServerApi/. ./ServerApi/
+COPY ./docker/Demo/build-demo-db.sh ./
+
 
 # build common client lib
 RUN cd client-common-lib && npm install && npm run build && cd ..
@@ -49,6 +51,10 @@ RUN dotnet publish -c Debug -o out
 
 WORKDIR /app/ServerAppApi.Web
 RUN dotnet build -c Debug /p:BuildEnvironment=Demo && dotnet publish --no-build -c Debug -o out
+
+# prepare database
+WORKDIR /app
+RUN ./build-demo-db.sh
 
 # runtime layer
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime
@@ -69,8 +75,11 @@ COPY --from=build /app/ServerAppApi.Web/out ./ServerAppApi.Web/
 COPY --from=build /app/config ./config/
 COPY ./docker/Demo/supervisord.conf /etc/value-service/supervisord.conf
 
+# environment variables
 ENV ASPNETCORE_ENVIRONMENT=Demo
-ENV connectionStrings:application=CONNECTION_STRING
+ENV connectionStrings:application="Data Source=App_Data/webvnext.db"
+ENV dbProviderName=sqlite
+
 EXPOSE 3200
 EXPOSE 5200
 

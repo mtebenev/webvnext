@@ -43,7 +43,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
           // In development environment use shared config files
           if(hostContext.HostingEnvironment.IsDevelopment())
           {
-            var sharedConfigPath = Path.Combine(hostContext.HostingEnvironment.ContentRootPath, @"..\config");
+            var sharedConfigPath = Path.Combine(hostContext.HostingEnvironment.ContentRootPath, @"../config");
 
             config.SetBasePath(sharedConfigPath)
               .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
