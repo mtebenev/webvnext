@@ -51,6 +51,7 @@ namespace Mt.WebVNext.DataModel
         // Get connection string from secrets
         var configuration = new ConfigurationBuilder()
           .AddUserSecrets<DesignTimeDbContextFactory>()
+          .AddEnvironmentVariables()
           .Build();
 
         connectionString = configuration.GetConnectionString("application");
