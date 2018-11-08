@@ -54,7 +54,7 @@ RUN dotnet build -c Debug /p:BuildEnvironment=Demo && dotnet publish --no-build 
 
 # prepare database
 WORKDIR /app
-RUN ./build-demo-db.sh
+RUN sed -i 's/\r//g' ./build-demo-db.sh && ./build-demo-db.sh
 
 # runtime layer
 FROM microsoft/dotnet:2.1-aspnetcore-runtime AS runtime

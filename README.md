@@ -5,9 +5,9 @@ two entities: Company and Contact. The aim is to provide a sample integrating al
 
 ## Server side stack overview
 
-- ASPNET Core 2.0.0
-- IdentityServer4 2.0.2
-- NgAspNetCore 0.1.0-Preview
+- ASPNET Core 2.1
+- IdentityServer4 2.3
+- YesSpa
 - AutoMapper 6.1.1
 - Entity Framework Core 2.0.0
 - xUnit 2.3.1
@@ -26,7 +26,17 @@ There are two client applications in the sample: angular and react. This is outl
 | Forms management/validation         | @angular/forms             | react-final-form          |
 | Translations/localization           | ngx-translate              | react-i18next             |
 
-## Build and run
+## Run docker demo
+
+```bash
+docker build -f ./docker/Demo/dockerfile -t webvnext .
+docker run --rm -it -p 3200:3200 -p 5200:5200 webvnext
+```
+
+Then navigate your browser to http://localhost:5200
+Use alice/password credentials to log in.
+
+## Build and run development environment
 
 ### Prerequisites
 

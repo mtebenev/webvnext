@@ -40,15 +40,11 @@ namespace Mt.WebVNext.ServerAppApi.Web
         .UseStartup<Startup>()
         .ConfigureAppConfiguration((hostContext, config) =>
         {
-          // In development environment use shared config files
-          if(hostContext.HostingEnvironment.IsDevelopment())
-          {
-            var sharedConfigPath = Path.Combine(hostContext.HostingEnvironment.ContentRootPath, @"../config");
+          var sharedConfigPath = Path.Combine(hostContext.HostingEnvironment.ContentRootPath, @"../config");
 
-            config.SetBasePath(sharedConfigPath)
-              .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
-              .AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
-          }
+          config.SetBasePath(sharedConfigPath)
+            .AddJsonFile("appsettings.json", optional: false, reloadOnChange: true)
+            .AddJsonFile($"appsettings.{hostContext.HostingEnvironment.EnvironmentName}.json", optional: true, reloadOnChange: true);
         });
   }
 }

@@ -7,18 +7,23 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Microsoft.Extensions.Logging;
 using Mt.WebVNext.AppEngine.AppServices;
 using Mt.WebVNext.AppEngine.Configuration;
 using Mt.WebVNext.AppEngine.DataServices;
 using Mt.WebVNext.DataModel;
+using Newtonsoft.Json;
 using YesSpa.AspNetCore;
 
 namespace Mt.WebVNext.ServerAppApi.Web
 {
   public class Startup
   {
-    public Startup(IConfiguration configuration)
+    private readonly ILogger<Startup> _logger;
+
+    public Startup(ILogger<Startup> logger, IConfiguration configuration)
     {
+      _logger = logger;
       Configuration = configuration;
     }
 
@@ -27,6 +32,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
     public void ConfigureServices(IServiceCollection services)
     {
       var appOptions = Configuration.Get<AppOptions>();
+      _logger.LogInformation($"App options: {JsonConvert.SerializeObject(appOptions)}");
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
       services.AddYesSpa();
@@ -76,6 +82,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
     {
       var appOptions = Configuration.Get<AppOptions>();
       var appConnectionString = Configuration.GetConnectionString("application");
+      _logger.LogInformation($"Using connection string: {appConnectionString}");
 
       if(string.IsNullOrEmpty(appConnectionString))
         throw new InvalidOperationException("Cannot get connection string from settings.");
