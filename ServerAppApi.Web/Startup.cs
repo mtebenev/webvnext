@@ -35,7 +35,12 @@ namespace Mt.WebVNext.ServerAppApi.Web
       _logger.LogInformation($"App options: {JsonConvert.SerializeObject(appOptions)}");
 
       services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
-      services.AddYesSpa();
+      services.AddYesSpa(builder =>
+      {
+        builder.Options.UseStubPage = false;
+        builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleReact)), "/react/", "/.Modules/ClientApp.React/build");
+        builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleAngular)), "/angular/", "/.Modules/ClientApp.Angular/dist/client-app-angular");
+      });
 
       services.AddAuthentication("Bearer")
         .AddIdentityServerAuthentication(options =>
@@ -67,12 +72,7 @@ namespace Mt.WebVNext.ServerAppApi.Web
       app.UseMvc();
       app.UseStaticFiles();
 
-      app.UseSpa(builder =>
-      {
-        builder.Options.UseStubPage = true;
-        builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleReact)), "/react/", "/.Modules/ClientApp.React/build");
-        builder.AddSpa(Assembly.GetAssembly(typeof(ClientAppModuleAngular)), "/angular/", "/.Modules/ClientApp.Angular/dist/client-app-angular");
-      });
+      app.UseYesSpa();
     }
 
     /// <summary>
